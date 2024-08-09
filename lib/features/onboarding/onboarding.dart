@@ -32,14 +32,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     }
   }
 
-  void _onNextPressed() {
+  _onNextPressed() {
     if (_currentPage < 1) {
       _pageController.nextPage(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
     } else {
-      context.replace("/${RouteNames.loginOrSignUp}");
+      context.pushReplacement(RouteNames.loginOrSignUp);
     }
   }
 
@@ -61,7 +61,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             height: 80,
             width: 80,
             child: FloatingActionButton(
-              onPressed: _onNextPressed,
+              onPressed: () {
+                _onNextPressed();
+              },
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(50),
               ),

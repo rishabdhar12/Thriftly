@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:budgeting_app/core/common/text.dart';
 import 'package:budgeting_app/core/constants/assets.dart';
 import 'package:budgeting_app/core/constants/colors.dart';
@@ -15,17 +17,23 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  Timer? _timer;
   @override
   void initState() {
-    _navigate(context);
     super.initState();
+    _navigate(context);
   }
 
   void _navigate(BuildContext context) async {
-    await Future.delayed(const Duration(seconds: 2));
-    if (context.mounted) {
-      context.replace("/${RouteNames.onboarding}");
-    }
+    _timer = Timer(const Duration(seconds: 2), () {
+      context.pushReplacement(RouteNames.onboarding);
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -38,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             SvgPicture.asset(AssetStrings.logo),
-            text(
+            textWidget(
               text: AppStrings.appName,
               fontSize: 50,
               fontWeight: FontWeight.w700,

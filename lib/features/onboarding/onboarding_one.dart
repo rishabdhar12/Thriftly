@@ -14,7 +14,7 @@ class OnboardingOne extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          text(
+          textWidget(
             text: AppStrings.welcomeText,
             fontSize: 44,
             fontWeight: FontWeight.w700,

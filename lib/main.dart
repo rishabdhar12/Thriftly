@@ -30,6 +30,8 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.poppinsTextTheme(),
       ),
       routerConfig: router,
+      // routerDelegate: router.routerDelegate,
+      // routeInformationParser: router.routeInformationParser,
     );
   }
 }
