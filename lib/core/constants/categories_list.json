@@ -1,0 +1,62 @@
+[
+  {
+    "categoryName": "Housing",
+    "items": ["Rent/Mortgage"]
+  },
+  {
+    "categoryName": "Utilities",
+    "items": ["Electricity", "Water", "Internet"]
+  },
+  {
+    "categoryName": "Groceries",
+    "items": ["Food", "Household Supplies"]
+  },
+  {
+    "categoryName": "Transportation",
+    "items": ["Fuel", "Public Transit", "Maintenance"]
+  },
+  {
+    "categoryName": "Healthcare",
+    "items": ["Medical Bills"]
+  },
+  {
+    "categoryName": "Insurance",
+    "items": ["Health", "Auto", "Life"]
+  },
+  {
+    "categoryName": "Education",
+    "items": ["Tuition", "Books"]
+  },
+  {
+    "categoryName": "Entertainment",
+    "items": ["Movies", "Hobbies", "Streaming"]
+  },
+  {
+    "categoryName": "Dining Out",
+    "items": ["Restaurants", "Coffee"]
+  },
+  {
+    "categoryName": "Personal Care",
+    "items": ["Haircuts", "Gym"]
+  },
+  {
+    "categoryName": "Clothing",
+    "items": ["Apparel", "Accessories"]
+  },
+  {
+    "categoryName": "Travel",
+    "items": ["Flights", "Accommodation"]
+  },
+  {
+    "categoryName": "Gifts & Donations",
+    "items": ["Presents", "Charitable Gifts"]
+  },
+  {
+    "categoryName": "Miscellaneous",
+    "items": ["Subscriptions", "Pet Care"]
+  },
+  {
+    "categoryName": "Savings & Investments",
+    "items": ["Savings", "Retirement", "Investments"]
+  }
+]

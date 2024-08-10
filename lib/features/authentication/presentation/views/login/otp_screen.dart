@@ -108,7 +108,7 @@ class _OtpScreenState extends State<OtpScreen> {
               width: 190,
               height: 45,
               onPressed: () {
-                // context.go(RouteNames.otpScreen);
+                context.go(RouteNames.categoriesScreen);
               },
               textWidget: textWidget(
                 text: AppStrings.submit,

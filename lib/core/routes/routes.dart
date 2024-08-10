@@ -4,6 +4,7 @@ import 'package:budgeting_app/features/authentication/presentation/views/login/l
 import 'package:budgeting_app/features/authentication/presentation/views/login/otp_screen.dart';
 import 'package:budgeting_app/features/authentication/presentation/views/login_or_signup.dart';
 import 'package:budgeting_app/features/authentication/presentation/views/signup/signup_screen.dart';
+import 'package:budgeting_app/features/categories/presentation/views/categories_screen.dart';
 import 'package:budgeting_app/features/onboarding/onboarding.dart';
 import 'package:budgeting_app/features/onboarding/onboarding_two.dart';
 import 'package:budgeting_app/features/splash/splash_screen.dart';
@@ -67,6 +68,16 @@ final GoRouter router = GoRouter(
         context: context,
         state: state,
         child: const SignUpScreen(),
+        type: 'slide-right-to-left',
+      ),
+    ),
+    GoRoute(
+      path: RouteNames.categoriesScreen,
+      pageBuilder: (context, state) =>
+          RouterTransitionFactory.getTransitionPage(
+        context: context,
+        state: state,
+        child: const CategoriesScreen(),
         type: 'slide-right-to-left',
       ),
     ),
