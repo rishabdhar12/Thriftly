@@ -3,6 +3,7 @@ import 'package:budgeting_app/core/constants/colors.dart';
 import 'package:budgeting_app/features/categories/presentation/bloc/categories_bloc.dart';
 import 'package:budgeting_app/features/categories/presentation/bloc/categories_event.dart';
 import 'package:budgeting_app/features/categories/presentation/bloc/categories_state.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -33,19 +34,23 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             RemoteFirebaseConfigState>(
           builder: (context, state) {
             if (state is RemoteFirebaseConfigLoadingState) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(
+                child: CupertinoActivityIndicator(
+                  radius: 20,
+                  color: ColorCodes.buttonColor,
+                ),
+              );
             } else if (state is RemoteFirebaseConfigFinishedState) {
               final categories = state.categoriesEntity!;
               return ListView.builder(
                 itemCount: categories.length,
                 itemBuilder: (context, index) {
-                  // final category = categories[index];
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       textWidget(
                           text: categories[index].categoryName,
-                          fontSize: 20,
+                          fontSize: 30,
                           color: ColorCodes.yellow),
                       Wrap(
                         spacing: 8,

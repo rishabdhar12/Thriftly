@@ -1,4 +1,5 @@
 final List<Map<String, String>> countryData = [
+  {"code": "+91", "flag": "IN"},
   {"code": "+93", "flag": "AF"},
   {"code": "+355", "flag": "AL"},
   {"code": "+213", "flag": "DZ"},

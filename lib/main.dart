@@ -1,7 +1,9 @@
+import 'package:budgeting_app/core/config/shared_prefs/shared_prefs.dart';
 import 'package:budgeting_app/core/constants/colors.dart';
 import 'package:budgeting_app/core/constants/string.dart';
 import 'package:budgeting_app/core/di/dependency_injection.dart';
 import 'package:budgeting_app/core/routes/routes.dart';
+import 'package:budgeting_app/features/authentication/presentation/blocs/auth_bloc.dart';
 import 'package:budgeting_app/features/categories/presentation/bloc/categories_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await PreferenceHelper.init();
   await setupDependencies();
   runApp(const MyApp());
 }
@@ -29,6 +32,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => sl<RemoteFirebaseCategoriesBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => sl<AuthBloc>(),
         ),
       ],
       child: MaterialApp.router(
