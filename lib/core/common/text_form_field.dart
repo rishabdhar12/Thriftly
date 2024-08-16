@@ -10,6 +10,7 @@ Widget textFormField({
   IconData? icon,
   void Function()? onPressed,
   Widget? suffixIcon,
+  bool enabled = true,
 }) {
   return Container(
     decoration: BoxDecoration(
@@ -20,6 +21,7 @@ Widget textFormField({
       controller: controller,
       keyboardType: textInputType,
       obscureText: obscureText,
+      enabled: enabled,
       decoration: InputDecoration(
         suffixIcon: suffixIcon,
         border: InputBorder.none,

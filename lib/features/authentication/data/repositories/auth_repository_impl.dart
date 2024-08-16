@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:budgeting_app/core/error/failure.dart';
 import 'package:budgeting_app/features/authentication/data/models/auth_model.dart';
+import 'package:budgeting_app/features/authentication/domain/entities/user_entity.dart';
 import 'package:budgeting_app/features/authentication/domain/repositories/auth_repositories.dart';
+import 'package:budgeting_app/features/authentication/dto/signup_dto.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fpdart/fpdart.dart';
@@ -75,6 +78,8 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<Either<Failure, bool>> checkUserExists(String phoneNumber) async {
+    log(phoneNumber);
+    log("1");
     try {
       final user = await firebaseFirestore
           .collection('users')
@@ -84,6 +89,28 @@ class AuthRepositoryImpl implements AuthRepository {
         return const Right(true);
       }
       return const Right(false);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserEntity>> signup(SignUpParams params) async {
+    try {
+      await firebaseFirestore.collection('users').add({
+        'fullName': params.fullName,
+        'phoneNumber': params.phoneNumber,
+        'email': params.email,
+        'dob': params.dob,
+      });
+
+      final userEntity = UserEntity(
+        fullName: params.fullName,
+        phoneNumber: params.phoneNumber,
+        email: params.email,
+        dob: params.dob,
+      );
+      return Right(userEntity);
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }

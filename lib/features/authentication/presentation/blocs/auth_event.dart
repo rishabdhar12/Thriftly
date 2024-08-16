@@ -1,3 +1,4 @@
+import 'package:budgeting_app/features/authentication/dto/signup_dto.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class AuthEvent extends Equatable {
@@ -31,4 +32,13 @@ class CheckUserExistEvent extends AuthEvent {
 
   @override
   List<Object> get props => [phoneNumber];
+}
+
+class SignUpEvent extends AuthEvent {
+  final SignUpParams signUpParams;
+
+  SignUpEvent({required this.signUpParams});
+
+  @override
+  List<Object> get props => [signUpParams];
 }

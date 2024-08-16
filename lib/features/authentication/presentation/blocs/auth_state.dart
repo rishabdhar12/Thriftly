@@ -1,4 +1,5 @@
 import 'package:budgeting_app/features/authentication/domain/entities/auth_entity.dart';
+import 'package:budgeting_app/features/authentication/domain/entities/user_entity.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class AuthState extends Equatable {
@@ -23,6 +24,15 @@ class AuthenticatedState extends AuthState {
   final AuthEntity user;
 
   AuthenticatedState({required this.user});
+
+  @override
+  List<Object> get props => [user];
+}
+
+class SignUpFinishedState extends AuthState {
+  final UserEntity user;
+
+  SignUpFinishedState({required this.user});
 
   @override
   List<Object> get props => [user];

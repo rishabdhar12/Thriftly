@@ -28,4 +28,6 @@ class AppStrings {
   static const String categoriesText2 = "You can always add/edit them later";
   static const String otpSent = "OTP sent to phone number";
   static const String loggedIn = "You are logged in";
+  static const String userExists = "User already exists, log in to continue";
+  static const String signUpComplete = "Sign-up complete! Welcome aboard!";
 }

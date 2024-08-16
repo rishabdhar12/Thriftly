@@ -162,9 +162,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           width: 190,
                           height: 45,
                           onPressed: () {
+                            // TODO: fix according to sinup screen
                             final user = checkUserExist();
-                            if (user) {
-                              showSnackBar(context, message: "UserExist");
+                            if (!user) {
+                              showSnackBar(
+                                context,
+                                message:
+                                    "User doesn't exist, please create an account",
+                              );
                             } else {
                               sendOTP();
                             }

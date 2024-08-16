@@ -1,7 +1,9 @@
 import 'package:budgeting_app/core/config/isar/isar_config.dart';
 import 'package:budgeting_app/features/authentication/data/repositories/auth_repository_impl.dart';
 import 'package:budgeting_app/features/authentication/domain/repositories/auth_repositories.dart';
+import 'package:budgeting_app/features/authentication/domain/usecases/check_user_exists_usecase.dart';
 import 'package:budgeting_app/features/authentication/domain/usecases/signin_usecase.dart';
+import 'package:budgeting_app/features/authentication/domain/usecases/signup_usecase.dart';
 import 'package:budgeting_app/features/authentication/domain/usecases/verifyotp_usecase.dart';
 import 'package:budgeting_app/features/authentication/presentation/blocs/auth_bloc.dart';
 import 'package:budgeting_app/features/categories/data/repositories/categories_repositories_impl.dart';
@@ -9,6 +11,7 @@ import 'package:budgeting_app/features/categories/domain/repositories/categories
 import 'package:budgeting_app/features/categories/domain/usecases/categories_usecase.dart';
 import 'package:budgeting_app/features/categories/presentation/bloc/local/local_categories_bloc.dart';
 import 'package:budgeting_app/features/categories/presentation/bloc/remote/remote_categories_bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:get_it/get_it.dart';
@@ -24,18 +27,22 @@ Future<void> setupDependencies() async {
       () => FirebaseRemoteConfig.instance);
 
   sl.registerLazySingleton(() => FirebaseAuth.instance);
+  sl.registerLazySingleton(() => FirebaseFirestore.instance);
 
   sl.registerFactory(() => RemoteCategoriesBloc(sl()));
   sl.registerFactory(() => AuthBloc(
         signInWithPhoneNumber: sl(),
         verifyOtp: sl(),
         checkUserExist: sl(),
+        signUp: sl(),
       ));
   sl.registerFactory(() => LocalCategoriesBloc(sl()));
 
   sl.registerLazySingleton(() => SignInWithPhoneNumber(sl()));
   sl.registerLazySingleton(() => VerifyOtp(sl()));
   sl.registerLazySingleton(() => CategoriesUsecase(sl()));
+  sl.registerLazySingleton(() => CheckUserExist(sl()));
+  sl.registerLazySingleton(() => SignUp(sl()));
 
   sl.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(sl(), sl()),
