@@ -1,4 +1,5 @@
 // lib/features/auth/presentation/bloc/auth_bloc.dart
+import 'package:budgeting_app/features/authentication/domain/usecases/check_user_exists_usecase.dart';
 import 'package:budgeting_app/features/authentication/domain/usecases/signin_usecase.dart';
 import 'package:budgeting_app/features/authentication/domain/usecases/verifyotp_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,13 +10,16 @@ import 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SignInWithPhoneNumber signInWithPhoneNumber;
   final VerifyOtp verifyOtp;
+  final CheckUserExist checkUserExist;
 
   AuthBloc({
     required this.signInWithPhoneNumber,
     required this.verifyOtp,
+    required this.checkUserExist,
   }) : super(AuthInitial()) {
     on<SendOtpEvent>(_onSendOtpEvent);
     on<VerifyOtpEvent>(_onVerifyOtpEvent);
+    on<CheckUserExistEvent>(_onCheckUserExist);
   }
 
   void _onSendOtpEvent(SendOtpEvent event, Emitter<AuthState> emit) async {
@@ -38,6 +42,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     failureOrUser.fold(
       (failure) => emit(AuthError(message: failure.message)),
       (user) => emit(AuthenticatedState(user: user)),
+    );
+  }
+
+  void _onCheckUserExist(
+      CheckUserExistEvent event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+    final failureOrUser = await checkUserExist(event.phoneNumber);
+    failureOrUser.fold(
+      (failure) => emit(AuthError(message: failure.message)),
+      (user) => emit(UserExistState(isUserExist: user)),
     );
   }
 }

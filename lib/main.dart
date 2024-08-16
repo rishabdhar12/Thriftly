@@ -4,7 +4,8 @@ import 'package:budgeting_app/core/constants/string.dart';
 import 'package:budgeting_app/core/di/dependency_injection.dart';
 import 'package:budgeting_app/core/routes/routes.dart';
 import 'package:budgeting_app/features/authentication/presentation/blocs/auth_bloc.dart';
-import 'package:budgeting_app/features/categories/presentation/bloc/categories_bloc.dart';
+import 'package:budgeting_app/features/categories/presentation/bloc/local/local_categories_bloc.dart';
+import 'package:budgeting_app/features/categories/presentation/bloc/remote/remote_categories_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,16 +26,18 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => sl<RemoteFirebaseCategoriesBloc>(),
+          create: (context) => sl<RemoteCategoriesBloc>(),
         ),
         BlocProvider(
           create: (context) => sl<AuthBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => sl<LocalCategoriesBloc>(),
         ),
       ],
       child: MaterialApp.router(

@@ -36,3 +36,12 @@ class AuthError extends AuthState {
   @override
   List<Object> get props => [message];
 }
+
+class UserExistState extends AuthState {
+  final bool isUserExist;
+
+  UserExistState({required this.isUserExist});
+
+  @override
+  List<Object> get props => [isUserExist];
+}

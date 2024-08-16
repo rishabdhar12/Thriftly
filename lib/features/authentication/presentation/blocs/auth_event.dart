@@ -23,3 +23,12 @@ class VerifyOtpEvent extends AuthEvent {
   @override
   List<Object> get props => [verificationId, otp];
 }
+
+class CheckUserExistEvent extends AuthEvent {
+  final String phoneNumber;
+
+  CheckUserExistEvent({required this.phoneNumber});
+
+  @override
+  List<Object> get props => [phoneNumber];
+}

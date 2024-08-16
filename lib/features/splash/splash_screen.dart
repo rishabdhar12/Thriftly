@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:budgeting_app/core/common/text.dart';
+import 'package:budgeting_app/core/config/shared_prefs/keys.dart';
+import 'package:budgeting_app/core/config/shared_prefs/shared_prefs.dart';
 import 'package:budgeting_app/core/constants/assets.dart';
 import 'package:budgeting_app/core/constants/colors.dart';
 import 'package:budgeting_app/core/constants/route_names.dart';
@@ -25,8 +27,15 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _navigate(BuildContext context) async {
+    final isLoggedIn = await PreferenceHelper.getDataFromSharedPreference(
+            key: PrefsKeys.isLoggedIn) ??
+        false;
     _timer = Timer(const Duration(seconds: 2), () {
-      context.pushReplacement(RouteNames.onboarding);
+      if (!isLoggedIn) {
+        context.pushReplacement(RouteNames.onboarding);
+      } else {
+        context.pushReplacement(RouteNames.categoriesScreen);
+      }
     });
   }
 

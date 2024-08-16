@@ -24,4 +24,8 @@ class AppStrings {
   static const String enterOTP = "Enter OTP";
   static const String submit = "Submit";
   static const String resendOTP = "Resend OTP";
+  static const String categoriesText1 = "Here are some suggestions";
+  static const String categoriesText2 = "You can always add/edit them later";
+  static const String otpSent = "OTP sent to phone number";
+  static const String loggedIn = "You are logged in";
 }

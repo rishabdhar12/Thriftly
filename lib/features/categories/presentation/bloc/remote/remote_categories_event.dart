@@ -1,13 +1,13 @@
 import 'package:equatable/equatable.dart';
 
-abstract class RemoteFirebaseConfigEvent extends Equatable {
-  const RemoteFirebaseConfigEvent();
+abstract class RemoteCategoriesEvent extends Equatable {
+  const RemoteCategoriesEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class GetCategories extends RemoteFirebaseConfigEvent {
+class GetCategories extends RemoteCategoriesEvent {
   const GetCategories();
 
   @override

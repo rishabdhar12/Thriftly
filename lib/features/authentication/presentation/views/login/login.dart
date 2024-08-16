@@ -4,11 +4,13 @@ import 'package:budgeting_app/core/common/back_button.dart';
 import 'package:budgeting_app/core/common/elevated_button.dart';
 import 'package:budgeting_app/core/common/text.dart';
 import 'package:budgeting_app/core/common/text_form_field.dart';
+import 'package:budgeting_app/core/config/shared_prefs/keys.dart';
 import 'package:budgeting_app/core/config/shared_prefs/shared_prefs.dart';
 import 'package:budgeting_app/core/constants/colors.dart';
 import 'package:budgeting_app/core/constants/country_codes.dart';
 import 'package:budgeting_app/core/constants/route_names.dart';
 import 'package:budgeting_app/core/constants/string.dart';
+import 'package:budgeting_app/core/utils/snackbar.dart';
 import 'package:budgeting_app/features/authentication/presentation/blocs/auth_bloc.dart';
 import 'package:budgeting_app/features/authentication/presentation/blocs/auth_event.dart';
 import 'package:budgeting_app/features/authentication/presentation/blocs/auth_state.dart';
@@ -28,6 +30,11 @@ final TextEditingController _phoneNumber = TextEditingController();
 String _selectedCode = "+91";
 
 class _LoginScreenState extends State<LoginScreen> {
+  checkUserExist() {
+    context.read<AuthBloc>().add(
+        CheckUserExistEvent(phoneNumber: "$_selectedCode${_phoneNumber.text}"));
+  }
+
   void sendOTP() {
     log(_selectedCode);
     context
@@ -47,12 +54,13 @@ class _LoginScreenState extends State<LoginScreen> {
       listener: (context, state) {
         if (state is AuthError) {
           log(state.message);
+          showSnackBar(context, message: state.message);
         }
         if (state is OtpSentState) {
           log(state.verificationId);
           PreferenceHelper.saveDataInSharedPreference(
-              key: "verificationId", value: state.verificationId);
-          log("OTP sent");
+              key: PrefsKeys.verificationId, value: state.verificationId);
+          showSnackBar(context, message: AppStrings.otpSent);
 
           context.replace(RouteNames.otpScreen);
         }
@@ -144,15 +152,22 @@ class _LoginScreenState extends State<LoginScreen> {
                   listener: (context, state) {},
                   builder: (context, state) {
                     if (state is AuthLoading) {
-                      return const CupertinoActivityIndicator(
-                          radius: 30, color: ColorCodes.buttonColor);
+                      return const Center(
+                        child: CupertinoActivityIndicator(
+                            radius: 30, color: ColorCodes.buttonColor),
+                      );
                     } else {
                       return Center(
                         child: elevatedButton(
                           width: 190,
                           height: 45,
                           onPressed: () {
-                            sendOTP();
+                            final user = checkUserExist();
+                            if (user) {
+                              showSnackBar(context, message: "UserExist");
+                            } else {
+                              sendOTP();
+                            }
                           },
                           textWidget: textWidget(
                             text: AppStrings.submit,

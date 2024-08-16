@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:budgeting_app/features/categories/domain/entities/products_entity.dart';
+import 'package:budgeting_app/features/categories/domain/entities/categories_entity.dart';
 
 List<CategoriesModel> categoriesModelFromJson(String str) =>
     List<CategoriesModel>.from(

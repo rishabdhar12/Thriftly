@@ -6,4 +6,5 @@ abstract class AuthRepository {
   Future<Either<Failure, AuthEntity>> signInWithPhoneNumber(String phoneNumber);
   Future<Either<Failure, AuthEntity>> verifyOtp(
       String verificationId, String otp);
+  Future<Either<Failure, bool>> checkUserExists(String phoneNumber);
 }
