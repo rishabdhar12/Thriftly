@@ -30,4 +30,8 @@ class AppStrings {
   static const String loggedIn = "You are logged in";
   static const String userExists = "User already exists, log in to continue";
   static const String signUpComplete = "Sign-up complete! Welcome aboard!";
+  static const String invalidPhNumber = "Invalid phone number";
+  static const String invalidName = "Invalid name";
+  static const String invalidEmail = "Invalid email";
+  static const String invalidDOB = "Invalid date of birth";
 }

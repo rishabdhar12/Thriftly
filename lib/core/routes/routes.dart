@@ -81,5 +81,15 @@ final GoRouter router = GoRouter(
         type: 'slide-right-to-left',
       ),
     ),
+    GoRoute(
+      path: RouteNames.layoutScreen,
+      pageBuilder: (context, state) =>
+          RouterTransitionFactory.getTransitionPage(
+        context: context,
+        state: state,
+        child: const CategoriesScreen(),
+        type: 'slide-right-to-left',
+      ),
+    ),
   ],
 );

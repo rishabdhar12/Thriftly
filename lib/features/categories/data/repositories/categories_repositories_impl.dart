@@ -21,4 +21,47 @@ class CategoriesRepositoriesImpl implements CategoriesRespository {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, Categories>> getCategory(String name) async {
+    Categories? category;
+    try {
+      await _isar.writeTxn(() async {
+        category =
+            await _isar.categories.filter().nameEqualTo(name).findFirst();
+      });
+
+      return Right(category!);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> deleteCategories(String name) async {
+    bool result = false;
+    Categories? category;
+    try {
+      await _isar.writeTxn(() async {
+        category =
+            await _isar.categories.filter().nameEqualTo(name).findFirst();
+      });
+
+      if (category != null) {
+        await _isar.writeTxn(() async {
+          result = await _isar.categories.delete(category!.id);
+        });
+      } else {
+        return const Left(ServerFailure("category not found"));
+      }
+
+      if (result) {
+        return const Right(true);
+      } else {
+        return const Right(false);
+      }
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }

@@ -29,10 +29,8 @@ class SignUpScreen extends StatefulWidget {
 final TextEditingController _phoneNumberController = TextEditingController();
 final TextEditingController _fullNameController = TextEditingController();
 final TextEditingController _emailController = TextEditingController();
-final TextEditingController _passwordController = TextEditingController();
 final TextEditingController _dobController = TextEditingController();
-final TextEditingController _confirmPasswordController =
-    TextEditingController();
+
 String _selectedCode = "+91";
 
 DateTime _selectedDate = DateTime.now();
@@ -98,7 +96,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   const EdgeInsets.symmetric(horizontal: 20.0, vertical: 40),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                // mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   GestureDetector(
                     onTap: () {
@@ -275,7 +272,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             width: 190,
                             height: 45,
                             onPressed: () async {
-                              checkUserExist();
+                              if (_phoneNumberController.text.isEmpty) {
+                                showSnackBar(context,
+                                    message: AppStrings.invalidPhNumber);
+                              } else if (_fullNameController.text.isEmpty) {
+                                showSnackBar(context,
+                                    message: AppStrings.invalidName);
+                              } else if (_emailController.text.isEmpty) {
+                                showSnackBar(context,
+                                    message: AppStrings.invalidEmail);
+                              } else if (_dobController.text.isEmpty) {
+                                showSnackBar(context,
+                                    message: AppStrings.invalidDOB);
+                              } else {
+                                checkUserExist();
+                              }
                             },
                             textWidget: textWidget(
                               text: AppStrings.submit,

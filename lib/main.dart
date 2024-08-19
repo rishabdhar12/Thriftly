@@ -6,6 +6,7 @@ import 'package:budgeting_app/core/routes/routes.dart';
 import 'package:budgeting_app/features/authentication/presentation/blocs/auth_bloc.dart';
 import 'package:budgeting_app/features/categories/presentation/bloc/local/local_categories_bloc.dart';
 import 'package:budgeting_app/features/categories/presentation/bloc/remote/remote_categories_bloc.dart';
+import 'package:budgeting_app/features/home/presentation/views/bloc/bottom_navigation_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,6 +39,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => sl<LocalCategoriesBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => sl<BottomNavigationBloc>(),
         ),
       ],
       child: MaterialApp.router(

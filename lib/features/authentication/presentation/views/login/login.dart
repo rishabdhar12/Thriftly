@@ -26,6 +26,8 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
+final _formKey = GlobalKey<FormState>();
+
 final TextEditingController _phoneNumber = TextEditingController();
 String _selectedCode = "+91";
 
@@ -71,121 +73,130 @@ class _LoginScreenState extends State<LoginScreen> {
       builder: (context, state) {
         return Scaffold(
           extendBodyBehindAppBar: true,
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 40),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              // mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                backButton(context, onPressed: () {
-                  context.go(RouteNames.loginOrSignUp);
-                }),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 8,
-                ),
-                textWidget(
-                  text: AppStrings.welcomeBack,
-                  fontSize: 40,
-                  fontWeight: FontWeight.w700,
-                  textAlign: TextAlign.start,
-                ),
-                const SizedBox(height: 30),
-                textWidget(
-                  text: AppStrings.phoneNumber,
-                  fontSize: 18,
-                  color: ColorCodes.lightGreen,
-                ),
-                const SizedBox(height: 6),
-                Row(
-                  children: [
-                    Container(
-                      width: 86,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.0),
-                        color: ColorCodes.lightGreen,
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 4),
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton<String>(
-                          isExpanded: true,
-                          value: _selectedCode,
-                          hint: textWidget(
-                            text: _selectedCode,
-                            fontSize: 20.0,
-                            color: ColorCodes.appBackground,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              _selectedCode = newValue!;
-                              log(_selectedCode);
-                            });
-                          },
-                          items: countryData.map<DropdownMenuItem<String>>(
-                              (Map<String, String> country) {
-                            return DropdownMenuItem<String>(
-                              value: country['code'],
-                              child: textWidget(
-                                text: '${country['code']}',
-                                fontSize: 16,
-                                color: ColorCodes.appBackground,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            );
-                          }).toList(),
+          body: SingleChildScrollView(
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 40),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                // mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  backButton(context, onPressed: () {
+                    context.go(RouteNames.loginOrSignUp);
+                  }),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 8,
+                  ),
+                  textWidget(
+                    text: AppStrings.welcomeBack,
+                    fontSize: 40,
+                    fontWeight: FontWeight.w700,
+                    textAlign: TextAlign.start,
+                  ),
+                  const SizedBox(height: 30),
+                  textWidget(
+                    text: AppStrings.phoneNumber,
+                    fontSize: 18,
+                    color: ColorCodes.lightGreen,
+                  ),
+                  const SizedBox(height: 6),
+                  Row(
+                    children: [
+                      Container(
+                        width: 86,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.0),
+                          color: ColorCodes.lightGreen,
                         ),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: textFormField(
-                        hintText: AppStrings.yourPhoneNumber,
-                        controller: _phoneNumber,
-                        textInputType: TextInputType.phone,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 60),
-                BlocConsumer<AuthBloc, AuthState>(
-                  listener: (context, state) {},
-                  builder: (context, state) {
-                    if (state is AuthLoading) {
-                      return const Center(
-                        child: CupertinoActivityIndicator(
-                            radius: 30, color: ColorCodes.buttonColor),
-                      );
-                    } else {
-                      return Center(
-                        child: elevatedButton(
-                          width: 190,
-                          height: 45,
-                          onPressed: () {
-                            // TODO: fix according to sinup screen
-                            final user = checkUserExist();
-                            if (!user) {
-                              showSnackBar(
-                                context,
-                                message:
-                                    "User doesn't exist, please create an account",
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 4),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                            isExpanded: true,
+                            value: _selectedCode,
+                            hint: textWidget(
+                              text: _selectedCode,
+                              fontSize: 20.0,
+                              color: ColorCodes.appBackground,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                _selectedCode = newValue!;
+                                log(_selectedCode);
+                              });
+                            },
+                            items: countryData.map<DropdownMenuItem<String>>(
+                                (Map<String, String> country) {
+                              return DropdownMenuItem<String>(
+                                value: country['code'],
+                                child: textWidget(
+                                  text: '${country['code']}',
+                                  fontSize: 16,
+                                  color: ColorCodes.appBackground,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               );
-                            } else {
-                              sendOTP();
-                            }
-                          },
-                          textWidget: textWidget(
-                            text: AppStrings.submit,
-                            fontSize: 22,
-                            fontWeight: FontWeight.w700,
-                            color: ColorCodes.appBackground,
+                            }).toList(),
                           ),
                         ),
-                      );
-                    }
-                  },
-                ),
-              ],
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: textFormField(
+                          hintText: AppStrings.yourPhoneNumber,
+                          controller: _phoneNumber,
+                          textInputType: TextInputType.phone,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 60),
+                  Center(
+                    child: BlocConsumer<AuthBloc, AuthState>(
+                      listener: (context, state) {
+                        if (state is UserExistState) {
+                          if (state.isUserExist) {
+                            showSnackBar(context,
+                                message: AppStrings.userExists);
+                          } else {
+                            sendOTP();
+                          }
+                        } else if (state is AuthError) {
+                          showSnackBar(context, message: state.message);
+                        }
+                      },
+                      builder: (context, state) {
+                        if (state is AuthLoading) {
+                          return const Center(
+                            child: CupertinoActivityIndicator(
+                                radius: 30, color: ColorCodes.buttonColor),
+                          );
+                        } else {
+                          return elevatedButton(
+                            width: 190,
+                            height: 45,
+                            onPressed: () async {
+                              if (_phoneNumber.text.isNotEmpty) {
+                                checkUserExist();
+                              } else {
+                                showSnackBar(context,
+                                    message: AppStrings.invalidPhNumber);
+                              }
+                            },
+                            textWidget: textWidget(
+                              text: AppStrings.submit,
+                              fontSize: 22,
+                              fontWeight: FontWeight.w700,
+                              color: ColorCodes.appBackground,
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         );

@@ -4,4 +4,6 @@ import 'package:fpdart/fpdart.dart';
 
 abstract class CategoriesRespository {
   Future<Either<Failure, Categories>> addCategories(Categories categories);
+  Future<Either<Failure, Categories>> getCategory(String name);
+  Future<Either<Failure, bool>> deleteCategories(String name);
 }

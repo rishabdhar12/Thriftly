@@ -3,8 +3,9 @@ import 'package:equatable/equatable.dart';
 
 abstract class LocalCategoriesState extends Equatable {
   final Categories? categories;
+  final bool? result;
 
-  const LocalCategoriesState({this.categories});
+  const LocalCategoriesState({this.categories, this.result});
 
   @override
   List<Object> get props => [categories!];
@@ -17,6 +18,15 @@ class LocalCategoriesLoadingState extends LocalCategoriesState {}
 class LocalCategoriesFinishedState extends LocalCategoriesState {
   const LocalCategoriesFinishedState(Categories categories)
       : super(categories: categories);
+}
+
+class LocalCategoriesFetchedState extends LocalCategoriesState {
+  const LocalCategoriesFetchedState(Categories categories)
+      : super(categories: categories);
+}
+
+class LocalCategoriesDeletedState extends LocalCategoriesState {
+  const LocalCategoriesDeletedState(bool result) : super(result: result);
 }
 
 class LocalCategoriesErrorState extends LocalCategoriesState {

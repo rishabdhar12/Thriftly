@@ -1,15 +1,20 @@
+import 'dart:developer';
+
 import 'package:budgeting_app/core/common/text.dart';
 import 'package:budgeting_app/core/constants/colors.dart';
+import 'package:budgeting_app/core/constants/route_names.dart';
 import 'package:budgeting_app/core/constants/string.dart';
 import 'package:budgeting_app/features/categories/domain/entities/local/categories_schema_isar.dart';
 import 'package:budgeting_app/features/categories/presentation/bloc/local/local_categories_bloc.dart';
 import 'package:budgeting_app/features/categories/presentation/bloc/local/local_categories_event.dart';
+import 'package:budgeting_app/features/categories/presentation/bloc/local/local_categories_state.dart';
 import 'package:budgeting_app/features/categories/presentation/bloc/remote/remote_categories_bloc.dart';
 import 'package:budgeting_app/features/categories/presentation/bloc/remote/remote_categories_event.dart';
 import 'package:budgeting_app/features/categories/presentation/bloc/remote/remote_categories_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({super.key});
@@ -19,6 +24,7 @@ class CategoriesScreen extends StatefulWidget {
 }
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
+  Categories? category;
   List<String> selectedList = [];
 
   @override
@@ -27,9 +33,14 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     super.initState();
   }
 
-  void submit(Categories categories) {
+  void add(Categories categories) {
     BlocProvider.of<LocalCategoriesBloc>(context)
         .add(AddCategoriesEvent(categories: categories));
+  }
+
+  void delete(String name) {
+    BlocProvider.of<LocalCategoriesBloc>(context)
+        .add(DeleteCategoriesEvent(name: name));
   }
 
   @override
@@ -40,7 +51,10 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         height: 70,
         width: 70,
         child: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            // TODO: set prefs
+            context.replace(RouteNames.layoutScreen);
+          },
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),
           ),
@@ -99,38 +113,57 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                       data: Theme.of(context).copyWith(
                                         canvasColor: Colors.transparent,
                                       ),
-                                      child: ChoiceChip(
-                                          showCheckmark: false,
-                                          onSelected: (bool value) {
-                                            setState(() {
-                                              if (value) {
-                                                selectedList.add(item);
-                                                final categories = Categories()
-                                                  ..name = item;
-                                                submit(categories);
-                                              } else {
-                                                selectedList.remove(item);
-                                              }
-                                            });
-                                          },
-                                          selected: selectedList.contains(item),
-                                          selectedColor: ColorCodes.buttonColor,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            side: const BorderSide(
-                                                color: ColorCodes.buttonColor),
-                                          ),
-                                          label: Text(
-                                            item,
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w600,
-                                              color: selectedList.contains(item)
-                                                  ? ColorCodes.appBackground
-                                                  : ColorCodes.offWhite,
-                                            ),
-                                          )),
+                                      child: BlocBuilder<LocalCategoriesBloc,
+                                          LocalCategoriesState>(
+                                        builder: (context, state) {
+                                          if (state
+                                              is LocalCategoriesFetchedState) {
+                                            final categories =
+                                                state.categories!;
+                                            log("${categories.id}");
+                                          }
+                                          return ChoiceChip(
+                                              showCheckmark: false,
+                                              onSelected: (bool value) async {
+                                                if (value) {
+                                                  final category = Categories()
+                                                    ..name = item;
+                                                  add(category);
+                                                  setState(() {
+                                                    selectedList.add(item);
+                                                  });
+                                                } else {
+                                                  delete(item);
+
+                                                  setState(() {
+                                                    selectedList.remove(item);
+                                                  });
+                                                }
+                                              },
+                                              selected:
+                                                  selectedList.contains(item),
+                                              selectedColor:
+                                                  ColorCodes.buttonColor,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                                side: const BorderSide(
+                                                    color:
+                                                        ColorCodes.buttonColor),
+                                              ),
+                                              label: Text(
+                                                item,
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: selectedList
+                                                          .contains(item)
+                                                      ? ColorCodes.appBackground
+                                                      : ColorCodes.offWhite,
+                                                ),
+                                              ));
+                                        },
+                                      ),
                                     ),
                                   )
                                   .toList(),

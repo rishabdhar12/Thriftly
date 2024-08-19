@@ -9,6 +9,7 @@ Widget textFormField({
   bool obscureText = false,
   IconData? icon,
   void Function()? onPressed,
+  String? Function(String?)? validator,
   Widget? suffixIcon,
   bool enabled = true,
 }) {
@@ -22,6 +23,7 @@ Widget textFormField({
       keyboardType: textInputType,
       obscureText: obscureText,
       enabled: enabled,
+      validator: validator,
       decoration: InputDecoration(
         suffixIcon: suffixIcon,
         border: InputBorder.none,
