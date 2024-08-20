@@ -1,3 +1,5 @@
+import 'package:budgeting_app/core/constants/assets.dart';
+import 'package:budgeting_app/core/constants/colors.dart';
 import 'package:budgeting_app/features/analysis/presentation/views/analysis_screen.dart';
 import 'package:budgeting_app/features/categories_txn/presentation/views/categories_txn_screen.dart';
 import 'package:budgeting_app/features/home/presentation/views/bloc/bottom_navigation_bloc.dart';
@@ -6,8 +8,10 @@ import 'package:budgeting_app/features/home/presentation/views/bloc/bottom_navig
 import 'package:budgeting_app/features/home/presentation/views/home.dart';
 import 'package:budgeting_app/features/profile/presentation/views/profile.dart';
 import 'package:budgeting_app/features/transactions/presentation/views/transaction_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class LayoutPage extends StatefulWidget {
   const LayoutPage({super.key});
@@ -22,60 +26,89 @@ class _LayoutPageState extends State<LayoutPage> {
     return BlocBuilder<BottomNavigationBloc, BottomNavigationState>(
       builder: (context, state) {
         return Scaffold(
-            bottomNavigationBar: BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
-              backgroundColor: Colors.white,
-              selectedItemColor: Colors.orange,
-              unselectedItemColor: Colors.grey,
-              currentIndex: state.index,
-              onTap: (index) {
-                switch (index) {
-                  case 0:
-                    BlocProvider.of<BottomNavigationBloc>(context)
-                        .add((const HomeEvent()));
-                  case 1:
-                    BlocProvider.of<BottomNavigationBloc>(context)
-                        .add((const AnalysisEvent()));
-                  case 2:
-                    BlocProvider.of<BottomNavigationBloc>(context)
-                        .add((const TransactionEvent()));
-                    break;
-                  case 3:
-                    BlocProvider.of<BottomNavigationBloc>(context)
-                        .add((const CategoriesTxnEvent()));
-                    break;
-                  case 4:
-                    BlocProvider.of<BottomNavigationBloc>(context)
-                        .add((const ProfileEvent()));
-                    break;
-                  default:
-                    const Placeholder();
-                }
-              },
-              items: const [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home_outlined),
-                  label: 'Home',
-                  activeIcon: Icon(Icons.home),
+            bottomNavigationBar: ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(30.0),
+                topRight: Radius.circular(30.0),
+              ),
+              child: SizedBox(
+                height: 80.0,
+                child: Theme(
+                  data: Theme.of(context).copyWith(
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                  ),
+                  child: BottomNavigationBar(
+                    type: BottomNavigationBarType.fixed,
+                    backgroundColor: ColorCodes.darkGreen,
+                    selectedItemColor: ColorCodes.buttonColor,
+                    unselectedItemColor: ColorCodes.white,
+                    showSelectedLabels: false,
+                    showUnselectedLabels: false,
+                    iconSize: 34.0,
+                    currentIndex: state.index,
+                    onTap: (index) {
+                      switch (index) {
+                        case 0:
+                          BlocProvider.of<BottomNavigationBloc>(context)
+                              .add((const HomeEvent()));
+                        case 1:
+                          BlocProvider.of<BottomNavigationBloc>(context)
+                              .add((const AnalysisEvent()));
+                        case 2:
+                          BlocProvider.of<BottomNavigationBloc>(context)
+                              .add((const TransactionEvent()));
+                          break;
+                        case 3:
+                          BlocProvider.of<BottomNavigationBloc>(context)
+                              .add((const CategoriesTxnEvent()));
+                          break;
+                        case 4:
+                          BlocProvider.of<BottomNavigationBloc>(context)
+                              .add((const ProfileEvent()));
+                          break;
+                        default:
+                          const Placeholder();
+                      }
+                    },
+                    items: [
+                      const BottomNavigationBarItem(
+                        icon: Icon(CupertinoIcons.home),
+                        label: 'Home',
+                        activeIcon: Icon(CupertinoIcons.home),
+                      ),
+                      BottomNavigationBarItem(
+                        icon: SvgPicture.asset(AssetStrings.analysisIcon),
+                        label: 'Analysis',
+                        activeIcon: SvgPicture.asset(
+                          AssetStrings.analysisIcon,
+                          color: ColorCodes.buttonColor,
+                        ),
+                      ),
+                      BottomNavigationBarItem(
+                        icon: SvgPicture.asset(AssetStrings.transactionIcon),
+                        label: 'Expenses',
+                        activeIcon: SvgPicture.asset(
+                          AssetStrings.transactionIcon,
+                          color: ColorCodes.buttonColor,
+                        ),
+                      ),
+                      BottomNavigationBarItem(
+                        icon: SvgPicture.asset(AssetStrings.categoriesIcon),
+                        label: 'Categories',
+                        activeIcon: SvgPicture.asset(
+                          AssetStrings.categoriesIcon,
+                          color: ColorCodes.buttonColor,
+                        ),
+                      ),
+                      const BottomNavigationBarItem(
+                          icon: Icon(CupertinoIcons.person),
+                          label: 'Profile',
+                          activeIcon: Icon(CupertinoIcons.person)),
+                    ],
+                  ),
                 ),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.shopping_cart_outlined),
-                    label: 'Analysis',
-                    activeIcon: Icon(Icons.shopping_cart)),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.shopping_bag_outlined),
-                    label: 'Expenses',
-                    activeIcon: Icon(Icons.shopping_bag)),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.favorite_border_outlined),
-                  label: 'Categories',
-                  activeIcon: Icon(Icons.favorite),
-                ),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.person_outline),
-                    label: 'Profile',
-                    activeIcon: Icon(Icons.person)),
-              ],
+              ),
             ),
             body: BlocBuilder<BottomNavigationBloc, BottomNavigationState>(
               builder: (context, state) {

@@ -1,3 +1,4 @@
+import 'package:budgeting_app/core/common/text.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -10,6 +11,10 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: Center(
+        child: textWidget(text: "Profile screen"),
+      ),
+    );
   }
 }

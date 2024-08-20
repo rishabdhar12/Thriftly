@@ -34,6 +34,8 @@ class _SplashScreenState extends State<SplashScreen> {
       if (!isLoggedIn) {
         context.pushReplacement(RouteNames.onboarding);
       } else {
+        // TODO: change back to layout screen
+        // context.pushReplacement(RouteNames.layoutScreen);
         context.pushReplacement(RouteNames.categoriesScreen);
       }
     });

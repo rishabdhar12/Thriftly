@@ -8,4 +8,5 @@ class RouteNames {
   static const String otpScreen = "/otp-screen";
   static const String categoriesScreen = "/categories";
   static const String layoutScreen = "/layout";
+  static const String allocationScreen = "/allocation-screen";
 }

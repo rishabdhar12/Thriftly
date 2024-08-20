@@ -34,4 +34,5 @@ class AppStrings {
   static const String invalidName = "Invalid name";
   static const String invalidEmail = "Invalid email";
   static const String invalidDOB = "Invalid date of birth";
+  static const String allocateMoneyText = "Allocate expense";
 }

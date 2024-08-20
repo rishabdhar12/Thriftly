@@ -18,7 +18,7 @@ class LocalCategoriesBloc
       required this.deleteCategoriesUsecase})
       : super(LocalCategoriesInitialState()) {
     on<AddCategoriesEvent>(_onAddCategories);
-    on<GetCategoriesEvent>(_onGetCategories);
+    on<GetCategoriesEvent>(_onGetCategory);
     on<DeleteCategoriesEvent>(_onDeleteCategories);
   }
 
@@ -39,7 +39,7 @@ class LocalCategoriesBloc
     }
   }
 
-  Future<void> _onGetCategories(
+  Future<void> _onGetCategory(
     GetCategoriesEvent event,
     Emitter<LocalCategoriesState> emit,
   ) async {

@@ -4,7 +4,10 @@ import 'package:budgeting_app/features/authentication/presentation/views/login/l
 import 'package:budgeting_app/features/authentication/presentation/views/login/otp_screen.dart';
 import 'package:budgeting_app/features/authentication/presentation/views/login_or_signup.dart';
 import 'package:budgeting_app/features/authentication/presentation/views/signup/signup_screen.dart';
+import 'package:budgeting_app/features/categories/domain/entities/local/categories_schema_isar.dart';
+import 'package:budgeting_app/features/categories/presentation/views/allocation_screen.dart';
 import 'package:budgeting_app/features/categories/presentation/views/categories_screen.dart';
+import 'package:budgeting_app/features/home/presentation/views/layout.dart';
 import 'package:budgeting_app/features/onboarding/onboarding.dart';
 import 'package:budgeting_app/features/onboarding/onboarding_two.dart';
 import 'package:budgeting_app/features/splash/splash_screen.dart';
@@ -87,7 +90,19 @@ final GoRouter router = GoRouter(
           RouterTransitionFactory.getTransitionPage(
         context: context,
         state: state,
-        child: const CategoriesScreen(),
+        child: const LayoutPage(),
+        type: 'slide-right-to-left',
+      ),
+    ),
+    GoRoute(
+      path: RouteNames.allocationScreen,
+      pageBuilder: (context, state) =>
+          RouterTransitionFactory.getTransitionPage(
+        context: context,
+        state: state,
+        child: AllocationScreen(
+          categories: state.extra as List<Categories>,
+        ),
         type: 'slide-right-to-left',
       ),
     ),

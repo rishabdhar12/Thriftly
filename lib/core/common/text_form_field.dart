@@ -12,10 +12,17 @@ Widget textFormField({
   String? Function(String?)? validator,
   Widget? suffixIcon,
   bool enabled = true,
+  double borderRadius = 20.0,
+  double? height,
+  double contentPaddingHorizontal = 16.0,
+  double contentPaddingVertical = 16.0,
+  void Function(String)? onChanged,
+  String? prefixText,
 }) {
   return Container(
+    height: height,
     decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(20.0),
+      borderRadius: BorderRadius.circular(borderRadius),
       color: fillColor,
     ),
     child: TextFormField(
@@ -24,11 +31,15 @@ Widget textFormField({
       obscureText: obscureText,
       enabled: enabled,
       validator: validator,
+      onChanged: onChanged,
       decoration: InputDecoration(
+        prefixText: prefixText,
         suffixIcon: suffixIcon,
         border: InputBorder.none,
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: contentPaddingHorizontal,
+          vertical: contentPaddingVertical,
+        ),
         hintText: hintText,
       ),
     ),
