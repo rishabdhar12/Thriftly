@@ -35,4 +35,8 @@ class AppStrings {
   static const String invalidEmail = "Invalid email";
   static const String invalidDOB = "Invalid date of birth";
   static const String allocateMoneyText = "Allocate expense";
+  static const String allocateAmountText = "Allocate amount";
+  static const String allocationSuccessful = "Categories added";
+  static const String selectedCurrency = "Selected Currency";
+  static const String inr = "INR";
 }

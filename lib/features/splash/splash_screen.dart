@@ -30,13 +30,17 @@ class _SplashScreenState extends State<SplashScreen> {
     final isLoggedIn = await PreferenceHelper.getDataFromSharedPreference(
             key: PrefsKeys.isLoggedIn) ??
         false;
+
+    final isCategoriesSeen = await PreferenceHelper.getDataFromSharedPreference(
+            key: PrefsKeys.isCategoriesSeen) ??
+        false;
     _timer = Timer(const Duration(seconds: 2), () {
       if (!isLoggedIn) {
         context.pushReplacement(RouteNames.onboarding);
-      } else {
-        // TODO: change back to layout screen
-        // context.pushReplacement(RouteNames.layoutScreen);
+      } else if (!isCategoriesSeen) {
         context.pushReplacement(RouteNames.categoriesScreen);
+      } else {
+        context.pushReplacement(RouteNames.layoutScreen);
       }
     });
   }

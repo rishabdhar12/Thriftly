@@ -8,8 +8,16 @@ abstract class LocalCategoriesEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class AddCategoryEvent extends LocalCategoriesEvent {
+  final Categories category;
+  const AddCategoryEvent({required this.category});
+
+  @override
+  List<Object> get props => [category];
+}
+
 class AddCategoriesEvent extends LocalCategoriesEvent {
-  final Categories categories;
+  final List<Categories> categories;
   const AddCategoriesEvent({required this.categories});
 
   @override

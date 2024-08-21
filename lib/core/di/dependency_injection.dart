@@ -9,6 +9,7 @@ import 'package:budgeting_app/features/authentication/presentation/blocs/auth_bl
 import 'package:budgeting_app/features/categories/data/repositories/categories_repositories_impl.dart';
 import 'package:budgeting_app/features/categories/domain/repositories/categories_repository.dart';
 import 'package:budgeting_app/features/categories/domain/usecases/add_categories_usecase.dart';
+import 'package:budgeting_app/features/categories/domain/usecases/add_category_usecase.dart';
 import 'package:budgeting_app/features/categories/domain/usecases/delete_categories_usecase.dart';
 import 'package:budgeting_app/features/categories/domain/usecases/get_category_usecase.dart';
 import 'package:budgeting_app/features/categories/presentation/bloc/local/local_categories_bloc.dart';
@@ -41,6 +42,7 @@ Future<void> setupDependencies() async {
         signUp: sl(),
       ));
   sl.registerFactory(() => LocalCategoriesBloc(
+        categoryUsecase: sl(),
         categoriesUsecase: sl(),
         deleteCategoriesUsecase: sl(),
         getCategoriesUsecase: sl(),
@@ -50,6 +52,7 @@ Future<void> setupDependencies() async {
   // Usecase
   sl.registerLazySingleton(() => SignInWithPhoneNumber(sl()));
   sl.registerLazySingleton(() => VerifyOtp(sl()));
+  sl.registerLazySingleton(() => CategoryUsecase(sl()));
   sl.registerLazySingleton(() => CategoriesUsecase(sl()));
   sl.registerLazySingleton(() => DeleteCategoriesUsecase(sl()));
   sl.registerLazySingleton(() => GetCategoriesUsecase(sl()));

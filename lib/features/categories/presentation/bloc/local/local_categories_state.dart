@@ -2,27 +2,33 @@ import 'package:budgeting_app/features/categories/domain/entities/local/categori
 import 'package:equatable/equatable.dart';
 
 abstract class LocalCategoriesState extends Equatable {
-  final Categories? categories;
+  final Categories? category;
+  final List<Categories>? categories;
   final bool? result;
 
-  const LocalCategoriesState({this.categories, this.result});
+  const LocalCategoriesState({this.category, this.categories, this.result});
 
   @override
-  List<Object> get props => [categories!];
+  List<Object> get props => [category!];
 }
 
 class LocalCategoriesInitialState extends LocalCategoriesState {}
 
 class LocalCategoriesLoadingState extends LocalCategoriesState {}
 
+class LocalCategoryFinishedState extends LocalCategoriesState {
+  const LocalCategoryFinishedState(Categories category)
+      : super(category: category);
+}
+
 class LocalCategoriesFinishedState extends LocalCategoriesState {
-  const LocalCategoriesFinishedState(Categories categories)
+  const LocalCategoriesFinishedState(List<Categories> categories)
       : super(categories: categories);
 }
 
 class LocalCategoriesFetchedState extends LocalCategoriesState {
-  const LocalCategoriesFetchedState(Categories categories)
-      : super(categories: categories);
+  const LocalCategoriesFetchedState(Categories category)
+      : super(category: category);
 }
 
 class LocalCategoriesDeletedState extends LocalCategoriesState {

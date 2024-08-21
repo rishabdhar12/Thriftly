@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:budgeting_app/core/common/text.dart';
+import 'package:budgeting_app/core/config/shared_prefs/keys.dart';
+import 'package:budgeting_app/core/config/shared_prefs/shared_prefs.dart';
 import 'package:budgeting_app/core/constants/colors.dart';
 import 'package:budgeting_app/core/constants/route_names.dart';
 import 'package:budgeting_app/core/constants/string.dart';
@@ -66,6 +68,18 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     });
   }
 
+  void allocationScreenRoutes() async {
+    await PreferenceHelper.saveDataInSharedPreference(
+        key: PrefsKeys.isCategoriesSeen, value: true);
+    if (mounted) {
+      if (selectedCategories.isEmpty) {
+        context.go(RouteNames.layoutScreen);
+      } else {
+        context.go(RouteNames.allocationScreen, extra: selectedCategories);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,7 +89,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         width: 70,
         child: FloatingActionButton(
           onPressed: () {
-            context.go(RouteNames.allocationScreen, extra: selectedCategories);
+            allocationScreenRoutes();
+            // context.go(RouteNames.allocationScreen, extra: selectedCategories);
           },
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),

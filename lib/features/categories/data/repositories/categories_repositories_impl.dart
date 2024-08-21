@@ -10,11 +10,25 @@ class CategoriesRepositoriesImpl implements CategoriesRespository {
   const CategoriesRepositoriesImpl(this._isar);
 
   @override
-  Future<Either<Failure, Categories>> addCategories(
-      Categories categories) async {
+  Future<Either<Failure, Categories>> addCategory(Categories category) async {
     try {
       await _isar.writeTxn(() async {
-        _isar.categories.put(categories);
+        await _isar.categories.put(category);
+      });
+      return Right(category);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Categories>>> addCategories(
+      List<Categories> categories) async {
+    try {
+      await _isar.writeTxn(() async {
+        for (Categories category in categories) {
+          await _isar.categories.put(category);
+        }
       });
       return Right(categories);
     } catch (e) {
