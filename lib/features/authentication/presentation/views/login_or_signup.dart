@@ -3,7 +3,7 @@ import 'package:budgeting_app/core/common/text.dart';
 import 'package:budgeting_app/core/constants/assets.dart';
 import 'package:budgeting_app/core/constants/colors.dart';
 import 'package:budgeting_app/core/constants/route_names.dart';
-import 'package:budgeting_app/core/constants/string.dart';
+import 'package:budgeting_app/core/constants/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';

@@ -31,6 +31,21 @@ const TransactionSchema = CollectionSchema(
       id: 2,
       name: r'message',
       type: IsarType.string,
+    ),
+    r'month': PropertySchema(
+      id: 3,
+      name: r'month',
+      type: IsarType.long,
+    ),
+    r'weekNumber': PropertySchema(
+      id: 4,
+      name: r'weekNumber',
+      type: IsarType.long,
+    ),
+    r'year': PropertySchema(
+      id: 5,
+      name: r'year',
+      type: IsarType.long,
     )
   },
   estimateSize: _transactionEstimateSize,
@@ -66,6 +81,9 @@ void _transactionSerialize(
   writer.writeDouble(offsets[0], object.amountSpent);
   writer.writeDateTime(offsets[1], object.date);
   writer.writeString(offsets[2], object.message);
+  writer.writeLong(offsets[3], object.month);
+  writer.writeLong(offsets[4], object.weekNumber);
+  writer.writeLong(offsets[5], object.year);
 }
 
 Transaction _transactionDeserialize(
@@ -79,6 +97,9 @@ Transaction _transactionDeserialize(
   object.date = reader.readDateTime(offsets[1]);
   object.id = id;
   object.message = reader.readString(offsets[2]);
+  object.month = reader.readLong(offsets[3]);
+  object.weekNumber = reader.readLong(offsets[4]);
+  object.year = reader.readLong(offsets[5]);
   return object;
 }
 
@@ -95,6 +116,12 @@ P _transactionDeserializeProp<P>(
       return (reader.readDateTime(offset)) as P;
     case 2:
       return (reader.readString(offset)) as P;
+    case 3:
+      return (reader.readLong(offset)) as P;
+    case 4:
+      return (reader.readLong(offset)) as P;
+    case 5:
+      return (reader.readLong(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -498,6 +525,169 @@ extension TransactionQueryFilter
       ));
     });
   }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> monthEqualTo(
+      int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'month',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      monthGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'month',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> monthLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'month',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> monthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'month',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      weekNumberEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'weekNumber',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      weekNumberGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'weekNumber',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      weekNumberLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'weekNumber',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      weekNumberBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'weekNumber',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> yearEqualTo(
+      int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'year',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> yearGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'year',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> yearLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'year',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition> yearBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'year',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
 }
 
 extension TransactionQueryObject
@@ -541,6 +731,42 @@ extension TransactionQuerySortBy
   QueryBuilder<Transaction, Transaction, QAfterSortBy> sortByMessageDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'message', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterSortBy> sortByMonth() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'month', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterSortBy> sortByMonthDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'month', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterSortBy> sortByWeekNumber() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'weekNumber', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterSortBy> sortByWeekNumberDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'weekNumber', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterSortBy> sortByYear() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'year', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterSortBy> sortByYearDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'year', Sort.desc);
     });
   }
 }
@@ -594,6 +820,42 @@ extension TransactionQuerySortThenBy
       return query.addSortBy(r'message', Sort.desc);
     });
   }
+
+  QueryBuilder<Transaction, Transaction, QAfterSortBy> thenByMonth() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'month', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterSortBy> thenByMonthDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'month', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterSortBy> thenByWeekNumber() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'weekNumber', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterSortBy> thenByWeekNumberDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'weekNumber', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterSortBy> thenByYear() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'year', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterSortBy> thenByYearDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'year', Sort.desc);
+    });
+  }
 }
 
 extension TransactionQueryWhereDistinct
@@ -614,6 +876,24 @@ extension TransactionQueryWhereDistinct
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'message', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QDistinct> distinctByMonth() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'month');
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QDistinct> distinctByWeekNumber() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'weekNumber');
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QDistinct> distinctByYear() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'year');
     });
   }
 }
@@ -641,6 +921,24 @@ extension TransactionQueryProperty
   QueryBuilder<Transaction, String, QQueryOperations> messageProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'message');
+    });
+  }
+
+  QueryBuilder<Transaction, int, QQueryOperations> monthProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'month');
+    });
+  }
+
+  QueryBuilder<Transaction, int, QQueryOperations> weekNumberProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'weekNumber');
+    });
+  }
+
+  QueryBuilder<Transaction, int, QQueryOperations> yearProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'year');
     });
   }
 }

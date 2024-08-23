@@ -7,7 +7,7 @@ import 'package:budgeting_app/core/common/text_form_field.dart';
 import 'package:budgeting_app/core/constants/colors.dart';
 import 'package:budgeting_app/core/constants/country_codes.dart';
 import 'package:budgeting_app/core/constants/route_names.dart';
-import 'package:budgeting_app/core/constants/string.dart';
+import 'package:budgeting_app/core/constants/strings.dart';
 import 'package:budgeting_app/core/utils/snackbar.dart';
 import 'package:budgeting_app/features/authentication/dto/signup_dto.dart';
 import 'package:budgeting_app/features/authentication/presentation/blocs/auth_bloc.dart';

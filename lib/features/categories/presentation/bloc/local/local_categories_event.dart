@@ -24,12 +24,19 @@ class AddCategoriesEvent extends LocalCategoriesEvent {
   List<Object> get props => [categories];
 }
 
-class GetCategoriesEvent extends LocalCategoriesEvent {
+class GetCategoryEvent extends LocalCategoriesEvent {
   final String name;
-  const GetCategoriesEvent({required this.name});
+  const GetCategoryEvent({required this.name});
 
   @override
   List<Object> get props => [name];
+}
+
+class GetCategoriesEvent extends LocalCategoriesEvent {
+  const GetCategoriesEvent();
+
+  @override
+  List<Object> get props => [];
 }
 
 class DeleteCategoriesEvent extends LocalCategoriesEvent {

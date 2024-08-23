@@ -1,6 +1,6 @@
 import 'package:budgeting_app/core/config/shared_prefs/shared_prefs.dart';
 import 'package:budgeting_app/core/constants/colors.dart';
-import 'package:budgeting_app/core/constants/string.dart';
+import 'package:budgeting_app/core/constants/strings.dart';
 import 'package:budgeting_app/core/di/dependency_injection.dart';
 import 'package:budgeting_app/core/routes/routes.dart';
 import 'package:budgeting_app/features/authentication/presentation/blocs/auth_bloc.dart';

@@ -35,6 +35,7 @@ dependencies:
   isar_flutter_libs: ^3.1.0+1
   path_provider: ^2.1.4
   cloud_firestore: ^4.14.0
+  percent_indicator: ^4.2.3
 
 dev_dependencies:
   flutter_test:

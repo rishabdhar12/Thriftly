@@ -39,4 +39,9 @@ class AppStrings {
   static const String allocationSuccessful = "Categories added";
   static const String selectedCurrency = "Selected Currency";
   static const String inr = "INR";
+  static const String hi = "Hi";
+  static const String goodMorning = "Good Morning";
+  static const String goodAfternoon = "Good Afternoon";
+  static const String goodEvening = "Good Evening";
+  static const String rupee = "₹";
 }

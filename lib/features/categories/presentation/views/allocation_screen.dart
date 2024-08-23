@@ -2,7 +2,7 @@ import 'package:budgeting_app/core/common/text.dart';
 import 'package:budgeting_app/core/common/text_form_field.dart';
 import 'package:budgeting_app/core/constants/colors.dart';
 import 'package:budgeting_app/core/constants/route_names.dart';
-import 'package:budgeting_app/core/constants/string.dart';
+import 'package:budgeting_app/core/constants/strings.dart';
 import 'package:budgeting_app/core/utils/snackbar.dart';
 import 'package:budgeting_app/features/categories/domain/entities/local/categories_schema_isar.dart';
 import 'package:budgeting_app/features/categories/presentation/bloc/local/local_categories_bloc.dart';
@@ -194,7 +194,7 @@ class _AllocationScreenState extends State<AllocationScreen> {
                                         borderRadius: 10.0,
                                         height: 46.0,
                                         contentPaddingVertical: 11.5,
-                                        prefixText: "₹. ",
+                                        prefixText: "${AppStrings.rupee}. ",
                                         onChanged: (String value) {
                                           _updateCategoryAmounts(index);
                                         }),
@@ -226,6 +226,13 @@ class _AllocationScreenState extends State<AllocationScreen> {
                                               value: 'Weekly',
                                               child: textWidget(
                                                 text: "Weekly",
+                                                color: ColorCodes.appBackground,
+                                              ),
+                                            ),
+                                            DropdownMenuItem(
+                                              value: 'Monthly',
+                                              child: textWidget(
+                                                text: "Monthly",
                                                 color: ColorCodes.appBackground,
                                               ),
                                             ),

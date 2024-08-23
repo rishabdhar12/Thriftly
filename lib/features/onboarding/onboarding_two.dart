@@ -1,6 +1,6 @@
 import 'package:budgeting_app/core/common/text.dart';
 import 'package:budgeting_app/core/constants/assets.dart';
-import 'package:budgeting_app/core/constants/string.dart';
+import 'package:budgeting_app/core/constants/strings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

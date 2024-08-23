@@ -4,13 +4,13 @@ import 'package:budgeting_app/features/categories/domain/entities/local/categori
 import 'package:budgeting_app/features/categories/domain/repositories/categories_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
-class GetCategoryUsecase extends BaseUsecase<Categories, String> {
+class GetCategoriesUsecase extends BaseUsecase<List<Categories>, NoParams> {
   final CategoriesRespository _categoriesRespository;
 
-  GetCategoryUsecase(this._categoriesRespository);
+  GetCategoriesUsecase(this._categoriesRespository);
 
   @override
-  Future<Either<Failure, Categories>> call(String params) async {
-    return await _categoriesRespository.getCategory(params);
+  Future<Either<Failure, List<Categories>>> call(NoParams params) async {
+    return await _categoriesRespository.getCategories();
   }
 }

@@ -11,4 +11,6 @@ class ColorCodes {
   static const grey = Colors.grey;
   static const darkGreen = Color(0xFF0E3E3E);
   static Color transparentCard = Colors.white.withOpacity(0.05);
+  static const blue = Color(0xFF3299FF);
+  static const darkBlue = Color(0xFF0068FF);
 }

@@ -5,7 +5,7 @@ import 'package:budgeting_app/core/config/shared_prefs/keys.dart';
 import 'package:budgeting_app/core/config/shared_prefs/shared_prefs.dart';
 import 'package:budgeting_app/core/constants/colors.dart';
 import 'package:budgeting_app/core/constants/route_names.dart';
-import 'package:budgeting_app/core/constants/string.dart';
+import 'package:budgeting_app/core/constants/strings.dart';
 import 'package:budgeting_app/features/categories/domain/entities/local/categories_schema_isar.dart';
 import 'package:budgeting_app/features/categories/presentation/bloc/remote/remote_categories_bloc.dart';
 import 'package:budgeting_app/features/categories/presentation/bloc/remote/remote_categories_event.dart';

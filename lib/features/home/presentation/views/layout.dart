@@ -1,6 +1,8 @@
 import 'package:budgeting_app/core/constants/assets.dart';
 import 'package:budgeting_app/core/constants/colors.dart';
 import 'package:budgeting_app/features/analysis/presentation/views/analysis_screen.dart';
+import 'package:budgeting_app/features/categories/presentation/bloc/local/local_categories_bloc.dart';
+import 'package:budgeting_app/features/categories/presentation/bloc/local/local_categories_event.dart';
 import 'package:budgeting_app/features/categories_txn/presentation/views/categories_txn_screen.dart';
 import 'package:budgeting_app/features/home/presentation/views/bloc/bottom_navigation_bloc.dart';
 import 'package:budgeting_app/features/home/presentation/views/bloc/bottom_navigation_event.dart';
@@ -21,6 +23,13 @@ class LayoutPage extends StatefulWidget {
 }
 
 class _LayoutPageState extends State<LayoutPage> {
+  @override
+  void initState() {
+    BlocProvider.of<LocalCategoriesBloc>(context)
+        .add(const GetCategoriesEvent());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<BottomNavigationBloc, BottomNavigationState>(

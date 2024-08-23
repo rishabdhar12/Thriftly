@@ -6,7 +6,7 @@ import 'package:budgeting_app/core/config/shared_prefs/keys.dart';
 import 'package:budgeting_app/core/config/shared_prefs/shared_prefs.dart';
 import 'package:budgeting_app/core/constants/colors.dart';
 import 'package:budgeting_app/core/constants/route_names.dart';
-import 'package:budgeting_app/core/constants/string.dart';
+import 'package:budgeting_app/core/constants/strings.dart';
 import 'package:budgeting_app/core/utils/snackbar.dart';
 import 'package:budgeting_app/features/authentication/presentation/blocs/auth_bloc.dart';
 import 'package:budgeting_app/features/authentication/presentation/blocs/auth_event.dart';

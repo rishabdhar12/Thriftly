@@ -11,6 +11,7 @@ import 'package:budgeting_app/features/categories/domain/repositories/categories
 import 'package:budgeting_app/features/categories/domain/usecases/add_categories_usecase.dart';
 import 'package:budgeting_app/features/categories/domain/usecases/add_category_usecase.dart';
 import 'package:budgeting_app/features/categories/domain/usecases/delete_categories_usecase.dart';
+import 'package:budgeting_app/features/categories/domain/usecases/get_categories_usecase.dart';
 import 'package:budgeting_app/features/categories/domain/usecases/get_category_usecase.dart';
 import 'package:budgeting_app/features/categories/presentation/bloc/local/local_categories_bloc.dart';
 import 'package:budgeting_app/features/categories/presentation/bloc/remote/remote_categories_bloc.dart';
@@ -45,6 +46,7 @@ Future<void> setupDependencies() async {
         categoryUsecase: sl(),
         categoriesUsecase: sl(),
         deleteCategoriesUsecase: sl(),
+        getCategoryUsecase: sl(),
         getCategoriesUsecase: sl(),
       ));
   sl.registerFactory(() => BottomNavigationBloc());
@@ -55,6 +57,7 @@ Future<void> setupDependencies() async {
   sl.registerLazySingleton(() => CategoryUsecase(sl()));
   sl.registerLazySingleton(() => CategoriesUsecase(sl()));
   sl.registerLazySingleton(() => DeleteCategoriesUsecase(sl()));
+  sl.registerLazySingleton(() => GetCategoryUsecase(sl()));
   sl.registerLazySingleton(() => GetCategoriesUsecase(sl()));
   sl.registerLazySingleton(() => CheckUserExist(sl()));
   sl.registerLazySingleton(() => SignUp(sl()));

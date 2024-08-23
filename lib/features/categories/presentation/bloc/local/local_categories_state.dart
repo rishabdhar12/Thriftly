@@ -26,9 +26,14 @@ class LocalCategoriesFinishedState extends LocalCategoriesState {
       : super(categories: categories);
 }
 
-class LocalCategoriesFetchedState extends LocalCategoriesState {
-  const LocalCategoriesFetchedState(Categories category)
+class LocalCategoryFetchedState extends LocalCategoriesState {
+  const LocalCategoryFetchedState(Categories category)
       : super(category: category);
+}
+
+class LocalCategoriesFetchedState extends LocalCategoriesState {
+  const LocalCategoriesFetchedState(List<Categories> categories)
+      : super(categories: categories);
 }
 
 class LocalCategoriesDeletedState extends LocalCategoriesState {

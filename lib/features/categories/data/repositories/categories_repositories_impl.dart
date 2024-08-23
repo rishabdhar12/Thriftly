@@ -52,6 +52,20 @@ class CategoriesRepositoriesImpl implements CategoriesRespository {
   }
 
   @override
+  Future<Either<Failure, List<Categories>>> getCategories() async {
+    List<Categories>? categories;
+    try {
+      await _isar.writeTxn(() async {
+        categories = await _isar.categories.where().findAll();
+      });
+
+      return Right(categories!);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
   Future<Either<Failure, bool>> deleteCategories(String name) async {
     bool result = false;
     Categories? category;
