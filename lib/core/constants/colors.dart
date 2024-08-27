@@ -13,4 +13,5 @@ class ColorCodes {
   static Color transparentCard = Colors.white.withOpacity(0.05);
   static const blue = Color(0xFF3299FF);
   static const darkBlue = Color(0xFF0068FF);
+  static const lightBlue = Color(0xFF6DB6FE);
 }

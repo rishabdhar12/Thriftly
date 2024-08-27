@@ -15,13 +15,12 @@ class RevenueCard extends StatefulWidget {
 class _RevenueCardState extends State<RevenueCard> {
   @override
   Widget build(BuildContext context) {
-// Widget revenurCard() {
     return Container(
       height: 120,
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       decoration: BoxDecoration(
         color: ColorCodes.buttonColor,
-        borderRadius: BorderRadius.circular(30.0),
+        borderRadius: BorderRadius.circular(20.0),
       ),
       child: Row(
         children: <Widget>[
@@ -93,13 +92,13 @@ class _RevenueCardState extends State<RevenueCard> {
             textWidget(
               text: title,
               color: ColorCodes.appBackground,
-              fontSize: 10.0,
+              fontSize: 12.0,
               fontWeight: FontWeight.w500,
             ),
             textWidget(
               text: amount,
               color: ColorCodes.appBackground,
-              fontSize: 12.0,
+              fontSize: 14.0,
               fontWeight: FontWeight.w700,
             ),
           ],

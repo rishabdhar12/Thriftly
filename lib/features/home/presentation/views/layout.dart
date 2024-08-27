@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:budgeting_app/core/constants/assets.dart';
 import 'package:budgeting_app/core/constants/colors.dart';
 import 'package:budgeting_app/features/analysis/presentation/views/analysis_screen.dart';
 import 'package:budgeting_app/features/categories/presentation/bloc/local/local_categories_bloc.dart';
 import 'package:budgeting_app/features/categories/presentation/bloc/local/local_categories_event.dart';
+import 'package:budgeting_app/features/categories/presentation/bloc/local/local_categories_state.dart';
 import 'package:budgeting_app/features/categories_txn/presentation/views/categories_txn_screen.dart';
 import 'package:budgeting_app/features/home/presentation/views/bloc/bottom_navigation_bloc.dart';
 import 'package:budgeting_app/features/home/presentation/views/bloc/bottom_navigation_event.dart';
@@ -122,7 +125,23 @@ class _LayoutPageState extends State<LayoutPage> {
             body: BlocBuilder<BottomNavigationBloc, BottomNavigationState>(
               builder: (context, state) {
                 if (state is HomeState) {
-                  return const HomeScreen();
+                  return BlocBuilder<LocalCategoriesBloc, LocalCategoriesState>(
+                    builder: (context, categoriesState) {
+                      if (categoriesState is LocalCategoriesFetchedState) {
+                        log("${categoriesState.categories}");
+                        return HomeScreen(
+                          categories: categoriesState.categories ?? [],
+                        );
+                      } else if (categoriesState
+                          is LocalCategoriesLoadingState) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else {
+                        return const SizedBox();
+                      }
+                    },
+                  );
                 } else if (state is AnalysisState) {
                   return const AnalysisScreen();
                 } else if (state is TransactionState) {

@@ -16,10 +16,11 @@ class ShowBalance extends StatefulWidget {
   State<ShowBalance> createState() => _ShowBalanceState();
 }
 
-double totalBalance = 3500.00;
+double totalBalance = 0.00;
 
 class _ShowBalanceState extends State<ShowBalance> {
   calcTotalBalance(List<Categories>? categories) {
+    totalBalance = 0.00;
     if (categories!.isNotEmpty) {
       for (Categories category in categories) {
         totalBalance += category.amount;

@@ -37,23 +37,28 @@ const CategoriesSchema = CollectionSchema(
       name: r'duration',
       type: IsarType.string,
     ),
-    r'name': PropertySchema(
+    r'iconCode': PropertySchema(
       id: 4,
+      name: r'iconCode',
+      type: IsarType.long,
+    ),
+    r'name': PropertySchema(
+      id: 5,
       name: r'name',
       type: IsarType.string,
     ),
     r'stateDate': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'stateDate',
       type: IsarType.dateTime,
     ),
     r'totalDeducted': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'totalDeducted',
       type: IsarType.double,
     ),
     r'txnHistory': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'txnHistory',
       type: IsarType.longList,
     )
@@ -95,10 +100,11 @@ void _categoriesSerialize(
   writer.writeDouble(offsets[1], object.amountLeft);
   writer.writeString(offsets[2], object.desc);
   writer.writeString(offsets[3], object.duration);
-  writer.writeString(offsets[4], object.name);
-  writer.writeDateTime(offsets[5], object.stateDate);
-  writer.writeDouble(offsets[6], object.totalDeducted);
-  writer.writeLongList(offsets[7], object.txnHistory);
+  writer.writeLong(offsets[4], object.iconCode);
+  writer.writeString(offsets[5], object.name);
+  writer.writeDateTime(offsets[6], object.stateDate);
+  writer.writeDouble(offsets[7], object.totalDeducted);
+  writer.writeLongList(offsets[8], object.txnHistory);
 }
 
 Categories _categoriesDeserialize(
@@ -112,11 +118,12 @@ Categories _categoriesDeserialize(
   object.amountLeft = reader.readDouble(offsets[1]);
   object.desc = reader.readString(offsets[2]);
   object.duration = reader.readString(offsets[3]);
+  object.iconCode = reader.readLong(offsets[4]);
   object.id = id;
-  object.name = reader.readString(offsets[4]);
-  object.stateDate = reader.readDateTime(offsets[5]);
-  object.totalDeducted = reader.readDouble(offsets[6]);
-  object.txnHistory = reader.readLongList(offsets[7]) ?? [];
+  object.name = reader.readString(offsets[5]);
+  object.stateDate = reader.readDateTime(offsets[6]);
+  object.totalDeducted = reader.readDouble(offsets[7]);
+  object.txnHistory = reader.readLongList(offsets[8]) ?? [];
   return object;
 }
 
@@ -136,12 +143,14 @@ P _categoriesDeserializeProp<P>(
     case 3:
       return (reader.readString(offset)) as P;
     case 4:
-      return (reader.readString(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 5:
-      return (reader.readDateTime(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 6:
-      return (reader.readDouble(offset)) as P;
+      return (reader.readDateTime(offset)) as P;
     case 7:
+      return (reader.readDouble(offset)) as P;
+    case 8:
       return (reader.readLongList(offset) ?? []) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -625,6 +634,60 @@ extension CategoriesQueryFilter
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'duration',
         value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Categories, Categories, QAfterFilterCondition> iconCodeEqualTo(
+      int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'iconCode',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Categories, Categories, QAfterFilterCondition>
+      iconCodeGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'iconCode',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Categories, Categories, QAfterFilterCondition> iconCodeLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'iconCode',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Categories, Categories, QAfterFilterCondition> iconCodeBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'iconCode',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
       ));
     });
   }
@@ -1134,6 +1197,18 @@ extension CategoriesQuerySortBy
     });
   }
 
+  QueryBuilder<Categories, Categories, QAfterSortBy> sortByIconCode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'iconCode', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Categories, Categories, QAfterSortBy> sortByIconCodeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'iconCode', Sort.desc);
+    });
+  }
+
   QueryBuilder<Categories, Categories, QAfterSortBy> sortByName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.asc);
@@ -1221,6 +1296,18 @@ extension CategoriesQuerySortThenBy
     });
   }
 
+  QueryBuilder<Categories, Categories, QAfterSortBy> thenByIconCode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'iconCode', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Categories, Categories, QAfterSortBy> thenByIconCodeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'iconCode', Sort.desc);
+    });
+  }
+
   QueryBuilder<Categories, Categories, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -1298,6 +1385,12 @@ extension CategoriesQueryWhereDistinct
     });
   }
 
+  QueryBuilder<Categories, Categories, QDistinct> distinctByIconCode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'iconCode');
+    });
+  }
+
   QueryBuilder<Categories, Categories, QDistinct> distinctByName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1353,6 +1446,12 @@ extension CategoriesQueryProperty
   QueryBuilder<Categories, String, QQueryOperations> durationProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'duration');
+    });
+  }
+
+  QueryBuilder<Categories, int, QQueryOperations> iconCodeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'iconCode');
     });
   }
 

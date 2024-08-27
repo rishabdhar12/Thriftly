@@ -12,6 +12,7 @@ Widget textWidget({
   return Text(
     text,
     textAlign: textAlign,
+    // overflow: TextOverflow.clip,
     style: GoogleFonts.poppins(
       fontSize: fontSize,
       fontWeight: fontWeight,

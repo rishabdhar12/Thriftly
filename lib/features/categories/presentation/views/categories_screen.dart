@@ -4,6 +4,7 @@ import 'package:budgeting_app/core/common/text.dart';
 import 'package:budgeting_app/core/config/shared_prefs/keys.dart';
 import 'package:budgeting_app/core/config/shared_prefs/shared_prefs.dart';
 import 'package:budgeting_app/core/constants/colors.dart';
+import 'package:budgeting_app/core/constants/icon_data.dart';
 import 'package:budgeting_app/core/constants/route_names.dart';
 import 'package:budgeting_app/core/constants/strings.dart';
 import 'package:budgeting_app/features/categories/domain/entities/local/categories_schema_isar.dart';
@@ -43,7 +44,115 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   // }
 
   void addToCategoriesList(String item) {
-    final category = Categories()..name = item;
+    IconData? iconCode;
+
+    switch (item) {
+      case "Rent/Mortgage":
+        iconCode = appIconsMap['home'];
+        break;
+      case "Electricity":
+        iconCode = appIconsMap['eco'];
+        break;
+      case "Water":
+        iconCode = appIconsMap['landscape'];
+        break;
+      case "Internet":
+        iconCode = appIconsMap['public'];
+        break;
+      case "Food":
+        iconCode = appIconsMap['fastfood'];
+        break;
+      case "Household Supplies":
+        iconCode = appIconsMap['shopping_cart'];
+        break;
+      case "Fuel":
+        iconCode = appIconsMap['rocket_launch'];
+        break;
+      case "Public Transit":
+        iconCode = appIconsMap['domain'];
+        break;
+      case "Maintenance":
+        iconCode = appIconsMap['build'];
+        break;
+      case "Medical Bills":
+        iconCode = appIconsMap['health_and_safety'];
+        break;
+      case "Health":
+        iconCode = appIconsMap['monitor_heart'];
+        break;
+      case "Auto":
+        iconCode = appIconsMap['credit_card'];
+        break;
+      case "Life":
+        iconCode = appIconsMap['medication'];
+        break;
+      case "Tuition":
+        iconCode = appIconsMap['school'];
+        break;
+      case "Books":
+        iconCode = appIconsMap['emoji_objects'];
+        break;
+      case "Movies":
+        iconCode = appIconsMap['stars'];
+        break;
+      case "Hobbies":
+        iconCode = appIconsMap['thumb_up'];
+        break;
+      case "Streaming":
+        iconCode = appIconsMap['tv'];
+        break;
+      case "Restaurants":
+        iconCode = appIconsMap['restaurant'];
+        break;
+      case "Coffee":
+        iconCode = appIconsMap['coffee'];
+        break;
+      case "Haircuts":
+        iconCode = appIconsMap['face'];
+        break;
+      case "Gym":
+        iconCode = appIconsMap['fitness_center'];
+        break;
+      case "Apparel":
+        iconCode = appIconsMap['card_membership'];
+        break;
+      case "Accessories":
+        iconCode = appIconsMap['loyalty'];
+        break;
+      case "Flights":
+        iconCode = appIconsMap['rocket_launch'];
+        break;
+      case "Accommodation":
+        iconCode = appIconsMap['home'];
+        break;
+      case "Presents":
+        iconCode = appIconsMap['celebration'];
+        break;
+      case "Charitable Gifts":
+        iconCode = appIconsMap['emoji_flags'];
+        break;
+      case "Subscriptions":
+        iconCode = appIconsMap['verified'];
+        break;
+      case "Pet Care":
+        iconCode = appIconsMap['pets'];
+        break;
+      case "Savings":
+        iconCode = appIconsMap['bar_chart'];
+        break;
+      case "Retirement":
+        iconCode = appIconsMap['leaderboard'];
+        break;
+      case "Investments":
+        iconCode = appIconsMap['developer_mode'];
+        break;
+      default:
+        iconCode = appIconsMap['category'];
+    }
+
+    final category = Categories()
+      ..name = item
+      ..iconCode = iconCode!.codePoint;
 
     setState(() {
       selectedList.add(item);

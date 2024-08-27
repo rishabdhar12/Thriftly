@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 
 part 'categories_schema_isar.g.dart';
@@ -13,4 +14,5 @@ class Categories {
   double totalDeducted = 0.00;
   double amountLeft = 0.00;
   DateTime stateDate = DateTime.now();
+  int iconCode = Icons.category.codePoint;
 }

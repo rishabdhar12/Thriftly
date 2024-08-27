@@ -175,10 +175,22 @@ class _AllocationScreenState extends State<AllocationScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              textWidget(
-                                text: categories[index].name,
-                                fontSize: 18.0,
-                                color: ColorCodes.yellow,
+                              Row(
+                                children: [
+                                  CircleAvatar(
+                                    backgroundColor: ColorCodes.buttonColor,
+                                    child: Icon(
+                                      IconData(categories[index].iconCode,
+                                          fontFamily: 'MaterialIcons'),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 6),
+                                  textWidget(
+                                    text: categories[index].name,
+                                    fontSize: 18.0,
+                                    color: ColorCodes.yellow,
+                                  ),
+                                ],
                               ),
                               const SizedBox(height: 12),
                               textWidget(
@@ -230,9 +242,9 @@ class _AllocationScreenState extends State<AllocationScreen> {
                                               ),
                                             ),
                                             DropdownMenuItem(
-                                              value: 'Monthly',
+                                              value: 'Daily',
                                               child: textWidget(
-                                                text: "Monthly",
+                                                text: "Daily",
                                                 color: ColorCodes.appBackground,
                                               ),
                                             ),
