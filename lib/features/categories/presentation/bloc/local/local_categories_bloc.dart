@@ -36,12 +36,26 @@ class LocalCategoriesBloc
     Emitter<LocalCategoriesState> emit,
   ) async {
     emit(LocalCategoriesLoadingState());
+
     try {
-      final response = await categoryUsecase(event.category);
-      response.fold(
-        (failure) => emit(LocalCategoriesErrorState(failure.message)),
-        (categories) => emit(LocalCategoryFinishedState(categories)),
-      );
+      final addCategoryResponse = await categoryUsecase(event.category);
+
+      if (addCategoryResponse.isLeft()) {
+        final failure = addCategoryResponse.getLeft().toNullable();
+        emit(LocalCategoriesErrorState(failure?.message ?? "Unknown error"));
+        return;
+      }
+
+      final getCategoriesResponse = await getCategoriesUsecase(NoParams());
+
+      if (getCategoriesResponse.isLeft()) {
+        final failure = getCategoriesResponse.getLeft().toNullable();
+        emit(LocalCategoriesErrorState(failure?.message ?? "Unknown error"));
+        return;
+      }
+
+      final categories = getCategoriesResponse.getRight().toNullable();
+      emit(LocalCategoriesFetchedState(categories ?? []));
     } catch (error) {
       emit(LocalCategoriesErrorState(error.toString()));
     }

@@ -1,6 +1,7 @@
 import 'package:budgeting_app/core/common/text.dart';
 import 'package:budgeting_app/core/constants/assets.dart';
 import 'package:budgeting_app/core/constants/colors.dart';
+import 'package:budgeting_app/core/constants/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -44,7 +45,7 @@ class _RevenueCardState extends State<RevenueCard> {
               ),
               const SizedBox(height: 8.0),
               textWidget(
-                text: "Savings\non goals",
+                text: AppStrings.savingsOnGoals,
                 fontSize: 10.0,
                 color: ColorCodes.appBackground,
                 textAlign: TextAlign.center,
@@ -65,11 +66,13 @@ class _RevenueCardState extends State<RevenueCard> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                _buildRevenueInfo("Revenue Last Week", "40000.00"),
+                _buildRevenueInfo(
+                    "${AppStrings.revenueDuration} Week", "40000.00"),
                 const SizedBox(height: 8.0),
                 const Divider(color: ColorCodes.white, thickness: 2),
                 const SizedBox(height: 8.0),
-                _buildRevenueInfo("Revenue Last Week", "40000.00"),
+                _buildRevenueInfo(
+                    "${AppStrings.savingsDuration} Week", "40000.00"),
               ],
             ),
           )

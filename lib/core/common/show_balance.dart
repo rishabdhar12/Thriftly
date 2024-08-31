@@ -50,7 +50,8 @@ class _ShowBalanceState extends State<ShowBalance> {
                           children: <Widget>[
                             SvgPicture.asset(AssetStrings.incomeIcon),
                             const SizedBox(width: 4),
-                            textWidget(text: "Total Balance", fontSize: 12.0),
+                            textWidget(
+                                text: AppStrings.totalBalance, fontSize: 12.0),
                           ],
                         ),
                         const SizedBox(height: 2),
@@ -73,7 +74,10 @@ class _ShowBalanceState extends State<ShowBalance> {
                           children: <Widget>[
                             SvgPicture.asset(AssetStrings.expenseIcon),
                             const SizedBox(width: 4),
-                            textWidget(text: "Total Expense", fontSize: 12.0),
+                            textWidget(
+                              text: AppStrings.totalExpense,
+                              fontSize: 12.0,
+                            ),
                           ],
                         ),
                         const SizedBox(height: 2),
@@ -107,7 +111,7 @@ class _ShowBalanceState extends State<ShowBalance> {
               ),
               const SizedBox(height: 4.0),
               textWidget(
-                  text: "30% of your income, Looks Good", fontSize: 12.0),
+                  text: "30% ${AppStrings.percentOfIncome}", fontSize: 12.0),
             ],
           );
         }

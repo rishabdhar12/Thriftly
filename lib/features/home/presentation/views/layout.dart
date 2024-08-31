@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:budgeting_app/core/constants/assets.dart';
 import 'package:budgeting_app/core/constants/colors.dart';
 import 'package:budgeting_app/features/analysis/presentation/views/analysis_screen.dart';
@@ -128,7 +126,7 @@ class _LayoutPageState extends State<LayoutPage> {
                   return BlocBuilder<LocalCategoriesBloc, LocalCategoriesState>(
                     builder: (context, categoriesState) {
                       if (categoriesState is LocalCategoriesFetchedState) {
-                        log("${categoriesState.categories}");
+                        // log("${categoriesState.categories}");
                         return HomeScreen(
                           categories: categoriesState.categories ?? [],
                         );

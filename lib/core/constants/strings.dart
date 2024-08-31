@@ -24,6 +24,7 @@ class AppStrings {
   static const String enterOTP = "Enter OTP";
   static const String submit = "Submit";
   static const String resendOTP = "Resend OTP";
+  static const String categories = "Categories";
   static const String categoriesText1 = "Here are some suggestions";
   static const String categoriesText2 = "You can always add/edit them later";
   static const String otpSent = "OTP sent to phone number";
@@ -44,4 +45,13 @@ class AppStrings {
   static const String goodAfternoon = "Good Afternoon";
   static const String goodEvening = "Good Evening";
   static const String rupee = "₹";
+  static const String daily = "Daily";
+  static const String weekly = "Weekly";
+  static const String monthly = "Monthly";
+  static const String totalBalance = "Total Balance";
+  static const String totalExpense = "Total Expense";
+  static const String percentOfIncome = "% of your income, Looks Good";
+  static const String savingsOnGoals = "Savings\non Goals";
+  static const String revenueDuration = "Revenue Last";
+  static const String savingsDuration = "Savings Last";
 }

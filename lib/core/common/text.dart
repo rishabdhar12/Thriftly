@@ -8,11 +8,14 @@ Widget textWidget({
   Color color = Colors.white,
   double? letterSpacing,
   TextAlign textAlign = TextAlign.start,
+  TextOverflow overflow = TextOverflow.clip,
+  int? maxLines,
 }) {
   return Text(
     text,
     textAlign: textAlign,
-    // overflow: TextOverflow.clip,
+    overflow: overflow,
+    maxLines: maxLines,
     style: GoogleFonts.poppins(
       fontSize: fontSize,
       fontWeight: fontWeight,

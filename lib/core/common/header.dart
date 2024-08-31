@@ -1,11 +1,10 @@
 import 'package:budgeting_app/core/common/text.dart';
 import 'package:budgeting_app/core/constants/colors.dart';
-import 'package:budgeting_app/core/constants/strings.dart';
-import 'package:budgeting_app/core/utils/greet.dart';
 import 'package:flutter/cupertino.dart';
 
 class Header extends StatelessWidget {
-  const Header({super.key});
+  final String headingText;
+  const Header({super.key, required this.headingText});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +14,7 @@ class Header extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           textWidget(
-            text: "${AppStrings.hi}, ${greet()}",
+            text: headingText,
             fontSize: 22.0,
             fontWeight: FontWeight.w600,
           ),
