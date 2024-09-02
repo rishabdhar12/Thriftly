@@ -2,6 +2,8 @@ import 'package:budgeting_app/core/common/data_table_view.dart';
 import 'package:budgeting_app/core/common/duration_tab_bar.dart';
 import 'package:budgeting_app/core/common/header.dart';
 import 'package:budgeting_app/core/common/show_balance.dart';
+import 'package:budgeting_app/core/common/text.dart';
+import 'package:budgeting_app/core/constants/colors.dart';
 import 'package:budgeting_app/core/constants/strings.dart';
 import 'package:budgeting_app/core/utils/greet.dart';
 import 'package:budgeting_app/features/categories/domain/entities/local/categories_schema_isar.dart';
@@ -47,23 +49,29 @@ class _HomeScreenState extends State<HomeScreen>
             ),
             durationTabBar(tabController),
             const SizedBox(height: 12),
-            SizedBox(
-              height: 300.0,
-              child: TabBarView(
-                controller: tabController,
-                children: [
-                  DataTableView(
-                      duration: AppStrings.daily,
-                      categories: widget.categories),
-                  DataTableView(
-                      duration: AppStrings.weekly,
-                      categories: widget.categories),
-                  DataTableView(
-                      duration: AppStrings.monthly,
-                      categories: widget.categories),
-                ],
-              ),
-            ),
+            widget.categories.isEmpty
+                ? textWidget(
+                    text: AppStrings.nothingToShow,
+                    color: ColorCodes.white,
+                    fontSize: 18.0,
+                  )
+                : SizedBox(
+                    height: 300.0,
+                    child: TabBarView(
+                      controller: tabController,
+                      children: [
+                        DataTableView(
+                            duration: AppStrings.daily,
+                            categories: widget.categories),
+                        DataTableView(
+                            duration: AppStrings.weekly,
+                            categories: widget.categories),
+                        DataTableView(
+                            duration: AppStrings.monthly,
+                            categories: widget.categories),
+                      ],
+                    ),
+                  ),
             const SizedBox(
               height: 30.0,
             ),

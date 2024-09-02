@@ -98,13 +98,13 @@ class _ShowBalanceState extends State<ShowBalance> {
                 curve: Curves.easeInOut,
                 tween: Tween<double>(
                   begin: 0,
-                  end: totalBalance - 2000.00,
+                  end: totalBalance != 0 ? totalBalance - 2000.00 : 0.00,
                 ),
                 builder: (context, value, _) => LinearProgressIndicator(
                   minHeight: 10.0,
                   borderRadius: BorderRadius.circular(12.0),
                   backgroundColor: ColorCodes.darkGreen,
-                  value: value / totalBalance,
+                  value: totalBalance != 0 ? value / totalBalance : 0,
                   valueColor:
                       const AlwaysStoppedAnimation<Color>(ColorCodes.white),
                 ),

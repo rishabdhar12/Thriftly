@@ -47,18 +47,23 @@ const CategoriesSchema = CollectionSchema(
       name: r'name',
       type: IsarType.string,
     ),
-    r'stateDate': PropertySchema(
+    r'reset': PropertySchema(
       id: 6,
+      name: r'reset',
+      type: IsarType.long,
+    ),
+    r'stateDate': PropertySchema(
+      id: 7,
       name: r'stateDate',
       type: IsarType.dateTime,
     ),
     r'totalDeducted': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'totalDeducted',
       type: IsarType.double,
     ),
     r'txnHistory': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'txnHistory',
       type: IsarType.longList,
     )
@@ -102,9 +107,10 @@ void _categoriesSerialize(
   writer.writeString(offsets[3], object.duration);
   writer.writeLong(offsets[4], object.iconCode);
   writer.writeString(offsets[5], object.name);
-  writer.writeDateTime(offsets[6], object.stateDate);
-  writer.writeDouble(offsets[7], object.totalDeducted);
-  writer.writeLongList(offsets[8], object.txnHistory);
+  writer.writeLong(offsets[6], object.reset);
+  writer.writeDateTime(offsets[7], object.stateDate);
+  writer.writeDouble(offsets[8], object.totalDeducted);
+  writer.writeLongList(offsets[9], object.txnHistory);
 }
 
 Categories _categoriesDeserialize(
@@ -121,9 +127,10 @@ Categories _categoriesDeserialize(
   object.iconCode = reader.readLong(offsets[4]);
   object.id = id;
   object.name = reader.readString(offsets[5]);
-  object.stateDate = reader.readDateTime(offsets[6]);
-  object.totalDeducted = reader.readDouble(offsets[7]);
-  object.txnHistory = reader.readLongList(offsets[8]) ?? [];
+  object.reset = reader.readLong(offsets[6]);
+  object.stateDate = reader.readDateTime(offsets[7]);
+  object.totalDeducted = reader.readDouble(offsets[8]);
+  object.txnHistory = reader.readLongList(offsets[9]) ?? [];
   return object;
 }
 
@@ -147,10 +154,12 @@ P _categoriesDeserializeProp<P>(
     case 5:
       return (reader.readString(offset)) as P;
     case 6:
-      return (reader.readDateTime(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 7:
-      return (reader.readDouble(offset)) as P;
+      return (reader.readDateTime(offset)) as P;
     case 8:
+      return (reader.readDouble(offset)) as P;
+    case 9:
       return (reader.readLongList(offset) ?? []) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -875,6 +884,59 @@ extension CategoriesQueryFilter
     });
   }
 
+  QueryBuilder<Categories, Categories, QAfterFilterCondition> resetEqualTo(
+      int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'reset',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Categories, Categories, QAfterFilterCondition> resetGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'reset',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Categories, Categories, QAfterFilterCondition> resetLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'reset',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Categories, Categories, QAfterFilterCondition> resetBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'reset',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
   QueryBuilder<Categories, Categories, QAfterFilterCondition> stateDateEqualTo(
       DateTime value) {
     return QueryBuilder.apply(this, (query) {
@@ -1221,6 +1283,18 @@ extension CategoriesQuerySortBy
     });
   }
 
+  QueryBuilder<Categories, Categories, QAfterSortBy> sortByReset() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'reset', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Categories, Categories, QAfterSortBy> sortByResetDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'reset', Sort.desc);
+    });
+  }
+
   QueryBuilder<Categories, Categories, QAfterSortBy> sortByStateDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'stateDate', Sort.asc);
@@ -1332,6 +1406,18 @@ extension CategoriesQuerySortThenBy
     });
   }
 
+  QueryBuilder<Categories, Categories, QAfterSortBy> thenByReset() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'reset', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Categories, Categories, QAfterSortBy> thenByResetDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'reset', Sort.desc);
+    });
+  }
+
   QueryBuilder<Categories, Categories, QAfterSortBy> thenByStateDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'stateDate', Sort.asc);
@@ -1398,6 +1484,12 @@ extension CategoriesQueryWhereDistinct
     });
   }
 
+  QueryBuilder<Categories, Categories, QDistinct> distinctByReset() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'reset');
+    });
+  }
+
   QueryBuilder<Categories, Categories, QDistinct> distinctByStateDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'stateDate');
@@ -1458,6 +1550,12 @@ extension CategoriesQueryProperty
   QueryBuilder<Categories, String, QQueryOperations> nameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'name');
+    });
+  }
+
+  QueryBuilder<Categories, int, QQueryOperations> resetProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'reset');
     });
   }
 

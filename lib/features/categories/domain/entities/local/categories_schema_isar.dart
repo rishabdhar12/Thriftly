@@ -15,4 +15,5 @@ class Categories {
   double amountLeft = 0.00;
   DateTime stateDate = DateTime.now();
   int iconCode = Icons.category.codePoint;
+  int reset = 0; // 0 -> false 1 -> true
 }

@@ -19,8 +19,8 @@ class _DataTableViewState extends State<DataTableView> {
     return Scaffold(
       body: Table(
         columnWidths: {
-          0: FixedColumnWidth(MediaQuery.of(context).size.width * 0.44),
-          1: FixedColumnWidth(MediaQuery.of(context).size.width * 0.27),
+          0: FixedColumnWidth(MediaQuery.of(context).size.width * 0.50),
+          1: FixedColumnWidth(MediaQuery.of(context).size.width * 0.25),
           2: FixedColumnWidth(MediaQuery.of(context).size.width * 0.25),
         },
         children: widget.categories!
@@ -43,15 +43,15 @@ class _DataTableViewState extends State<DataTableView> {
 
 Widget _buildCell(String text, {IconData? icon}) {
   return Column(
-    mainAxisAlignment: MainAxisAlignment.center,
+    // mainAxisAlignment: MainAxisAlignment.center,
     children: [
       Container(
         // color: Colors.amber,
         height: 70.0,
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
+          // crossAxisAlignment: CrossAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.center,
           children: [
             icon != null
                 ? Container(

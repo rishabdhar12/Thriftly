@@ -54,4 +54,13 @@ class AppStrings {
   static const String savingsOnGoals = "Savings\non Goals";
   static const String revenueDuration = "Revenue Last";
   static const String savingsDuration = "Savings Last";
+  static const String add = "Add";
+  static const String nothingToShow = "Nothing to show!";
+  static const String newCategory = "New Category";
+  static const String categoryName = "Category Name";
+  static const String save = "Save";
+  static const String cancel = "Cancel";
+  static const String enterAmount = "Enter Amount";
+  static const String allFieldsMandatory = "All fields are mandatory";
+  static const String addExpense = "Add Expense";
 }

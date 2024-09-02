@@ -22,28 +22,33 @@ const TransactionSchema = CollectionSchema(
       name: r'amountSpent',
       type: IsarType.double,
     ),
-    r'date': PropertySchema(
+    r'categoryId': PropertySchema(
       id: 1,
+      name: r'categoryId',
+      type: IsarType.long,
+    ),
+    r'date': PropertySchema(
+      id: 2,
       name: r'date',
       type: IsarType.dateTime,
     ),
     r'message': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'message',
       type: IsarType.string,
     ),
     r'month': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'month',
       type: IsarType.long,
     ),
     r'weekNumber': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'weekNumber',
       type: IsarType.long,
     ),
     r'year': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'year',
       type: IsarType.long,
     )
@@ -79,11 +84,12 @@ void _transactionSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeDouble(offsets[0], object.amountSpent);
-  writer.writeDateTime(offsets[1], object.date);
-  writer.writeString(offsets[2], object.message);
-  writer.writeLong(offsets[3], object.month);
-  writer.writeLong(offsets[4], object.weekNumber);
-  writer.writeLong(offsets[5], object.year);
+  writer.writeLong(offsets[1], object.categoryId);
+  writer.writeDateTime(offsets[2], object.date);
+  writer.writeString(offsets[3], object.message);
+  writer.writeLong(offsets[4], object.month);
+  writer.writeLong(offsets[5], object.weekNumber);
+  writer.writeLong(offsets[6], object.year);
 }
 
 Transaction _transactionDeserialize(
@@ -94,12 +100,13 @@ Transaction _transactionDeserialize(
 ) {
   final object = Transaction();
   object.amountSpent = reader.readDouble(offsets[0]);
-  object.date = reader.readDateTime(offsets[1]);
+  object.categoryId = reader.readLong(offsets[1]);
+  object.date = reader.readDateTime(offsets[2]);
   object.id = id;
-  object.message = reader.readString(offsets[2]);
-  object.month = reader.readLong(offsets[3]);
-  object.weekNumber = reader.readLong(offsets[4]);
-  object.year = reader.readLong(offsets[5]);
+  object.message = reader.readString(offsets[3]);
+  object.month = reader.readLong(offsets[4]);
+  object.weekNumber = reader.readLong(offsets[5]);
+  object.year = reader.readLong(offsets[6]);
   return object;
 }
 
@@ -113,14 +120,16 @@ P _transactionDeserializeProp<P>(
     case 0:
       return (reader.readDouble(offset)) as P;
     case 1:
-      return (reader.readDateTime(offset)) as P;
-    case 2:
-      return (reader.readString(offset)) as P;
-    case 3:
       return (reader.readLong(offset)) as P;
+    case 2:
+      return (reader.readDateTime(offset)) as P;
+    case 3:
+      return (reader.readString(offset)) as P;
     case 4:
       return (reader.readLong(offset)) as P;
     case 5:
+      return (reader.readLong(offset)) as P;
+    case 6:
       return (reader.readLong(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -282,6 +291,62 @@ extension TransactionQueryFilter
         upper: upper,
         includeUpper: includeUpper,
         epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      categoryIdEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'categoryId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      categoryIdGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'categoryId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      categoryIdLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'categoryId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      categoryIdBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'categoryId',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
       ));
     });
   }
@@ -710,6 +775,18 @@ extension TransactionQuerySortBy
     });
   }
 
+  QueryBuilder<Transaction, Transaction, QAfterSortBy> sortByCategoryId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'categoryId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterSortBy> sortByCategoryIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'categoryId', Sort.desc);
+    });
+  }
+
   QueryBuilder<Transaction, Transaction, QAfterSortBy> sortByDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'date', Sort.asc);
@@ -782,6 +859,18 @@ extension TransactionQuerySortThenBy
   QueryBuilder<Transaction, Transaction, QAfterSortBy> thenByAmountSpentDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'amountSpent', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterSortBy> thenByCategoryId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'categoryId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterSortBy> thenByCategoryIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'categoryId', Sort.desc);
     });
   }
 
@@ -866,6 +955,12 @@ extension TransactionQueryWhereDistinct
     });
   }
 
+  QueryBuilder<Transaction, Transaction, QDistinct> distinctByCategoryId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'categoryId');
+    });
+  }
+
   QueryBuilder<Transaction, Transaction, QDistinct> distinctByDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'date');
@@ -909,6 +1004,12 @@ extension TransactionQueryProperty
   QueryBuilder<Transaction, double, QQueryOperations> amountSpentProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'amountSpent');
+    });
+  }
+
+  QueryBuilder<Transaction, int, QQueryOperations> categoryIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'categoryId');
     });
   }
 

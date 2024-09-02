@@ -11,6 +11,7 @@ import 'package:budgeting_app/features/home/presentation/views/layout.dart';
 import 'package:budgeting_app/features/onboarding/onboarding.dart';
 import 'package:budgeting_app/features/onboarding/onboarding_two.dart';
 import 'package:budgeting_app/features/splash/splash_screen.dart';
+import 'package:budgeting_app/features/transactions/presentation/views/expense_history.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -103,6 +104,16 @@ final GoRouter router = GoRouter(
         child: AllocationScreen(
           categories: state.extra as List<Categories>,
         ),
+        type: 'slide-right-to-left',
+      ),
+    ),
+    GoRoute(
+      path: RouteNames.expenseHistoryScreen,
+      pageBuilder: (context, state) =>
+          RouterTransitionFactory.getTransitionPage(
+        context: context,
+        state: state,
+        child: ExpenseHistoryScreen(id: state.extra as int),
         type: 'slide-right-to-left',
       ),
     ),

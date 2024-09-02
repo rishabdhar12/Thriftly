@@ -9,4 +9,5 @@ class RouteNames {
   static const String categoriesScreen = "/categories";
   static const String layoutScreen = "/layout";
   static const String allocationScreen = "/allocation-screen";
+  static const String expenseHistoryScreen = "/expense-history-screen";
 }
