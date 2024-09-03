@@ -19,6 +19,7 @@ import 'package:budgeting_app/features/home/presentation/views/bloc/bottom_navig
 import 'package:budgeting_app/features/transactions/data/local/repositories/transaction_repository_impl.dart';
 import 'package:budgeting_app/features/transactions/domain/repositories/transaction_repository.dart';
 import 'package:budgeting_app/features/transactions/domain/usecases/add_transaction_usecase.dart';
+import 'package:budgeting_app/features/transactions/domain/usecases/get_transactions_usecase.dart';
 import 'package:budgeting_app/features/transactions/presentation/bloc/local/local_transaction_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -54,7 +55,10 @@ Future<void> setupDependencies() async {
         getCategoriesUsecase: sl(),
       ));
   sl.registerFactory(() => BottomNavigationBloc());
-  sl.registerFactory(() => LocalTransactionBloc(addTransactionUsecase: sl()));
+  sl.registerFactory(() => LocalTransactionBloc(
+        addTransactionUsecase: sl(),
+        getTransactionsUsecase: sl(),
+      ));
 
   // Usecase
   sl.registerLazySingleton(() => SignInWithPhoneNumber(sl()));
@@ -67,6 +71,7 @@ Future<void> setupDependencies() async {
   sl.registerLazySingleton(() => CheckUserExist(sl()));
   sl.registerLazySingleton(() => SignUp(sl()));
   sl.registerLazySingleton(() => AddTransactionUsecase(sl()));
+  sl.registerLazySingleton(() => GetTransactionsUsecase(sl()));
 
   // Repository
   sl.registerLazySingleton<AuthRepository>(

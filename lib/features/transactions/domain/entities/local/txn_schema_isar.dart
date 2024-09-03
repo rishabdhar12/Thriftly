@@ -6,6 +6,7 @@ part 'txn_schema_isar.g.dart';
 class Transaction {
   Id id = Isar.autoIncrement;
   late int categoryId;
+  String title = "";
   double amountSpent = 0.00;
   DateTime date = DateTime.now();
   int month = DateTime.now().month;

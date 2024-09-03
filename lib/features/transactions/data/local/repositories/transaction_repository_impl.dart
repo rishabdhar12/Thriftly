@@ -1,5 +1,6 @@
 import 'package:budgeting_app/core/error/failure.dart';
 import 'package:budgeting_app/features/categories/domain/entities/local/categories_schema_isar.dart';
+import 'package:budgeting_app/features/transactions/domain/dto/transaction_dto.dart';
 import 'package:budgeting_app/features/transactions/domain/entities/local/txn_schema_isar.dart';
 import 'package:budgeting_app/features/transactions/domain/repositories/transaction_repository.dart';
 import 'package:fpdart/fpdart.dart';
@@ -11,15 +12,15 @@ class TransactionRepositoryImpl implements TransactionRepository {
   const TransactionRepositoryImpl(this._isar);
 
   @override
-  Future<Either<Failure, Transaction>> addTransaction(
-      Transaction transaction) async {
+  Future<Either<Failure, int>> addTransaction(
+      AddTransactionParams params) async {
     Id? id;
     Categories? category;
     try {
       await _isar.writeTxn(() async {
         category = await _isar.categories
             .filter()
-            .idEqualTo(transaction.categoryId)
+            .idEqualTo(params.categoryId)
             .findFirst();
       });
 
@@ -28,7 +29,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
       }
 
       await _isar.writeTxn(() async {
-        id = await _isar.transactions.put(transaction);
+        id = await _isar.transactions.put(params.transaction);
       });
 
       if (id == null) {
@@ -40,7 +41,24 @@ class TransactionRepositoryImpl implements TransactionRepository {
         await _isar.categories.put(category!);
       });
 
-      return Right(transaction);
+      return Right(id ?? 0);
+    } catch (error) {
+      return Left(ServerFailure(error.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Transaction>>> getTransactions(
+      int categoryId) async {
+    List<Transaction>? transactions;
+    try {
+      await _isar.writeTxn(() async {
+        transactions = await _isar.transactions
+            .filter()
+            .categoryIdEqualTo(categoryId)
+            .findAll();
+      });
+      return Right(transactions ?? []);
     } catch (error) {
       return Left(ServerFailure(error.toString()));
     }

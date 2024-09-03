@@ -30,11 +30,6 @@ class _AllocationScreenState extends State<AllocationScreen> {
   void initState() {
     _initializeAmountControllers();
     _initializeSelectedDurations();
-    // log("allocation screen");
-    // log(widget.categories
-    //     .map((category) => 'Name: ${category.name}')
-    //     .toList()
-    //     .toString());
     super.initState();
   }
 
@@ -63,16 +58,15 @@ class _AllocationScreenState extends State<AllocationScreen> {
     if (newAmount != null) {
       widget.categories[i].amount = newAmount;
     }
-    // log("Updated categories: ${widget.categories.map((c) => 'Name: ${c.name}, Amount: ${c.amount}').toList()}");
   }
 
   void _updateCategoryDuration(int i, String? newDuration) {
     if (newDuration != null) {
       setState(() {
         _selectedDurations[i] = newDuration;
+        widget.categories[i].duration = newDuration;
       });
     }
-    // log("Updated duration for ${widget.categories[i].name} to ${_selectedDurations[i]}");
   }
 
   addToLocalStorage(List<Categories> categories) {
@@ -228,23 +222,23 @@ class _AllocationScreenState extends State<AllocationScreen> {
                                               color: ColorCodes.white),
                                           items: [
                                             DropdownMenuItem(
-                                              value: 'Monthly',
+                                              value: AppStrings.monthly,
                                               child: textWidget(
-                                                text: "Monthly",
+                                                text: AppStrings.monthly,
                                                 color: ColorCodes.appBackground,
                                               ),
                                             ),
                                             DropdownMenuItem(
-                                              value: 'Weekly',
+                                              value: AppStrings.weekly,
                                               child: textWidget(
-                                                text: "Weekly",
+                                                text: AppStrings.weekly,
                                                 color: ColorCodes.appBackground,
                                               ),
                                             ),
                                             DropdownMenuItem(
-                                              value: 'Daily',
+                                              value: AppStrings.daily,
                                               child: textWidget(
-                                                text: "Daily",
+                                                text: AppStrings.daily,
                                                 color: ColorCodes.appBackground,
                                               ),
                                             ),
@@ -262,7 +256,6 @@ class _AllocationScreenState extends State<AllocationScreen> {
                                     onTap: () {
                                       setState(() {
                                         categories.removeAt(index);
-                                        // log("After deletion  ${widget.categories.map((c) => 'Name: ${c.name}').toList()}");
                                       });
                                     },
                                     child: Container(

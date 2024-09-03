@@ -1,4 +1,4 @@
-import 'package:budgeting_app/features/transactions/domain/entities/local/txn_schema_isar.dart';
+import 'package:budgeting_app/features/transactions/domain/dto/transaction_dto.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class LocalTransactionEvent extends Equatable {
@@ -9,9 +9,17 @@ abstract class LocalTransactionEvent extends Equatable {
 }
 
 class AddTransactionEvent extends LocalTransactionEvent {
-  final Transaction transaction;
-  const AddTransactionEvent({required this.transaction});
+  final AddTransactionParams params;
+  const AddTransactionEvent({required this.params});
 
   @override
-  List<Object> get props => [transaction];
+  List<Object> get props => [params];
+}
+
+class GetTransactionEvent extends LocalTransactionEvent {
+  final int categoryId;
+  const GetTransactionEvent({required this.categoryId});
+
+  @override
+  List<Object> get props => [categoryId];
 }
