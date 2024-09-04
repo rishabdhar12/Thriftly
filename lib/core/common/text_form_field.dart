@@ -18,6 +18,7 @@ Widget textFormField({
   double contentPaddingVertical = 16.0,
   void Function(String)? onChanged,
   String? prefixText,
+  int maxLines = 1,
 }) {
   return Container(
     height: height,
@@ -32,6 +33,7 @@ Widget textFormField({
       enabled: enabled,
       validator: validator,
       onChanged: onChanged,
+      maxLines: maxLines,
       decoration: InputDecoration(
         prefixText: prefixText,
         suffixIcon: suffixIcon,

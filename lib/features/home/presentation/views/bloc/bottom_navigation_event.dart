@@ -21,12 +21,12 @@ class AnalysisEvent extends BottomNavigationEvent {
   List<Object> get props => [];
 }
 
-class TransactionEvent extends BottomNavigationEvent {
-  const TransactionEvent();
+// class TransactionEvent extends BottomNavigationEvent {
+//   const TransactionEvent();
 
-  @override
-  List<Object> get props => [];
-}
+//   @override
+//   List<Object> get props => [];
+// }
 
 class CategoriesTxnEvent extends BottomNavigationEvent {
   const CategoriesTxnEvent();

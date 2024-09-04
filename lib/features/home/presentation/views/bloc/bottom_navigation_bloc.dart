@@ -7,7 +7,7 @@ class BottomNavigationBloc
   BottomNavigationBloc() : super(const HomeState()) {
     on<HomeEvent>(_onLoadHome);
     on<AnalysisEvent>(_onLoadAnalysis);
-    on<TransactionEvent>(_onLoadTransaction);
+    // on<TransactionEvent>(_onLoadTransaction);
     on<CategoriesTxnEvent>(_onLoadCategoriesTxn);
     on<ProfileEvent>(_onLoadProfile);
   }
@@ -21,10 +21,10 @@ class BottomNavigationBloc
     emit(const AnalysisState());
   }
 
-  void _onLoadTransaction(
-      TransactionEvent event, Emitter<BottomNavigationState> emit) {
-    emit(const TransactionState());
-  }
+  // void _onLoadTransaction(
+  //     TransactionEvent event, Emitter<BottomNavigationState> emit) {
+  //   emit(const TransactionState());
+  // }
 
   void _onLoadCategoriesTxn(
       CategoriesTxnEvent event, Emitter<BottomNavigationState> emit) {

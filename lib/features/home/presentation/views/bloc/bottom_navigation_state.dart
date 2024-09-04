@@ -30,22 +30,22 @@ class AnalysisState extends BottomNavigationState {
   List<Object> get props => [index, title];
 }
 
-class TransactionState extends BottomNavigationState {
-  const TransactionState();
+// class TransactionState extends BottomNavigationState {
+//   const TransactionState();
 
-  @override
-  final int index = 2;
-  final String title = "Transaction";
+//   @override
+//   final int index = 2;
+//   final String title = "Transaction";
 
-  @override
-  List<Object> get props => [index, title];
-}
+//   @override
+//   List<Object> get props => [index, title];
+// }
 
 class CategoriesTxnState extends BottomNavigationState {
   const CategoriesTxnState();
 
   @override
-  final int index = 3;
+  final int index = 2;
   final String title = "CategoriesTxn";
 
   @override
@@ -56,7 +56,7 @@ class ProfileState extends BottomNavigationState {
   const ProfileState();
 
   @override
-  final int index = 4;
+  final int index = 3;
   final String title = "Profile";
 
   @override

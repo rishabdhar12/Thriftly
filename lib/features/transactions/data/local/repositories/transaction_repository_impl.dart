@@ -37,6 +37,10 @@ class TransactionRepositoryImpl implements TransactionRepository {
       }
 
       category?.txnHistory = [...category!.txnHistory, id!];
+      category?.totalDeducted += params.transaction.amountSpent;
+      category?.amountLeft =
+          (category!.amount - params.transaction.amountSpent);
+
       await _isar.writeTxn(() async {
         await _isar.categories.put(category!);
       });

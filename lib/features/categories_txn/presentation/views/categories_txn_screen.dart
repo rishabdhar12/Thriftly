@@ -28,23 +28,15 @@ class CategoriesTxnScreen extends StatefulWidget {
 
 final TextEditingController _newCategoryController = TextEditingController();
 final TextEditingController _amountController = TextEditingController();
-String _selectedDuration = "Monthly";
+String _selectedDuration = AppStrings.monthly;
 
 class _CategoriesTxnScreenState extends State<CategoriesTxnScreen> {
   @override
   void initState() {
-    // _selectedDuration = "Monthly";
     BlocProvider.of<LocalCategoriesBloc>(context)
         .add(const GetCategoriesEvent());
     super.initState();
   }
-
-  // @override
-  // void dispose() {
-  //   _newCategoryController.dispose();
-  //   _amountController.dispose();
-  //   super.dispose();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -166,14 +158,17 @@ class _CategoriesTxnScreenState extends State<CategoriesTxnScreen> {
         return AlertDialog(
           backgroundColor: ColorCodes.appBackground,
           content: SizedBox(
+            // padding: const EdgeInsets.symmetric(vertical: 20.0),
             width: MediaQuery.of(context).size.width,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
+            height: 480.0,
+            child: ListView(
+              // mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Container(
                   height: 50.0,
                   width: 50.0,
                   padding: const EdgeInsets.all(4.0),
+                  margin: const EdgeInsets.symmetric(horizontal: 100.0),
                   decoration: BoxDecoration(
                     color: ColorCodes.lightBlue,
                     borderRadius: BorderRadius.circular(10.0),

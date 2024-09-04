@@ -10,7 +10,6 @@ import 'package:budgeting_app/features/home/presentation/views/bloc/bottom_navig
 import 'package:budgeting_app/features/home/presentation/views/bloc/bottom_navigation_state.dart';
 import 'package:budgeting_app/features/home/presentation/views/home.dart';
 import 'package:budgeting_app/features/profile/presentation/views/profile.dart';
-import 'package:budgeting_app/features/transactions/presentation/views/transaction_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -65,15 +64,15 @@ class _LayoutPageState extends State<LayoutPage> {
                         case 1:
                           BlocProvider.of<BottomNavigationBloc>(context)
                               .add((const AnalysisEvent()));
+                        // case 2:
+                        //   BlocProvider.of<BottomNavigationBloc>(context)
+                        //       .add((const TransactionEvent()));
+                        //   break;
                         case 2:
-                          BlocProvider.of<BottomNavigationBloc>(context)
-                              .add((const TransactionEvent()));
-                          break;
-                        case 3:
                           BlocProvider.of<BottomNavigationBloc>(context)
                               .add((const CategoriesTxnEvent()));
                           break;
-                        case 4:
+                        case 3:
                           BlocProvider.of<BottomNavigationBloc>(context)
                               .add((const ProfileEvent()));
                           break;
@@ -95,14 +94,14 @@ class _LayoutPageState extends State<LayoutPage> {
                           color: ColorCodes.buttonColor,
                         ),
                       ),
-                      BottomNavigationBarItem(
-                        icon: SvgPicture.asset(AssetStrings.transactionIcon),
-                        label: 'Expenses',
-                        activeIcon: SvgPicture.asset(
-                          AssetStrings.transactionIcon,
-                          color: ColorCodes.buttonColor,
-                        ),
-                      ),
+                      // BottomNavigationBarItem(
+                      //   icon: SvgPicture.asset(AssetStrings.transactionIcon),
+                      //   label: 'Expenses',
+                      //   activeIcon: SvgPicture.asset(
+                      //     AssetStrings.transactionIcon,
+                      //     color: ColorCodes.buttonColor,
+                      //   ),
+                      // ),
                       BottomNavigationBarItem(
                         icon: SvgPicture.asset(AssetStrings.categoriesIcon),
                         label: 'Categories',
@@ -142,9 +141,11 @@ class _LayoutPageState extends State<LayoutPage> {
                   );
                 } else if (state is AnalysisState) {
                   return const AnalysisScreen();
-                } else if (state is TransactionState) {
-                  return const TransactionScreen();
-                } else if (state is CategoriesTxnState) {
+                }
+                // else if (state is TransactionState) {
+                //   return const TransactionScreen();
+                // }
+                else if (state is CategoriesTxnState) {
                   return const CategoriesTxnScreen();
                 } else if (state is ProfileState) {
                   return const ProfileScreen();

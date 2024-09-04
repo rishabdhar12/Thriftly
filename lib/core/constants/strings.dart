@@ -50,17 +50,34 @@ class AppStrings {
   static const String monthly = "Monthly";
   static const String totalBalance = "Total Balance";
   static const String totalExpense = "Total Expense";
-  static const String percentOfIncome = "% of your income, Looks Good";
+  static const String percentOfIncomeGood =
+      "% of your budget – Right on the Money!";
+  static const String percentOfIncomeWarning =
+      "% of your budget – Tread Lightly!";
+  static const String percentOfIncomeExceed =
+      "% of your budget – Whoa, Slow Down!";
   static const String savingsOnGoals = "Savings\non Goals";
   static const String revenueDuration = "Revenue Last";
   static const String savingsDuration = "Savings Last";
   static const String add = "Add";
   static const String nothingToShow = "Nothing to show!";
+  static const String nothingToShowToday = "No fresh transactions for today!";
+  static const String nothingToShowWeekly =
+      "No fresh transactions for this week!";
+  static const String nothingToShowMonth =
+      "No fresh transactions for this month!";
   static const String newCategory = "New Category";
   static const String categoryName = "Category Name";
   static const String save = "Save";
   static const String cancel = "Cancel";
   static const String enterAmount = "Enter Amount";
+  static const String amountFormText = "Amount spent";
   static const String allFieldsMandatory = "All fields are mandatory";
   static const String addExpense = "Add Expense";
+  static const String noTransactions =
+      "Looks like your wallet's been on vacation! 🏖️ \n\nNo transactions to show.";
+  static const String enterDate = "Enter Date";
+  static const String expenseTitle = "Expense Title";
+  static const String expenseText = "What did you spend on?";
+  static const String message = "Additional info";
 }

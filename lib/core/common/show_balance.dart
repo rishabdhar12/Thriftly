@@ -17,15 +17,23 @@ class ShowBalance extends StatefulWidget {
 }
 
 double totalBalance = 0.00;
+double totalExpense = 0.00;
+double percent = 0.00;
 
 class _ShowBalanceState extends State<ShowBalance> {
   calcTotalBalance(List<Categories>? categories) {
     totalBalance = 0.00;
+    totalExpense = 0.00;
     if (categories!.isNotEmpty) {
       for (Categories category in categories) {
         totalBalance += category.amount;
+        totalExpense += category.totalDeducted;
       }
     }
+  }
+
+  calcPercent() {
+    percent = ((totalExpense * 100) / totalBalance);
   }
 
   @override
@@ -35,6 +43,7 @@ class _ShowBalanceState extends State<ShowBalance> {
         if (state is LocalCategoriesFetchedState) {
           final categories = state.categories;
           calcTotalBalance(categories);
+          calcPercent();
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,10 +91,12 @@ class _ShowBalanceState extends State<ShowBalance> {
                         ),
                         const SizedBox(height: 2),
                         textWidget(
-                          text: "-${AppStrings.rupee} 0.00",
+                          text: "-${AppStrings.rupee} $totalExpense",
                           fontSize: 22.0,
                           fontWeight: FontWeight.bold,
-                          color: ColorCodes.blue,
+                          color: percent >= 80.00
+                              ? ColorCodes.red
+                              : ColorCodes.blue,
                         ),
                       ],
                     ),
@@ -98,20 +109,22 @@ class _ShowBalanceState extends State<ShowBalance> {
                 curve: Curves.easeInOut,
                 tween: Tween<double>(
                   begin: 0,
-                  end: totalBalance != 0 ? totalBalance - 2000.00 : 0.00,
+                  end: totalBalance != 0 ? totalBalance - totalExpense : 0.00,
                 ),
                 builder: (context, value, _) => LinearProgressIndicator(
                   minHeight: 10.0,
                   borderRadius: BorderRadius.circular(12.0),
                   backgroundColor: ColorCodes.darkGreen,
-                  value: totalBalance != 0 ? value / totalBalance : 0,
+                  value: totalBalance != 0 ? totalExpense / totalBalance : 0,
                   valueColor:
                       const AlwaysStoppedAnimation<Color>(ColorCodes.white),
                 ),
               ),
               const SizedBox(height: 4.0),
               textWidget(
-                  text: "30% ${AppStrings.percentOfIncome}", fontSize: 12.0),
+                  text:
+                      "${percent.toStringAsFixed(2)} ${percent < 50.0 ? AppStrings.percentOfIncomeGood : percent < 80.0 ? AppStrings.percentOfIncomeWarning : AppStrings.percentOfIncomeExceed}",
+                  fontSize: 12.0),
             ],
           );
         }

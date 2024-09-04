@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:budgeting_app/core/common/back_button.dart';
 import 'package:budgeting_app/core/common/date_picker.dart';
 import 'package:budgeting_app/core/common/elevated_button.dart';
 import 'package:budgeting_app/core/common/text.dart';
@@ -97,25 +98,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  GestureDetector(
-                    onTap: () {
+                  backButton(
+                    context,
+                    onPressed: () {
                       context.go(RouteNames.loginOrSignUp);
                     },
-                    child: Container(
-                      width: 56.0,
-                      height: 56.0,
-                      decoration: const BoxDecoration(
-                        color: ColorCodes.buttonColor,
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Center(
-                        child: Icon(
-                          CupertinoIcons.back,
-                          color: ColorCodes.appBackground,
-                          size: 39.0,
-                        ),
-                      ),
-                    ),
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 8,

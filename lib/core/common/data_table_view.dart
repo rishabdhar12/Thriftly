@@ -1,5 +1,6 @@
 import 'package:budgeting_app/core/common/text.dart';
 import 'package:budgeting_app/core/constants/colors.dart';
+import 'package:budgeting_app/core/constants/strings.dart';
 import 'package:budgeting_app/features/categories/domain/entities/local/categories_schema_isar.dart';
 import 'package:flutter/material.dart';
 
@@ -17,26 +18,46 @@ class _DataTableViewState extends State<DataTableView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Table(
-        columnWidths: {
-          0: FixedColumnWidth(MediaQuery.of(context).size.width * 0.50),
-          1: FixedColumnWidth(MediaQuery.of(context).size.width * 0.25),
-          2: FixedColumnWidth(MediaQuery.of(context).size.width * 0.25),
-        },
-        children: widget.categories!
-            .where((category) => category.duration == widget.duration)
-            .map((category) {
-          return TableRow(
-            children: [
-              _buildCell(category.name,
-                  icon:
-                      IconData(category.iconCode, fontFamily: 'MaterialIcons')),
-              _buildCell(category.amount.toString()),
-              _buildCell(category.totalDeducted.toString()),
-            ],
-          );
-        }).toList(),
-      ),
+      body: widget.categories!
+              .where((category) => category.duration == widget.duration)
+              .toList()
+              .isEmpty
+          ? Center(
+              // crossAxisAlignment: CrossAxisAlignment.center,
+              child: textWidget(
+                text: widget.duration == AppStrings.daily
+                    ? AppStrings.nothingToShowToday
+                    : widget.duration == AppStrings.weekly
+                        ? AppStrings.nothingToShowWeekly
+                        : AppStrings.nothingToShowMonth,
+                color: ColorCodes.white,
+                fontSize: 18.0,
+                textAlign: TextAlign.center,
+              ),
+            )
+          : Table(
+              columnWidths: {
+                0: FixedColumnWidth(MediaQuery.of(context).size.width * 0.50),
+                1: FixedColumnWidth(MediaQuery.of(context).size.width * 0.25),
+                2: FixedColumnWidth(MediaQuery.of(context).size.width * 0.25),
+              },
+              children: widget.categories!
+                  .where((category) => category.duration == widget.duration)
+                  .toList()
+                  .reversed
+                  .take(3)
+                  .map((category) {
+                return TableRow(
+                  children: [
+                    _buildCell(category.name,
+                        icon: IconData(category.iconCode,
+                            fontFamily: 'MaterialIcons')),
+                    _buildCell(category.amount.toString()),
+                    _buildCell(category.totalDeducted.toString()),
+                  ],
+                );
+              }).toList(),
+            ),
     );
   }
 }
