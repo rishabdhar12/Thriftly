@@ -5,7 +5,6 @@ import 'package:budgeting_app/core/common/show_balance.dart';
 import 'package:budgeting_app/core/constants/strings.dart';
 import 'package:budgeting_app/core/utils/greet.dart';
 import 'package:budgeting_app/features/categories/domain/entities/local/categories_schema_isar.dart';
-import 'package:budgeting_app/features/home/presentation/views/widgets/revenue_card_widget.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -40,8 +39,8 @@ class _HomeScreenState extends State<HomeScreen>
                 children: [
                   ShowBalance(),
                   SizedBox(height: 30.0),
-                  RevenueCard(),
-                  SizedBox(height: 30.0),
+                  // RevenueCard(),
+                  // SizedBox(height: 30.0),
                 ],
               ),
             ),
