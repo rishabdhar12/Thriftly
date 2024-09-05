@@ -65,9 +65,9 @@ Before you can run the app, ensure you have the following tools installed:
 
 - **lib/core**: Contains core utilities, services, and base classes.
 - **lib/features**: Organized by feature (e.g., transactions, categories, analysis).
-- **lib/presentation**: UI components like screens, widgets, and styles.
-- **lib/data**: Repositories and models that handle data storage and retrieval.
-- **lib/domain**: Business logic and entities following the Clean Architecture structure.
+    - **lib/features/data**: Repositories and models that handle data storage and retrieval.
+    - **lib/features/domain**: Business logic and entities following the Clean Architecture structure.
+    - **lib/features/presentation**: UI components like screens, widgets, and styles.
 
 ## Contributions
 
