@@ -27,7 +27,7 @@ Welcome to **Thriftly**, your go-to expense tracker app designed to help you man
 
 ## Design Inspiration
 The design for Thriftly is inspired by a Figma community design:
-Finance Management Mobile App UI/UX Kit for Budget Tracker & Financial Prototype Design.
+[Finance Management Mobile App UI/UX Kit for Budget Tracker & Financial Prototype Design (Community)](https://www.figma.com/design/G6jJh3ePeVrYZRBdxGTpGY/Finance-Management-Mobile-App-UI-UX-Kit-for-Budget-Tracker-Financial-Prototype-Design-(Community)?node-id=7388-3143&node-type=CANVAS&t=WnOjov271pjhLxYZ-0).
 This modern and user-friendly design serves as the foundation for the app's UI/UX, ensuring a smooth user experience.
 
 ## Getting Started
