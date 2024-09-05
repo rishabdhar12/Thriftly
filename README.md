@@ -25,6 +25,11 @@ Welcome to **Thriftly**, your go-to expense tracker app designed to help you man
 - **Isar DB**: A fast, efficient local NoSQL database for offline storage.
 - **Firebase**: Used for cloud storage, authentication, and other backend services.
 
+## Design Inspiration
+The design for Thriftly is inspired by a Figma community design:
+Finance Management Mobile App UI/UX Kit for Budget Tracker & Financial Prototype Design.
+This modern and user-friendly design serves as the foundation for the app's UI/UX, ensuring a smooth user experience.
+
 ## Getting Started
 
 ### Prerequisites
