@@ -1,12 +1,9 @@
 import 'dart:developer';
 
-import 'package:budgeting_app/core/common/back_button.dart';
-import 'package:budgeting_app/core/common/date_picker.dart';
 import 'package:budgeting_app/core/common/elevated_button.dart';
 import 'package:budgeting_app/core/common/text.dart';
 import 'package:budgeting_app/core/common/text_form_field.dart';
 import 'package:budgeting_app/core/constants/colors.dart';
-import 'package:budgeting_app/core/constants/icon_data.dart';
 import 'package:budgeting_app/core/constants/strings.dart';
 import 'package:budgeting_app/core/utils/snackbar.dart';
 import 'package:budgeting_app/features/transactions/domain/dto/transaction_dto.dart';
@@ -22,18 +19,23 @@ import 'package:intl/intl.dart';
 
 class ExpenseHistoryScreen extends StatefulWidget {
   final int id;
-  const ExpenseHistoryScreen({super.key, required this.id});
+  final int iconCode;
+  const ExpenseHistoryScreen(
+      {super.key, required this.id, required this.iconCode});
 
   @override
   State<ExpenseHistoryScreen> createState() => _ExpenseHistoryScreenState();
 }
 
+DateTime _selectedDate = DateTime.now();
+String _selectedDateFormatted =
+    DateFormat("dd/MM/yyyy").format(_selectedDate).toString();
+
 final TextEditingController _titleController = TextEditingController();
 final TextEditingController _messageController = TextEditingController();
 final TextEditingController _amountController = TextEditingController();
-final TextEditingController _dateController = TextEditingController(text: "");
-
-DateTime _selectedDate = DateTime.now();
+final TextEditingController _dateController =
+    TextEditingController(text: _selectedDateFormatted);
 
 class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
   @override
@@ -80,23 +82,45 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
     }
   }
 
-  void _showDatePicker() {
+  // void _showCupertinoDatePicker() {
+  //   final DateFormat formatter = DateFormat('dd/MM/yyyy');
+  //   showCupertinoModalPopup(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return CustomCupertinoDatePicker(
+  //         initialDate: _selectedDate,
+  //         onDateChanged: (DateTime newDate) {
+  //           setState(() {
+  //             _selectedDate = newDate;
+  //             _dateController.text =
+  //                 formatter.format(_selectedDate).toString().split(" ").first;
+  //           });
+  //         },
+  //       );
+  //     },
+  //   );
+  // }
+
+  void _showDatePicker() async {
     final DateFormat formatter = DateFormat('dd/MM/yyyy');
-    showCupertinoModalPopup(
+    final DateTime now = DateTime.now();
+    final DateTime firstDayOfMonth = DateTime(now.year, now.month, 1);
+    final DateTime lastDayOfMonth = DateTime(now.year, now.month + 1, 0);
+
+    final DateTime? pickedDate = await showDatePicker(
       context: context,
-      builder: (BuildContext context) {
-        return CustomCupertinoDatePicker(
-          initialDate: _selectedDate,
-          onDateChanged: (DateTime newDate) {
-            setState(() {
-              _selectedDate = newDate;
-              _dateController.text =
-                  formatter.format(_selectedDate).toString().split(" ").first;
-            });
-          },
-        );
-      },
+      initialDate: now,
+      firstDate: firstDayOfMonth,
+      lastDate: lastDayOfMonth,
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
     );
+
+    if (pickedDate != null && pickedDate != _selectedDate) {
+      setState(() {
+        _selectedDate = pickedDate;
+        _dateController.text = formatter.format(_selectedDate);
+      });
+    }
   }
 
   @override
@@ -108,29 +132,19 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
         ),
       ),
       child: Scaffold(
-        appBar: AppBar(
-          elevation: 0.0,
-          scrolledUnderElevation: 0.0,
-          backgroundColor: ColorCodes.appBackground,
-          automaticallyImplyLeading: false,
-          titleSpacing: 20.0,
-          // leading: IconButton(
-          //   icon: const Icon(
-          //     CupertinoIcons.chevron_back,
-          //     color: ColorCodes.buttonColor,
-          //     size: 60.0,
-          //   ),
-          //   onPressed: () {
-          //     context.pop();
-          //   },
-          // ),
-          title: Align(
-            alignment: Alignment.centerLeft,
-            child: backButton(context, onPressed: () {
-              context.pop();
-            }),
-          ),
-        ),
+        // appBar: AppBar(
+        //   elevation: 0.0,
+        //   scrolledUnderElevation: 0.0,
+        //   backgroundColor: ColorCodes.appBackground,
+        //   automaticallyImplyLeading: false,
+        //   titleSpacing: 20.0,
+        //   title: Align(
+        //     alignment: Alignment.centerLeft,
+        //     child: backButton(context, onPressed: () {
+        //       context.pop();
+        //     }),
+        //   ),
+        // ),
         persistentFooterAlignment: AlignmentDirectional.bottomCenter,
         persistentFooterButtons: [
           Padding(
@@ -139,16 +153,7 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
               width: 190,
               height: 45,
               onPressed: () async {
-                // final transaction = Transaction()
-                //   ..title = "three"
-                //   ..categoryId = widget.id;
-                // addTransaction(
-                //   AddTransactionParams(
-                //     transaction: transaction,
-                //     categoryId: widget.id,
-                //   ),
-                // );
-                showBottomSheet(context);
+                showExpenseBottomSheet(context);
               },
               textWidget: textWidget(
                 text: AppStrings.addExpense,
@@ -195,13 +200,20 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // backButton(context, onPressed: () {
-                        //   context.pop();
-                        // }),
-                        // const SizedBox(height: 30.0),
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: GestureDetector(
+                            onTap: () {},
+                            child: const Icon(
+                              Icons.filter_list,
+                              color: ColorCodes.buttonColor,
+                              size: 39.0,
+                            ),
+                          ),
+                        ),
                         ListView.separated(
                             separatorBuilder: (context, index) {
-                              return const SizedBox(height: 30.0);
+                              return const SizedBox(height: 20.0);
                             },
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
@@ -223,7 +235,7 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
     );
   }
 
-  Future<void> showBottomSheet(BuildContext context) {
+  Future<void> showExpenseBottomSheet(BuildContext context) {
     return showModalBottomSheet(
       context: context,
       constraints: BoxConstraints.loose(
@@ -345,27 +357,30 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
     return ListTile(
       visualDensity: const VisualDensity(vertical: 4.0),
       leading: Container(
-        height: 90.0,
-        width: 70.0,
+        height: 60.0,
+        width: 60.0,
         padding: const EdgeInsets.all(4.0),
         decoration: BoxDecoration(
           color: ColorCodes.darkBlue,
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: Icon(
-          IconData(appIconsMap['restaurant']!.codePoint,
-              fontFamily: "MaterialIcons"),
-          size: 40.0,
+          IconData(widget.iconCode, fontFamily: "MaterialIcons"),
+          size: 36.0,
           color: ColorCodes.white,
         ),
       ),
       title: textWidget(
         text: transactions[index].title,
-        fontSize: 20.0,
-        fontWeight: FontWeight.bold,
+        fontSize: 18.0,
+        fontWeight: FontWeight.w600,
       ),
       subtitle: textWidget(
-        text: transactions[index].date.toString().split(" ").first,
+        text: DateFormat("dd/MM/yyyy")
+            .format(transactions[index].date)
+            .toString()
+            .split(" ")
+            .first,
         fontSize: 14.0,
         color: ColorCodes.lightBlue,
       ),

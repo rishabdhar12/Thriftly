@@ -16,19 +16,21 @@ class LocalCategoriesInitialState extends LocalCategoriesState {}
 
 class LocalCategoriesLoadingState extends LocalCategoriesState {}
 
+// category (single)
 class LocalCategoryFinishedState extends LocalCategoriesState {
   const LocalCategoryFinishedState(Categories category)
       : super(category: category);
 }
 
-class LocalCategoriesFinishedState extends LocalCategoriesState {
-  const LocalCategoriesFinishedState(List<Categories> categories)
-      : super(categories: categories);
-}
-
 class LocalCategoryFetchedState extends LocalCategoriesState {
   const LocalCategoryFetchedState(Categories category)
       : super(category: category);
+}
+
+// categorie(s)
+class LocalCategoriesFinishedState extends LocalCategoriesState {
+  const LocalCategoriesFinishedState(List<Categories> categories)
+      : super(categories: categories);
 }
 
 class LocalCategoriesFetchedState extends LocalCategoriesState {

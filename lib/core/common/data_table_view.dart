@@ -78,10 +78,13 @@ class _DataTableViewState extends State<DataTableView> {
                       _buildCell(category.name,
                           icon: IconData(category.iconCode,
                               fontFamily: 'MaterialIcons')),
-                      _buildCell(category.amount.toString()),
-                      _buildCell(category.amount < category.amountLeft
-                          ? "-${category.amountLeft}"
-                          : "${category.amountLeft}"),
+                      _buildCell(category.amount.toString(),
+                          color: ColorCodes.yellow),
+                      _buildCell(
+                          category.amount < category.amountLeft
+                              ? "-${category.amountLeft}"
+                              : "${category.amountLeft}",
+                          color: ColorCodes.lightBlue),
                     ],
                   );
                 }),
@@ -107,7 +110,8 @@ Widget buildHeaderCell(String text) {
   );
 }
 
-Widget _buildCell(String text, {IconData? icon}) {
+Widget _buildCell(String text,
+    {IconData? icon, Color color = ColorCodes.white}) {
   return Column(
     // mainAxisAlignment: MainAxisAlignment.center,
     children: [
@@ -140,7 +144,7 @@ Widget _buildCell(String text, {IconData? icon}) {
               child: textWidget(
                 text: text,
                 textAlign: TextAlign.start,
-                color: ColorCodes.white,
+                color: color,
                 fontSize: 14.0,
               ),
             ),

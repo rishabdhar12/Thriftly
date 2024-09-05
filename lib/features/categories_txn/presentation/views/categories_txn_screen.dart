@@ -330,7 +330,10 @@ class _CategoriesTxnScreenState extends State<CategoriesTxnScreen> {
           onTap: () {
             context.push(
               RouteNames.expenseHistoryScreen,
-              extra: categories[index].id,
+              extra: {
+                'id': categories[index].id,
+                'iconCode': categories[index].iconCode,
+              },
             );
           },
           child: Container(

@@ -50,6 +50,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp.router(
         title: AppStrings.appName,
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           scaffoldBackgroundColor: ColorCodes.appBackground,
           colorScheme: ColorScheme.fromSeed(seedColor: ColorCodes.buttonColor),

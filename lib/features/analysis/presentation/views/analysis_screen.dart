@@ -13,7 +13,11 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: textWidget(text: "Analysis screen"),
+        child: textWidget(
+          text: "Coming Soon!",
+          fontSize: 24.0,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }

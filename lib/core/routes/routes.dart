@@ -108,14 +108,18 @@ final GoRouter router = GoRouter(
       ),
     ),
     GoRoute(
-      path: RouteNames.expenseHistoryScreen,
-      pageBuilder: (context, state) =>
-          RouterTransitionFactory.getTransitionPage(
-        context: context,
-        state: state,
-        child: ExpenseHistoryScreen(id: state.extra as int),
-        type: 'slide-right-to-left',
-      ),
-    ),
+        path: RouteNames.expenseHistoryScreen,
+        pageBuilder: (context, state) {
+          Map<String, dynamic> extra = state.extra as Map<String, dynamic>;
+          return RouterTransitionFactory.getTransitionPage(
+            context: context,
+            state: state,
+            child: ExpenseHistoryScreen(
+              id: extra['id'],
+              iconCode: extra['iconCode'],
+            ),
+            type: 'slide-right-to-left',
+          );
+        }),
   ],
 );
