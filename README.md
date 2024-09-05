@@ -10,7 +10,7 @@ Welcome to **Thriftly**, your go-to expense tracker app designed to help you man
 
 ### 2. Transactions
 - **Daily**, **Weekly**, and **Monthly** tracking of all your expenses.
-- Add, edit, and delete transactions with an intuitive interface.
+- Add transactions with an intuitive interface.
 - View past transactions filtered by date and category for comprehensive oversight.
 
 ### 3. Analysis (Coming Soon)
