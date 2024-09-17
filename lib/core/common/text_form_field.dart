@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 Widget textFormField({
   Color fillColor = ColorCodes.lightGreen,
   String hintText = "",
+  String? initialText,
   TextEditingController? controller,
   TextInputType textInputType = TextInputType.text,
   bool obscureText = false,
@@ -27,6 +28,7 @@ Widget textFormField({
       color: fillColor,
     ),
     child: TextFormField(
+      initialValue: initialText,
       controller: controller,
       keyboardType: textInputType,
       obscureText: obscureText,

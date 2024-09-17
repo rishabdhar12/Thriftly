@@ -333,6 +333,7 @@ class _CategoriesTxnScreenState extends State<CategoriesTxnScreen> {
               extra: {
                 'id': categories[index].id,
                 'iconCode': categories[index].iconCode,
+                // '': categories[index].iconCode,
               },
             );
           },

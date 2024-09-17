@@ -19,6 +19,7 @@ import 'package:budgeting_app/features/home/presentation/views/bloc/bottom_navig
 import 'package:budgeting_app/features/transactions/data/local/repositories/transaction_repository_impl.dart';
 import 'package:budgeting_app/features/transactions/domain/repositories/transaction_repository.dart';
 import 'package:budgeting_app/features/transactions/domain/usecases/add_transaction_usecase.dart';
+import 'package:budgeting_app/features/transactions/domain/usecases/edit_transaction_usecase.dart';
 import 'package:budgeting_app/features/transactions/domain/usecases/get_transactions_usecase.dart';
 import 'package:budgeting_app/features/transactions/presentation/bloc/local/local_transaction_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -58,6 +59,7 @@ Future<void> setupDependencies() async {
   sl.registerFactory(() => LocalTransactionBloc(
         addTransactionUsecase: sl(),
         getTransactionsUsecase: sl(),
+        editTransactionsUsecase: sl(),
       ));
 
   // Usecase
@@ -72,6 +74,7 @@ Future<void> setupDependencies() async {
   sl.registerLazySingleton(() => SignUp(sl()));
   sl.registerLazySingleton(() => AddTransactionUsecase(sl()));
   sl.registerLazySingleton(() => GetTransactionsUsecase(sl()));
+  sl.registerLazySingleton(() => EditTransactionUsecase(sl()));
 
   // Repository
   sl.registerLazySingleton<AuthRepository>(

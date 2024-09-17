@@ -80,4 +80,5 @@ class AppStrings {
   static const String expenseTitle = "Expense Title";
   static const String expenseText = "What did you spend on?";
   static const String message = "Additional info";
+  static const String editTransaction = "Edit Transaction";
 }
