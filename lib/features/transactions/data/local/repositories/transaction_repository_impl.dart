@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:budgeting_app/core/error/failure.dart';
 import 'package:budgeting_app/features/categories/domain/entities/local/categories_schema_isar.dart';
+import 'package:budgeting_app/features/transactions/domain/dto/delete_transaction_dto.dart';
 import 'package:budgeting_app/features/transactions/domain/dto/edit_transaction_dto.dart';
 import 'package:budgeting_app/features/transactions/domain/dto/transaction_dto.dart';
 import 'package:budgeting_app/features/transactions/domain/entities/local/txn_schema_isar.dart';
@@ -40,7 +43,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
       category?.txnHistory = [...category!.txnHistory, id!];
       category?.totalDeducted += params.transaction.amountSpent;
       category?.amountLeft =
-          (category!.amount - params.transaction.amountSpent);
+          (category!.amount - category!.totalDeducted);
 
       await _isar.writeTxn(() async {
         await _isar.categories.put(category!);
@@ -80,7 +83,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
 
       // Revert
       category?.totalDeducted -= transaction!.amountSpent;
-      category?.amountLeft += transaction!.amountSpent;
+      category?.amountLeft =  transaction!.amountSpent;
 
       transaction?.title = params.transaction.title;
       transaction?.date = params.transaction.date;
@@ -89,7 +92,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
 
       category?.totalDeducted += params.transaction.amountSpent;
       category?.amountLeft =
-          (category!.amount - params.transaction.amountSpent);
+          (category!.amount - category!.totalDeducted);
 
       await _isar.writeTxn(() async {
         await _isar.transactions.put(transaction!);
@@ -98,6 +101,38 @@ class TransactionRepositoryImpl implements TransactionRepository {
 
       return Right(transaction!.id);
     } catch (error) {
+      return Left(ServerFailure(error.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> deleteTransaction(
+      DeleteTransactionParams params) async {
+    Categories? category;
+    // Transaction? transaction;
+    try {
+      await _isar.writeTxn(() async {
+        category = await _isar.categories
+            .filter()
+            .idEqualTo(params.categoryId)
+            .findFirst();
+      });
+
+      if (category == null) {
+        return const Left(ServerFailure("category not found!"));
+      }
+
+      category?.txnHistory = [...?category?.txnHistory];
+      category?.txnHistory.removeWhere((id) => id == params.transactionId);
+
+      await _isar.writeTxn(() async {
+        await _isar.categories.put(category!);
+        await _isar.transactions.delete(params.transactionId);
+      });
+
+      return const Right(true);
+    } catch (error) {
+      log("here");
       return Left(ServerFailure(error.toString()));
     }
   }

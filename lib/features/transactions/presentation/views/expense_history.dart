@@ -6,6 +6,7 @@ import 'package:budgeting_app/core/common/text_form_field.dart';
 import 'package:budgeting_app/core/constants/colors.dart';
 import 'package:budgeting_app/core/constants/strings.dart';
 import 'package:budgeting_app/core/utils/snackbar.dart';
+import 'package:budgeting_app/features/transactions/domain/dto/delete_transaction_dto.dart';
 import 'package:budgeting_app/features/transactions/domain/dto/edit_transaction_dto.dart';
 import 'package:budgeting_app/features/transactions/domain/dto/transaction_dto.dart';
 import 'package:budgeting_app/features/transactions/domain/entities/local/txn_schema_isar.dart';
@@ -60,6 +61,11 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
   void editTransaction(EditTransactionParams params) {
     BlocProvider.of<LocalTransactionBloc>(context)
         .add(EditTransactionEvent(params: params));
+  }
+
+  void deleteTransaction(DeleteTransactionParams params) {
+    BlocProvider.of<LocalTransactionBloc>(context)
+        .add(DeleteTransactionEvent(params: params));
   }
 
   submit() async {
@@ -119,6 +125,12 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
           id: transactionId,
         ),
       );
+      // deleteTransaction(
+      //   DeleteTransactionParams(
+      //     transactionId: transactionId,
+      //     categoryId: widget.id,
+      //   ),
+      // );
 
       log(transactionId.toString());
       _titleController.clear();

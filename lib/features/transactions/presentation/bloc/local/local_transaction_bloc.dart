@@ -1,4 +1,5 @@
 import 'package:budgeting_app/features/transactions/domain/usecases/add_transaction_usecase.dart';
+import 'package:budgeting_app/features/transactions/domain/usecases/delete_transaction_usecase.dart';
 import 'package:budgeting_app/features/transactions/domain/usecases/edit_transaction_usecase.dart';
 import 'package:budgeting_app/features/transactions/domain/usecases/get_transactions_usecase.dart';
 import 'package:budgeting_app/features/transactions/presentation/bloc/local/local_transaction_event.dart';
@@ -10,15 +11,18 @@ class LocalTransactionBloc
   final AddTransactionUsecase addTransactionUsecase;
   final GetTransactionsUsecase getTransactionsUsecase;
   final EditTransactionUsecase editTransactionsUsecase;
+  final DeleteTransactionUsecase deleteTransactionUsecase;
 
   LocalTransactionBloc({
     required this.addTransactionUsecase,
     required this.getTransactionsUsecase,
     required this.editTransactionsUsecase,
+    required this.deleteTransactionUsecase,
   }) : super(LocalTransactionInitialState()) {
     on<AddTransactionEvent>(_onAddTransaction);
     on<GetTransactionEvent>(_onGetTransaction);
     on<EditTransactionEvent>(_onEditTransaction);
+    on<DeleteTransactionEvent>(_onDeleteTransaction);
   }
 
   Future<void> _onAddTransaction(
@@ -60,6 +64,36 @@ class LocalTransactionBloc
 
       if (editTransactionResponse.isLeft()) {
         final failure = editTransactionResponse.getLeft().toNullable();
+        emit(LocalTransactionErrorState(failure?.message ?? "Unknown error"));
+        return;
+      }
+
+      final getTransactionResponse =
+          await getTransactionsUsecase(event.params.categoryId);
+
+      if (getTransactionResponse.isLeft()) {
+        final failure = getTransactionResponse.getLeft().toNullable();
+        emit(LocalTransactionErrorState(failure?.message ?? "Unknown error"));
+        return;
+      }
+
+      final transaction = getTransactionResponse.getRight().toNullable();
+      emit(LocalTransactionsFetchedState(transaction ?? []));
+    } catch (error) {
+      emit(LocalTransactionErrorState(error.toString()));
+    }
+  }
+
+  Future<void> _onDeleteTransaction(
+      DeleteTransactionEvent event, Emitter<LocalTransactionState> emit) async {
+    emit(LocalTransactionLoadingState());
+
+    try {
+      final deleteTransactionResponse =
+          await deleteTransactionUsecase(event.params);
+
+      if (deleteTransactionResponse.isLeft()) {
+        final failure = deleteTransactionResponse.getLeft().toNullable();
         emit(LocalTransactionErrorState(failure?.message ?? "Unknown error"));
         return;
       }
