@@ -297,7 +297,7 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: textWidget(text: "Edit" color: ColorCodes.darkBlue),
+              child: textWidget(text: "Edit", color: ColorCodes.darkBlue),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
