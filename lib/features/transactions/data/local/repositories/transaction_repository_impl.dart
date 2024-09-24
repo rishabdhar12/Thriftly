@@ -42,8 +42,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
 
       category?.txnHistory = [...category!.txnHistory, id!];
       category?.totalDeducted += params.transaction.amountSpent;
-      category?.amountLeft =
-          (category!.amount - category!.totalDeducted);
+      category?.amountLeft = (category!.amount - category!.totalDeducted);
 
       await _isar.writeTxn(() async {
         await _isar.categories.put(category!);
@@ -83,7 +82,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
 
       // Revert
       category?.totalDeducted -= transaction!.amountSpent;
-      category?.amountLeft =  transaction!.amountSpent;
+      category?.amountLeft = transaction!.amountSpent;
 
       transaction?.title = params.transaction.title;
       transaction?.date = params.transaction.date;
@@ -91,8 +90,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
       transaction?.message = params.transaction.message;
 
       category?.totalDeducted += params.transaction.amountSpent;
-      category?.amountLeft =
-          (category!.amount - category!.totalDeducted);
+      category?.amountLeft = (category!.amount - category!.totalDeducted);
 
       await _isar.writeTxn(() async {
         await _isar.transactions.put(transaction!);
@@ -109,7 +107,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
   Future<Either<Failure, bool>> deleteTransaction(
       DeleteTransactionParams params) async {
     Categories? category;
-    // Transaction? transaction;
+    Transaction? transaction;
     try {
       await _isar.writeTxn(() async {
         category = await _isar.categories
@@ -122,8 +120,22 @@ class TransactionRepositoryImpl implements TransactionRepository {
         return const Left(ServerFailure("category not found!"));
       }
 
+      await _isar.writeTxn(() async {
+        transaction = await _isar.transactions
+            .filter()
+            .idEqualTo(params.transactionId)
+            .findFirst();
+      });
+
+      if (transaction == null) {
+        return const Left(ServerFailure("transaction not found!"));
+      }
+
       category?.txnHistory = [...?category?.txnHistory];
       category?.txnHistory.removeWhere((id) => id == params.transactionId);
+
+      category?.totalDeducted -= transaction!.amountSpent;
+      category?.amountLeft += transaction!.amountSpent;
 
       await _isar.writeTxn(() async {
         await _isar.categories.put(category!);

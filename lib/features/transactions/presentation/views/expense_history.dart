@@ -13,6 +13,7 @@ import 'package:budgeting_app/features/transactions/domain/entities/local/txn_sc
 import 'package:budgeting_app/features/transactions/presentation/bloc/local/local_transaction_bloc.dart';
 import 'package:budgeting_app/features/transactions/presentation/bloc/local/local_transaction_event.dart';
 import 'package:budgeting_app/features/transactions/presentation/bloc/local/local_transaction_state.dart';
+import 'package:budgeting_app/features/transactions/presentation/views/widgets/transaction_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -125,14 +126,7 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
           id: transactionId,
         ),
       );
-      // deleteTransaction(
-      //   DeleteTransactionParams(
-      //     transactionId: transactionId,
-      //     categoryId: widget.id,
-      //   ),
-      // );
 
-      log(transactionId.toString());
       _titleController.clear();
       _amountController.clear();
       _dateController.clear();
@@ -141,7 +135,16 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
     }
   }
 
-  void _showDatePicker() async {
+  delete(int transactionId) {
+    deleteTransaction(
+      DeleteTransactionParams(
+        transactionId: transactionId,
+        categoryId: widget.id,
+      ),
+    );
+  }
+
+  Future<void> pickDate() async {
     final DateFormat formatter = DateFormat('dd/MM/yyyy');
     final DateTime now = DateTime.now();
     final DateTime firstDayOfMonth = DateTime(now.year, now.month, 1);
@@ -159,6 +162,7 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
       setState(() {
         _selectedDate = pickedDate;
         _dateController.text = formatter.format(_selectedDate);
+        log(_dateController.text);
       });
     }
   }
@@ -247,12 +251,17 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                             itemCount: transactions.length,
                             itemBuilder: (context, index) {
                               return GestureDetector(
-                                  onTap: () async {
-                                    transactionId = transactions[index].id;
-                                    await showEditBottomSheet(
-                                        context, transactions[index]);
-                                  },
-                                  child: transactionItem(transactions, index));
+                                onTap: () async {
+                                  transactionId = transactions[index].id;
+
+                                  showActionDialog(transaction: transactions[index]);
+                                },
+                                child: transactionItem(
+                                  transactions,
+                                  index,
+                                  widget.iconCode,
+                                ),
+                              );
                             }),
                         const SizedBox(height: 40.0),
                       ],
@@ -265,6 +274,54 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> showActionDialog({Transaction? transaction}) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: ColorCodes.lightGreen,
+          title: textWidget(
+            text: "Make a selection",
+            fontWeight: FontWeight.w500,
+            fontSize: 24.0,
+            color: ColorCodes.appBackground,
+          ),
+          content: const Text("Would you like to edit or delete this item?"),
+          actions: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: ColorCodes.blue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              onPressed: () async {
+                Navigator.of(context).pop();
+                await showEditBottomSheet(
+                    context, transaction!);
+              },
+              child: textWidget(text: "Edit"),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: ColorCodes.red,
+                textStyle: const TextStyle(color: ColorCodes.white),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              onPressed: () async {
+                Navigator.of(context).pop();
+                await delete(transaction!.id);
+              },
+              child: textWidget(text: "Delete"),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -339,7 +396,9 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                       color: ColorCodes.appBackground,
                     ),
                     CupertinoButton(
-                      onPressed: _showDatePicker,
+                      onPressed: () {
+                        pickDate();
+                      },
                       child: const Icon(CupertinoIcons.calendar),
                     ),
                   ],
@@ -457,7 +516,9 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                       color: ColorCodes.appBackground,
                     ),
                     CupertinoButton(
-                      onPressed: _showDatePicker,
+                      onPressed: () async {
+                        await pickDate();
+                      },
                       child: const Icon(CupertinoIcons.calendar),
                     ),
                   ],
@@ -514,46 +575,6 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
           ),
         );
       },
-    );
-  }
-
-  Widget transactionItem(List<Transaction> transactions, int index) {
-    return ListTile(
-      visualDensity: const VisualDensity(vertical: 4.0),
-      leading: Container(
-        height: 60.0,
-        width: 60.0,
-        padding: const EdgeInsets.all(4.0),
-        decoration: BoxDecoration(
-          color: ColorCodes.darkBlue,
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        child: Icon(
-          IconData(widget.iconCode, fontFamily: "MaterialIcons"),
-          size: 36.0,
-          color: ColorCodes.white,
-        ),
-      ),
-      title: textWidget(
-        text: transactions[index].title,
-        fontSize: 18.0,
-        fontWeight: FontWeight.w600,
-      ),
-      subtitle: textWidget(
-        text: DateFormat("dd/MM/yyyy")
-            .format(transactions[index].date)
-            .toString()
-            .split(" ")
-            .first,
-        fontSize: 14.0,
-        color: ColorCodes.lightBlue,
-      ),
-      trailing: textWidget(
-        text: "-${transactions[index].amountSpent.toString()}",
-        fontSize: 20.0,
-        fontWeight: FontWeight.bold,
-        color: ColorCodes.yellow,
-      ),
     );
   }
 }
