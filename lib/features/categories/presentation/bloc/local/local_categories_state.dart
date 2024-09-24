@@ -27,7 +27,7 @@ class LocalCategoryFetchedState extends LocalCategoriesState {
       : super(category: category);
 }
 
-// categorie(s)
+// category(s)
 class LocalCategoriesFinishedState extends LocalCategoriesState {
   const LocalCategoriesFinishedState(List<Categories> categories)
       : super(categories: categories);
@@ -40,6 +40,11 @@ class LocalCategoriesFetchedState extends LocalCategoriesState {
 
 class LocalCategoriesDeletedState extends LocalCategoriesState {
   const LocalCategoriesDeletedState(bool result) : super(result: result);
+}
+
+class LocalCategoriesResetState extends LocalCategoriesState {
+  const LocalCategoriesResetState(List<Categories> categories)
+      : super(categories: categories);
 }
 
 class LocalCategoriesErrorState extends LocalCategoriesState {

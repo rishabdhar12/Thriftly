@@ -46,3 +46,10 @@ class DeleteCategoriesEvent extends LocalCategoriesEvent {
   @override
   List<Object> get props => [name];
 }
+
+class ResetCategoriesEvent extends LocalCategoriesEvent {
+  const ResetCategoriesEvent();
+
+  @override
+  List<Object> get props => [];
+}

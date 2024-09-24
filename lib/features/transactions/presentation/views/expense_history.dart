@@ -253,8 +253,9 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                               return GestureDetector(
                                 onTap: () async {
                                   transactionId = transactions[index].id;
-
-                                  showActionDialog(transaction: transactions[index]);
+                                  // await showEditBottomSheet(
+                                  //     context, transactions[index]);
+                                  showActionDialog();
                                 },
                                 child: transactionItem(
                                   transactions,
@@ -277,33 +278,26 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
     );
   }
 
-  Future<void> showActionDialog({Transaction? transaction}) async {
+  Future<void> showActionDialog() async {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: ColorCodes.lightGreen,
-          title: textWidget(
-            text: "Make a selection",
-            fontWeight: FontWeight.w500,
-            fontSize: 24.0,
-            color: ColorCodes.appBackground,
-          ),
+          title: const Text("Make a selection"),
           content: const Text("Would you like to edit or delete this item?"),
           actions: [
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: ColorCodes.blue,
+                backgroundColor: ColorCodes.lightBlue,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              onPressed: () async {
+              onPressed: () {
                 Navigator.of(context).pop();
-                await showEditBottomSheet(
-                    context, transaction!);
               },
-              child: textWidget(text: "Edit"),
+              child: textWidget(text: "Edit" color: ColorCodes.darkBlue),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -313,11 +307,10 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              onPressed: () async {
+              onPressed: () {
                 Navigator.of(context).pop();
-                await delete(transaction!.id);
               },
-              child: textWidget(text: "Delete"),
+              child: const Text("Delete"),
             ),
           ],
         );

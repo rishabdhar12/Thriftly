@@ -25,9 +25,17 @@ class LayoutPage extends StatefulWidget {
 class _LayoutPageState extends State<LayoutPage> {
   @override
   void initState() {
-    BlocProvider.of<LocalCategoriesBloc>(context)
-        .add(const GetCategoriesEvent());
+    // resetCategories();
+    getCategories();
     super.initState();
+  }
+
+  getCategories() {
+    BlocProvider.of<LocalCategoriesBloc>(context).add(const GetCategoriesEvent());
+  }
+
+  resetCategories() {
+    BlocProvider.of<LocalCategoriesBloc>(context).add(const ResetCategoriesEvent());
   }
 
   @override
@@ -59,8 +67,7 @@ class _LayoutPageState extends State<LayoutPage> {
                     onTap: (index) {
                       switch (index) {
                         case 0:
-                          BlocProvider.of<BottomNavigationBloc>(context)
-                              .add((const HomeEvent()));
+                          BlocProvider.of<BottomNavigationBloc>(context).add((const HomeEvent()));
                         case 1:
                           BlocProvider.of<BottomNavigationBloc>(context)
                               .add((const AnalysisEvent()));
@@ -129,8 +136,7 @@ class _LayoutPageState extends State<LayoutPage> {
                         return HomeScreen(
                           categories: categoriesState.categories ?? [],
                         );
-                      } else if (categoriesState
-                          is LocalCategoriesLoadingState) {
+                      } else if (categoriesState is LocalCategoriesLoadingState) {
                         return const Center(
                           child: CircularProgressIndicator(),
                         );

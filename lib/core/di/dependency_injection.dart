@@ -13,6 +13,7 @@ import 'package:budgeting_app/features/categories/domain/usecases/add_category_u
 import 'package:budgeting_app/features/categories/domain/usecases/delete_categories_usecase.dart';
 import 'package:budgeting_app/features/categories/domain/usecases/get_categories_usecase.dart';
 import 'package:budgeting_app/features/categories/domain/usecases/get_category_usecase.dart';
+import 'package:budgeting_app/features/categories/domain/usecases/reset_categories_usecase.dart';
 import 'package:budgeting_app/features/categories/presentation/bloc/local/local_categories_bloc.dart';
 import 'package:budgeting_app/features/categories/presentation/bloc/remote/remote_categories_bloc.dart';
 import 'package:budgeting_app/features/home/presentation/views/bloc/bottom_navigation_bloc.dart';
@@ -35,8 +36,7 @@ Future<void> setupDependencies() async {
   final isar = await openIsarInstance();
   sl.registerSingleton<Isar>(isar);
 
-  sl.registerLazySingleton<FirebaseRemoteConfig>(
-      () => FirebaseRemoteConfig.instance);
+  sl.registerLazySingleton<FirebaseRemoteConfig>(() => FirebaseRemoteConfig.instance);
 
   sl.registerLazySingleton(() => FirebaseAuth.instance);
   sl.registerLazySingleton(() => FirebaseFirestore.instance);
@@ -55,6 +55,7 @@ Future<void> setupDependencies() async {
         deleteCategoriesUsecase: sl(),
         getCategoryUsecase: sl(),
         getCategoriesUsecase: sl(),
+        resetCategoriesUsecase: sl(),
       ));
   sl.registerFactory(() => BottomNavigationBloc());
   sl.registerFactory(() => LocalTransactionBloc(
@@ -72,6 +73,7 @@ Future<void> setupDependencies() async {
   sl.registerLazySingleton(() => DeleteCategoriesUsecase(sl()));
   sl.registerLazySingleton(() => GetCategoryUsecase(sl()));
   sl.registerLazySingleton(() => GetCategoriesUsecase(sl()));
+  sl.registerLazySingleton(() => ResetCategoriesUsecase(sl()));
   sl.registerLazySingleton(() => CheckUserExist(sl()));
   sl.registerLazySingleton(() => SignUp(sl()));
   sl.registerLazySingleton(() => AddTransactionUsecase(sl()));

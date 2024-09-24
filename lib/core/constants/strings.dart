@@ -81,4 +81,13 @@ class AppStrings {
   static const String expenseText = "What did you spend on?";
   static const String message = "Additional info";
   static const String editTransaction = "Edit Transaction";
+  static const String editOrDelete = "Would you like to edit or delete this item?";
+  static const String makeSelection = "Make a selection";
+  static const String edit = "Edit";
+  static const String delete = "Delete";
+  static const String titleMandatory = "Title is mandatory";
+  static const String amountMandatory = "Amount is mandatory";
+  static const String dateMandatory = "Date is mandatory";
+  static const String expenseAdded = "Expense added successfully!";
+  static const String expenseEdited = "Expense edited!";
 }
