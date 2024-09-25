@@ -1,4 +1,6 @@
 // lib/features/auth/presentation/bloc/auth_bloc.dart
+import 'dart:developer';
+
 import 'package:budgeting_app/features/authentication/domain/usecases/check_user_exists_usecase.dart';
 import 'package:budgeting_app/features/authentication/domain/usecases/signin_usecase.dart';
 import 'package:budgeting_app/features/authentication/domain/usecases/signup_usecase.dart';
@@ -50,8 +52,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     );
   }
 
-  void _onCheckUserExist(
-      CheckUserExistEvent event, Emitter<AuthState> emit) async {
+  void _onCheckUserExist(CheckUserExistEvent event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
     final failureOrUser = await checkUserExist(event.phoneNumber);
     failureOrUser.fold(
@@ -62,10 +63,33 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   void _onSignUp(SignUpEvent event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
-    final failureOrUser = await signUp(event.signUpParams);
-    failureOrUser.fold(
-      (failure) => emit(AuthError(message: failure.message)),
-      (user) => emit(SignUpFinishedState(user: user)),
-    );
+    try {
+      final signUpResponse = await signUp(event.signUpParams);
+      // failureOrUser.fold(
+      //   (failure) => emit(AuthError(message: failure.message)),
+      //   (user) => emit(SignUpFinishedState(user: user)),
+      // );
+
+      if (signUpResponse.isLeft()) {
+        final failure = signUpResponse.getLeft().toNullable();
+        emit(AuthError(message: failure?.message ?? "Unknown error"));
+        return;
+      }
+
+      final signUpWithPhoneNumberResponse =
+          await signInWithPhoneNumber(event.signUpParams.phoneNumber);
+
+      if (signUpWithPhoneNumberResponse.isLeft()) {
+        final failure = signUpWithPhoneNumberResponse.getLeft().toNullable();
+        emit(AuthError(message: failure?.message ?? "Unknown error"));
+        return;
+      }
+
+      final user = signUpWithPhoneNumberResponse.getRight().toNullable();
+      // log("AuthBloc: ${user!.uid}");
+      emit(OtpSentState(verificationId: user!.uid));
+    } catch (error) {
+      emit(AuthError(message: error.toString()));
+    }
   }
 }

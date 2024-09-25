@@ -23,6 +23,7 @@ import 'package:intl/intl.dart';
 class ExpenseHistoryScreen extends StatefulWidget {
   final int id;
   final int iconCode;
+
   const ExpenseHistoryScreen({
     super.key,
     required this.id,
@@ -34,39 +35,32 @@ class ExpenseHistoryScreen extends StatefulWidget {
 }
 
 DateTime _selectedDate = DateTime.now();
-String _selectedDateFormatted =
-    DateFormat("dd/MM/yyyy").format(_selectedDate).toString();
+String _selectedDateFormatted = DateFormat("dd/MM/yyyy").format(_selectedDate).toString();
 
 final TextEditingController _titleController = TextEditingController(text: "");
-final TextEditingController _messageController =
-    TextEditingController(text: "");
+final TextEditingController _messageController = TextEditingController(text: "");
 final TextEditingController _amountController = TextEditingController(text: "");
-final TextEditingController _dateController =
-    TextEditingController(text: _selectedDateFormatted);
+final TextEditingController _dateController = TextEditingController(text: _selectedDateFormatted);
 
 int transactionId = 0;
 
 class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
   @override
   void initState() {
-    BlocProvider.of<LocalTransactionBloc>(context)
-        .add(GetTransactionEvent(categoryId: widget.id));
+    BlocProvider.of<LocalTransactionBloc>(context).add(GetTransactionEvent(categoryId: widget.id));
     super.initState();
   }
 
   void addTransaction(AddTransactionParams params) {
-    BlocProvider.of<LocalTransactionBloc>(context)
-        .add(AddTransactionEvent(params: params));
+    BlocProvider.of<LocalTransactionBloc>(context).add(AddTransactionEvent(params: params));
   }
 
   void editTransaction(EditTransactionParams params) {
-    BlocProvider.of<LocalTransactionBloc>(context)
-        .add(EditTransactionEvent(params: params));
+    BlocProvider.of<LocalTransactionBloc>(context).add(EditTransactionEvent(params: params));
   }
 
   void deleteTransaction(DeleteTransactionParams params) {
-    BlocProvider.of<LocalTransactionBloc>(context)
-        .add(DeleteTransactionEvent(params: params));
+    BlocProvider.of<LocalTransactionBloc>(context).add(DeleteTransactionEvent(params: params));
   }
 
   submit() async {
@@ -255,7 +249,7 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                                   transactionId = transactions[index].id;
                                   // await showEditBottomSheet(
                                   //     context, transactions[index]);
-                                  showActionDialog();
+                                  showActionDialog(context, transaction: transactions[index]);
                                 },
                                 child: transactionItem(
                                   transactions,
@@ -278,7 +272,7 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
     );
   }
 
-  Future<void> showActionDialog() async {
+  Future<void> showActionDialog(BuildContext context, {Transaction? transaction}) async {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -296,6 +290,7 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
               ),
               onPressed: () {
                 Navigator.of(context).pop();
+                showEditBottomSheet(context, transaction!);
               },
               child: textWidget(text: "Edit", color: ColorCodes.darkBlue),
             ),
@@ -309,6 +304,7 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
               ),
               onPressed: () {
                 Navigator.of(context).pop();
+                delete(transaction!.id);
               },
               child: const Text("Delete"),
             ),
@@ -318,8 +314,7 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
     );
   }
 
-  Future<void> showEditBottomSheet(
-      BuildContext context, Transaction transaction) {
+  Future<void> showEditBottomSheet(BuildContext context, Transaction transaction) {
     _titleController.text = transaction.title;
     _amountController.text = transaction.amountSpent.toString();
     _messageController.text = transaction.message;
@@ -382,9 +377,7 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     textWidget(
-                      text: _dateController.text == ""
-                          ? "DD/MM/YYYY"
-                          : _dateController.text,
+                      text: _dateController.text == "" ? "DD/MM/YYYY" : _dateController.text,
                       fontSize: 16,
                       color: ColorCodes.appBackground,
                     ),
@@ -407,8 +400,7 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
               textFormField(
                 hintText: AppStrings.amountFormText,
                 controller: _amountController,
-                textInputType:
-                    const TextInputType.numberWithOptions(decimal: true),
+                textInputType: const TextInputType.numberWithOptions(decimal: true),
                 contentPaddingVertical: 0.0,
               ),
               const SizedBox(height: 30),
@@ -502,9 +494,7 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     textWidget(
-                      text: _dateController.text == ""
-                          ? "DD/MM/YYYY"
-                          : _dateController.text,
+                      text: _dateController.text == "" ? "DD/MM/YYYY" : _dateController.text,
                       fontSize: 16,
                       color: ColorCodes.appBackground,
                     ),
@@ -527,8 +517,7 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
               textFormField(
                 hintText: AppStrings.amountFormText,
                 controller: _amountController,
-                textInputType:
-                    const TextInputType.numberWithOptions(decimal: true),
+                textInputType: const TextInputType.numberWithOptions(decimal: true),
                 contentPaddingVertical: 0.0,
               ),
               const SizedBox(height: 30),

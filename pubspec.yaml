@@ -37,6 +37,8 @@ dependencies:
   cloud_firestore: ^4.14.0
   percent_indicator: ^4.2.3
   syncfusion_flutter_datepicker: ^26.2.13
+  new_version_plus: ^0.0.12
+  package_info_plus: ^8.0.2
 
 dev_dependencies:
   flutter_test:

@@ -5,6 +5,8 @@ import 'package:budgeting_app/core/common/date_picker.dart';
 import 'package:budgeting_app/core/common/elevated_button.dart';
 import 'package:budgeting_app/core/common/text.dart';
 import 'package:budgeting_app/core/common/text_form_field.dart';
+import 'package:budgeting_app/core/config/shared_prefs/keys.dart';
+import 'package:budgeting_app/core/config/shared_prefs/shared_prefs.dart';
 import 'package:budgeting_app/core/constants/colors.dart';
 import 'package:budgeting_app/core/constants/country_codes.dart';
 import 'package:budgeting_app/core/constants/route_names.dart';
@@ -38,8 +40,9 @@ DateTime _selectedDate = DateTime.now();
 
 class _SignUpScreenState extends State<SignUpScreen> {
   checkUserExist() {
-    context.read<AuthBloc>().add(CheckUserExistEvent(
-        phoneNumber: "$_selectedCode${_phoneNumberController.text}"));
+    context
+        .read<AuthBloc>()
+        .add(CheckUserExistEvent(phoneNumber: "$_selectedCode${_phoneNumberController.text}"));
   }
 
   void signUpUser(SignUpParams params) {
@@ -56,8 +59,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           onDateChanged: (DateTime newDate) {
             setState(() {
               _selectedDate = newDate;
-              _dobController.text =
-                  formatter.format(_selectedDate).toString().split(" ").first;
+              _dobController.text = formatter.format(_selectedDate).toString().split(" ").first;
             });
           },
         );
@@ -83,9 +85,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
           showSnackBar(context, message: state.message);
         }
 
-        if (state is SignUpFinishedState) {
-          log(state.user.fullName);
-          showSnackBar(context, message: AppStrings.signUpComplete);
+        if (state is OtpSentState) {
+          // log(state.user.fullName);
+          showSnackBar(context, message: AppStrings.otpSent);
+          PreferenceHelper.saveDataInSharedPreference(
+              key: PrefsKeys.verificationId, value: state.verificationId);
+          showSnackBar(context, message: AppStrings.otpSent);
+
+          context.replace(RouteNames.otpScreen);
+          // context.go(RouteNames.otpScreen);
         }
       },
       builder: (context, state) {
@@ -93,8 +101,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           extendBodyBehindAppBar: true,
           body: SingleChildScrollView(
             child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 40),
+              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 40),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -128,8 +135,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           borderRadius: BorderRadius.circular(20.0),
                           color: ColorCodes.lightGreen,
                         ),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 4),
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton<String>(
                             isExpanded: true,
@@ -146,8 +152,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 log(_selectedCode);
                               });
                             },
-                            items: countryData.map<DropdownMenuItem<String>>(
-                                (Map<String, String> country) {
+                            items: countryData
+                                .map<DropdownMenuItem<String>>((Map<String, String> country) {
                               return DropdownMenuItem<String>(
                                 value: country['code'],
                                 child: textWidget(
@@ -212,9 +218,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         textWidget(
-                          text: _dobController.text == ""
-                              ? "DD/MM/YYYY"
-                              : _dobController.text,
+                          text: _dobController.text == "" ? "DD/MM/YYYY" : _dobController.text,
                           fontSize: 16,
                           color: ColorCodes.appBackground,
                         ),
@@ -231,14 +235,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       listener: (context, state) {
                         if (state is UserExistState) {
                           if (state.isUserExist) {
-                            showSnackBar(context,
-                                message: AppStrings.userExists);
+                            showSnackBar(context, message: AppStrings.userExists);
                           } else {
                             signUpUser(
                               SignUpParams(
                                 fullName: _fullNameController.text,
-                                phoneNumber:
-                                    "$_selectedCode${_phoneNumberController.text}",
+                                phoneNumber: "$_selectedCode${_phoneNumberController.text}",
                                 email: _emailController.text,
                                 dob: _dobController.text,
                               ),
@@ -260,17 +262,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             height: 45,
                             onPressed: () async {
                               if (_phoneNumberController.text.isEmpty) {
-                                showSnackBar(context,
-                                    message: AppStrings.invalidPhNumber);
+                                showSnackBar(context, message: AppStrings.invalidPhNumber);
                               } else if (_fullNameController.text.isEmpty) {
-                                showSnackBar(context,
-                                    message: AppStrings.invalidName);
+                                showSnackBar(context, message: AppStrings.invalidName);
                               } else if (_emailController.text.isEmpty) {
-                                showSnackBar(context,
-                                    message: AppStrings.invalidEmail);
+                                showSnackBar(context, message: AppStrings.invalidEmail);
                               } else if (_dobController.text.isEmpty) {
-                                showSnackBar(context,
-                                    message: AppStrings.invalidDOB);
+                                showSnackBar(context, message: AppStrings.invalidDOB);
                               } else {
                                 checkUserExist();
                               }
