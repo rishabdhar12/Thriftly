@@ -1,3 +1,4 @@
+import 'package:budgeting_app/core/config/shared_prefs/package_info.dart';
 import 'package:budgeting_app/core/config/shared_prefs/shared_prefs.dart';
 import 'package:budgeting_app/core/constants/colors.dart';
 import 'package:budgeting_app/core/constants/strings.dart';
@@ -21,6 +22,7 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await PreferenceHelper.init();
+  await PackageInfoPlus.init();
   await setupDependencies();
   runApp(const MyApp());
 }

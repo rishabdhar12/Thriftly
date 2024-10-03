@@ -1,6 +1,3 @@
-// lib/features/auth/presentation/bloc/auth_bloc.dart
-import 'dart:developer';
-
 import 'package:budgeting_app/features/authentication/domain/usecases/check_user_exists_usecase.dart';
 import 'package:budgeting_app/features/authentication/domain/usecases/signin_usecase.dart';
 import 'package:budgeting_app/features/authentication/domain/usecases/signup_usecase.dart';
@@ -52,7 +49,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     );
   }
 
-  void _onCheckUserExist(CheckUserExistEvent event, Emitter<AuthState> emit) async {
+  void _onCheckUserExist(
+      CheckUserExistEvent event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
     final failureOrUser = await checkUserExist(event.phoneNumber);
     failureOrUser.fold(
@@ -65,10 +63,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(AuthLoading());
     try {
       final signUpResponse = await signUp(event.signUpParams);
-      // failureOrUser.fold(
-      //   (failure) => emit(AuthError(message: failure.message)),
-      //   (user) => emit(SignUpFinishedState(user: user)),
-      // );
 
       if (signUpResponse.isLeft()) {
         final failure = signUpResponse.getLeft().toNullable();

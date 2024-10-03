@@ -30,6 +30,7 @@ class AppStrings {
   static const String otpSent = "OTP sent to phone number";
   static const String loggedIn = "You are logged in";
   static const String userExists = "User already exists, log in to continue";
+  static const String userNotFound = "User doesn't exists, please signup";
   static const String signUpComplete = "Sign-up complete! Welcome aboard!";
   static const String invalidPhNumber = "Invalid phone number";
   static const String invalidName = "Invalid name";
@@ -81,7 +82,8 @@ class AppStrings {
   static const String expenseText = "What did you spend on?";
   static const String message = "Additional info";
   static const String editTransaction = "Edit Transaction";
-  static const String editOrDelete = "Would you like to edit or delete this item?";
+  static const String editOrDelete =
+      "Would you like to edit or delete this item?";
   static const String makeSelection = "Make a selection";
   static const String edit = "Edit";
   static const String delete = "Delete";
@@ -90,4 +92,10 @@ class AppStrings {
   static const String dateMandatory = "Date is mandatory";
   static const String expenseAdded = "Expense added successfully!";
   static const String expenseEdited = "Expense edited!";
+  static const String editProfile = "Edit Profile";
+  static const String settings = "Settings";
+  static const String help = "Help";
+  static const String logout = "Logout";
+  static const String version = "Version";
+  static const String about = "About";
 }

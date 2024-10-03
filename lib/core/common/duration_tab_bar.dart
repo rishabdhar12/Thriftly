@@ -1,4 +1,5 @@
 import 'package:budgeting_app/core/constants/colors.dart';
+import 'package:budgeting_app/core/constants/strings.dart';
 import 'package:flutter/material.dart';
 
 Widget durationTabBar(TabController? tabController) {
@@ -27,9 +28,9 @@ Widget durationTabBar(TabController? tabController) {
             unselectedLabelColor: ColorCodes.white,
             indicatorSize: TabBarIndicatorSize.tab,
             tabs: const [
-              Tab(text: 'Daily'),
-              Tab(text: 'Weekly'),
-              Tab(text: 'Monthly'),
+              Tab(text: AppStrings.daily),
+              Tab(text: AppStrings.weekly),
+              Tab(text: AppStrings.monthly),
             ],
           ),
         ),

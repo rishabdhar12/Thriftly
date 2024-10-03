@@ -1,7 +1,13 @@
-import 'package:budgeting_app/core/common/text.dart';
-import 'package:budgeting_app/core/constants/colors.dart';
+import 'dart:developer';
+
+import 'package:budgeting_app/core/config/shared_prefs/package_info.dart';
+import 'package:budgeting_app/core/config/shared_prefs/shared_prefs.dart';
+import 'package:budgeting_app/core/constants/route_names.dart';
+import 'package:budgeting_app/core/constants/strings.dart';
+import 'package:budgeting_app/features/profile/presentation/widgets/profile_items.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -10,7 +16,14 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
+String appVersion = "";
+
 class _ProfileScreenState extends State<ProfileScreen> {
+  void getVersion() {
+    appVersion = PackageInfoPlus.getVersion();
+    log(appVersion);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,59 +32,47 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Column(
           children: [
             profileItems(
-              title: "Edit Profile",
+              title: AppStrings.editProfile,
               icon: CupertinoIcons.person,
+              onPressed: () {},
             ),
             const SizedBox(height: 20.0),
             profileItems(
-              title: "Settings",
+              title: AppStrings.settings,
               icon: CupertinoIcons.settings,
+              onPressed: () {},
             ),
             const SizedBox(height: 20.0),
             profileItems(
-              title: "Help",
+              title: AppStrings.help,
               icon: CupertinoIcons.question_circle,
+              onPressed: () {},
             ),
             const SizedBox(height: 20.0),
             profileItems(
-              title: "Logout",
+              title: AppStrings.logout,
               icon: CupertinoIcons.power,
+              onPressed: () async {
+                await PreferenceHelper.clearData();
+                if (context.mounted) context.replace(RouteNames.login);
+              },
             ),
             const SizedBox(height: 20.0),
             profileItems(
-              title: "Version",
-              icon: CupertinoIcons.power,
+              title: AppStrings.version,
+              icon: CupertinoIcons.info,
+              onPressed: () {
+                getVersion();
+              },
             ),
             const SizedBox(height: 20.0),
             profileItems(
-              title: "About",
-              icon: CupertinoIcons.info_circle,
+              title: AppStrings.about,
+              icon: Icons.hdr_auto_outlined,
+              onPressed: () {},
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget profileItems({String title = "", IconData? icon}) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      height: 60.0,
-      decoration: BoxDecoration(
-        color: ColorCodes.transparentCard,
-        borderRadius: BorderRadius.circular(12.0),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          textWidget(text: title, fontWeight: FontWeight.w600, fontSize: 16.0),
-          Icon(
-            // CupertinoIcons.person,
-            icon,
-            color: ColorCodes.white,
-            size: 20.0,
-          ),
-        ],
       ),
     );
   }

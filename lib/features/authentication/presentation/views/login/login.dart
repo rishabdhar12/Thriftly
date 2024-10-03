@@ -157,10 +157,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       listener: (context, state) {
                         if (state is UserExistState) {
                           if (state.isUserExist) {
-                            showSnackBar(context,
-                                message: AppStrings.userExists);
-                          } else {
                             sendOTP();
+                          } else {
+                            showSnackBar(
+                              context,
+                              message: AppStrings.userNotFound,
+                            );
                           }
                         } else if (state is AuthError) {
                           showSnackBar(context, message: state.message);

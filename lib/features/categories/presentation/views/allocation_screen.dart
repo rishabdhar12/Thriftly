@@ -57,6 +57,7 @@ class _AllocationScreenState extends State<AllocationScreen> {
     double? newAmount = double.tryParse(_amountControllers[i].text);
     if (newAmount != null) {
       widget.categories[i].amount = newAmount;
+      widget.categories[i].amountLeft = newAmount;
     }
   }
 

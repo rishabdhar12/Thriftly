@@ -28,6 +28,7 @@ class AuthRepositoryImpl implements AuthRepository {
             final userCredential =
                 await firebaseAuth.signInWithCredential(credential);
             final user = userCredential.user;
+            log("$user");
             if (user != null) {
               completer.complete(
                 Right(AuthModel(uid: user.uid, phoneNumber: user.phoneNumber!)),

@@ -1,4 +1,4 @@
-import 'package:budgeting_app/core/common/text.dart';
+import 'package:budgeting_app/core/common/duration_tab_bar.dart';
 import 'package:flutter/material.dart';
 
 class AnalysisScreen extends StatefulWidget {
@@ -8,15 +8,25 @@ class AnalysisScreen extends StatefulWidget {
   State<AnalysisScreen> createState() => _AnalysisScreenState();
 }
 
-class _AnalysisScreenState extends State<AnalysisScreen> {
+TabController? tabController;
+
+class _AnalysisScreenState extends State<AnalysisScreen>
+    with SingleTickerProviderStateMixin {
+  @override
+  void initState() {
+    tabController = TabController(length: 3, vsync: this);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: textWidget(
-          text: "Coming Soon!",
-          fontSize: 24.0,
-          fontWeight: FontWeight.bold,
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            const SizedBox(height: 40),
+            durationTabBar(tabController),
+          ],
         ),
       ),
     );
