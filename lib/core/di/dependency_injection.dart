@@ -22,6 +22,7 @@ import 'package:budgeting_app/features/transactions/domain/repositories/transact
 import 'package:budgeting_app/features/transactions/domain/usecases/add_transaction_usecase.dart';
 import 'package:budgeting_app/features/transactions/domain/usecases/delete_transaction_usecase.dart';
 import 'package:budgeting_app/features/transactions/domain/usecases/edit_transaction_usecase.dart';
+import 'package:budgeting_app/features/transactions/domain/usecases/get_transactions_by_categoryid_usecase.dart';
 import 'package:budgeting_app/features/transactions/domain/usecases/get_transactions_usecase.dart';
 import 'package:budgeting_app/features/transactions/presentation/bloc/local/local_transaction_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -36,7 +37,8 @@ Future<void> setupDependencies() async {
   final isar = await openIsarInstance();
   sl.registerSingleton<Isar>(isar);
 
-  sl.registerLazySingleton<FirebaseRemoteConfig>(() => FirebaseRemoteConfig.instance);
+  sl.registerLazySingleton<FirebaseRemoteConfig>(
+      () => FirebaseRemoteConfig.instance);
 
   sl.registerLazySingleton(() => FirebaseAuth.instance);
   sl.registerLazySingleton(() => FirebaseFirestore.instance);
@@ -60,9 +62,10 @@ Future<void> setupDependencies() async {
   sl.registerFactory(() => BottomNavigationBloc());
   sl.registerFactory(() => LocalTransactionBloc(
         addTransactionUsecase: sl(),
-        getTransactionsUsecase: sl(),
+        getTransactionsByCategoryIdUsecase: sl(),
         editTransactionsUsecase: sl(),
         deleteTransactionUsecase: sl(),
+        getTransactionsUsecase: sl(),
       ));
 
   // Usecase
@@ -77,9 +80,10 @@ Future<void> setupDependencies() async {
   sl.registerLazySingleton(() => CheckUserExist(sl()));
   sl.registerLazySingleton(() => SignUp(sl()));
   sl.registerLazySingleton(() => AddTransactionUsecase(sl()));
-  sl.registerLazySingleton(() => GetTransactionsUsecase(sl()));
+  sl.registerLazySingleton(() => GetTransactionsByCategoryIdUsecase(sl()));
   sl.registerLazySingleton(() => EditTransactionUsecase(sl()));
   sl.registerLazySingleton(() => DeleteTransactionUsecase(sl()));
+  sl.registerLazySingleton(() => GetTransactionsUsecase(sl()));
 
   // Repository
   sl.registerLazySingleton<AuthRepository>(

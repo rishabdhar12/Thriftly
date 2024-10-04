@@ -3,7 +3,10 @@ import 'package:budgeting_app/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 Widget profileItems(
-    {String title = "", IconData? icon, void Function()? onPressed}) {
+    {String title = "",
+    String desc = "",
+    IconData? icon,
+    void Function()? onPressed}) {
   return GestureDetector(
     onTap: onPressed,
     child: Container(
@@ -17,12 +20,14 @@ Widget profileItems(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           textWidget(text: title, fontWeight: FontWeight.w600, fontSize: 16.0),
-          Icon(
-            // CupertinoIcons.person,
-            icon,
-            color: ColorCodes.white,
-            size: 20.0,
-          ),
+          icon != null
+              ? Icon(
+                  // CupertinoIcons.person,
+                  icon,
+                  color: ColorCodes.white,
+                  size: 20.0,
+                )
+              : textWidget(text: desc, fontSize: 16.0),
         ],
       ),
     ),

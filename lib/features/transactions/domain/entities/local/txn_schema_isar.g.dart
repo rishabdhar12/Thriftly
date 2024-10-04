@@ -47,13 +47,18 @@ const TransactionSchema = CollectionSchema(
       name: r'title',
       type: IsarType.string,
     ),
-    r'weekNumber': PropertySchema(
+    r'totalBudget': PropertySchema(
       id: 6,
+      name: r'totalBudget',
+      type: IsarType.double,
+    ),
+    r'weekNumber': PropertySchema(
+      id: 7,
       name: r'weekNumber',
       type: IsarType.long,
     ),
     r'year': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'year',
       type: IsarType.long,
     )
@@ -95,8 +100,9 @@ void _transactionSerialize(
   writer.writeString(offsets[3], object.message);
   writer.writeLong(offsets[4], object.month);
   writer.writeString(offsets[5], object.title);
-  writer.writeLong(offsets[6], object.weekNumber);
-  writer.writeLong(offsets[7], object.year);
+  writer.writeDouble(offsets[6], object.totalBudget);
+  writer.writeLong(offsets[7], object.weekNumber);
+  writer.writeLong(offsets[8], object.year);
 }
 
 Transaction _transactionDeserialize(
@@ -113,8 +119,9 @@ Transaction _transactionDeserialize(
   object.message = reader.readString(offsets[3]);
   object.month = reader.readLong(offsets[4]);
   object.title = reader.readString(offsets[5]);
-  object.weekNumber = reader.readLong(offsets[6]);
-  object.year = reader.readLong(offsets[7]);
+  object.totalBudget = reader.readDouble(offsets[6]);
+  object.weekNumber = reader.readLong(offsets[7]);
+  object.year = reader.readLong(offsets[8]);
   return object;
 }
 
@@ -138,8 +145,10 @@ P _transactionDeserializeProp<P>(
     case 5:
       return (reader.readString(offset)) as P;
     case 6:
-      return (reader.readLong(offset)) as P;
+      return (reader.readDouble(offset)) as P;
     case 7:
+      return (reader.readLong(offset)) as P;
+    case 8:
       return (reader.readLong(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -788,6 +797,72 @@ extension TransactionQueryFilter
   }
 
   QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      totalBudgetEqualTo(
+    double value, {
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'totalBudget',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      totalBudgetGreaterThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'totalBudget',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      totalBudgetLessThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'totalBudget',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
+      totalBudgetBetween(
+    double lower,
+    double upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'totalBudget',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterFilterCondition>
       weekNumberEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -977,6 +1052,18 @@ extension TransactionQuerySortBy
     });
   }
 
+  QueryBuilder<Transaction, Transaction, QAfterSortBy> sortByTotalBudget() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'totalBudget', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterSortBy> sortByTotalBudgetDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'totalBudget', Sort.desc);
+    });
+  }
+
   QueryBuilder<Transaction, Transaction, QAfterSortBy> sortByWeekNumber() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'weekNumber', Sort.asc);
@@ -1088,6 +1175,18 @@ extension TransactionQuerySortThenBy
     });
   }
 
+  QueryBuilder<Transaction, Transaction, QAfterSortBy> thenByTotalBudget() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'totalBudget', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Transaction, Transaction, QAfterSortBy> thenByTotalBudgetDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'totalBudget', Sort.desc);
+    });
+  }
+
   QueryBuilder<Transaction, Transaction, QAfterSortBy> thenByWeekNumber() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'weekNumber', Sort.asc);
@@ -1153,6 +1252,12 @@ extension TransactionQueryWhereDistinct
     });
   }
 
+  QueryBuilder<Transaction, Transaction, QDistinct> distinctByTotalBudget() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'totalBudget');
+    });
+  }
+
   QueryBuilder<Transaction, Transaction, QDistinct> distinctByWeekNumber() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'weekNumber');
@@ -1207,6 +1312,12 @@ extension TransactionQueryProperty
   QueryBuilder<Transaction, String, QQueryOperations> titleProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'title');
+    });
+  }
+
+  QueryBuilder<Transaction, double, QQueryOperations> totalBudgetProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'totalBudget');
     });
   }
 

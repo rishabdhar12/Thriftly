@@ -7,6 +7,7 @@ class Transaction {
   Id id = Isar.autoIncrement;
   late int categoryId;
   String title = "";
+  double totalBudget = 0.00;
   double amountSpent = 0.00;
   DateTime date = DateTime.now();
   int month = DateTime.now().month;

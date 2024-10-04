@@ -19,6 +19,12 @@ class ProfileScreen extends StatefulWidget {
 String appVersion = "";
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  @override
+  void initState() {
+    getVersion();
+    super.initState();
+  }
+
   void getVersion() {
     appVersion = PackageInfoPlus.getVersion();
     log(appVersion);
@@ -60,10 +66,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const SizedBox(height: 20.0),
             profileItems(
               title: AppStrings.version,
-              icon: CupertinoIcons.info,
-              onPressed: () {
-                getVersion();
-              },
+              // icon: CupertinoIcons.info,
+              desc: appVersion,
+              onPressed: () {},
             ),
             const SizedBox(height: 20.0),
             profileItems(

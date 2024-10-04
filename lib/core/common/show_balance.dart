@@ -21,7 +21,7 @@ double totalExpense = 0.00;
 double percent = 0.00;
 
 class _ShowBalanceState extends State<ShowBalance> {
-  calcTotalBalance(List<Categories>? categories) {
+  void calcTotalBalance(List<Categories>? categories) {
     totalBalance = 0.00;
     totalExpense = 0.00;
     if (categories!.isNotEmpty) {
@@ -32,7 +32,7 @@ class _ShowBalanceState extends State<ShowBalance> {
     }
   }
 
-  calcPercent() {
+  void calcPercent() {
     percent = ((totalExpense * 100) / totalBalance);
   }
 

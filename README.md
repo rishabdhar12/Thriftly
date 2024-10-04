@@ -1,6 +1,6 @@
 # Thriftly - Expense Tracker App
 
-Welcome to **Thriftly**, your go-to expense tracker app designed to help you manage and analyze your expenses with ease. This app is built using **Flutter**, incorporating **BLoC** for state management, adhering to **Clean Architecture** principles, and utilizing **Isar DB** for efficient local storage and **Firebase** for cloud integration.
+Welcome to **Thriftly**, expense tracker app designed to help you manage and analyze your expenses with ease. This app is built using **Flutter**, incorporating **BLoC** for state management, adhering to **Clean Architecture** principles, and utilizing **Isar DB** for efficient local storage and **Firebase** for cloud integration and authentication.
 
 ## Features
 
@@ -21,7 +21,6 @@ Welcome to **Thriftly**, your go-to expense tracker app designed to help you man
 
 - **Flutter**: Cross-platform framework for building iOS and Android applications.
 - **BLoC**: Business Logic Component (BLoC) pattern for reactive state management.
-- **Clean Architecture**: Structured project following separation of concerns for scalability and maintainability.
 - **Isar DB**: A fast, efficient local NoSQL database for offline storage.
 - **Firebase**: Used for cloud storage, authentication, and other backend services.
 

@@ -150,7 +150,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
   }
 
   @override
-  Future<Either<Failure, List<Transaction>>> getTransactions(
+  Future<Either<Failure, List<Transaction>>> getTransactionsByCategoryId(
       int categoryId) async {
     List<Transaction>? transactions;
     try {
@@ -159,6 +159,19 @@ class TransactionRepositoryImpl implements TransactionRepository {
             .filter()
             .categoryIdEqualTo(categoryId)
             .findAll();
+      });
+      return Right(transactions ?? []);
+    } catch (error) {
+      return Left(ServerFailure(error.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Transaction>>> getTransactions() async {
+    List<Transaction>? transactions;
+    try {
+      await _isar.writeTxn(() async {
+        transactions = await _isar.transactions.where().findAll();
       });
       return Right(transactions ?? []);
     } catch (error) {

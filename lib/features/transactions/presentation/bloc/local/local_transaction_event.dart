@@ -34,10 +34,17 @@ class DeleteTransactionEvent extends LocalTransactionEvent {
   List<Object> get props => [params];
 }
 
-class GetTransactionEvent extends LocalTransactionEvent {
+class GetTransactionByCategoryIdEvent extends LocalTransactionEvent {
   final int categoryId;
-  const GetTransactionEvent({required this.categoryId});
+  const GetTransactionByCategoryIdEvent({required this.categoryId});
 
   @override
   List<Object> get props => [categoryId];
+}
+
+class GetTransactionsEvent extends LocalTransactionEvent {
+  const GetTransactionsEvent();
+
+  @override
+  List<Object> get props => [];
 }

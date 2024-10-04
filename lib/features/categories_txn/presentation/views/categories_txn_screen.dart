@@ -33,7 +33,8 @@ String _selectedDuration = AppStrings.monthly;
 class _CategoriesTxnScreenState extends State<CategoriesTxnScreen> {
   @override
   void initState() {
-    BlocProvider.of<LocalCategoriesBloc>(context).add(const GetCategoriesEvent());
+    BlocProvider.of<LocalCategoriesBloc>(context)
+        .add(const GetCategoriesEvent());
     super.initState();
   }
 
@@ -46,12 +47,14 @@ class _CategoriesTxnScreenState extends State<CategoriesTxnScreen> {
             const Header(headingText: AppStrings.categories),
             const SizedBox(height: 40.0),
             Padding(
-              padding: const EdgeInsets.only(left: 40.0, right: 40.0, bottom: 20.0),
+              padding:
+                  const EdgeInsets.only(left: 40.0, right: 40.0, bottom: 20.0),
               child: Column(
                 children: [
                   const ShowBalance(),
                   const SizedBox(height: 30.0),
-                  BlocBuilder<LocalCategoriesBloc, LocalCategoriesState>(builder: (context, state) {
+                  BlocBuilder<LocalCategoriesBloc, LocalCategoriesState>(
+                      builder: (context, state) {
                     if (state is LocalCategoriesLoadingState) {
                       return const Center(
                         child: CupertinoActivityIndicator(
@@ -67,7 +70,8 @@ class _CategoriesTxnScreenState extends State<CategoriesTxnScreen> {
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: categories.length + 1,
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 3,
                           crossAxisSpacing: 7,
                           mainAxisSpacing: 40.0,
@@ -143,7 +147,8 @@ class _CategoriesTxnScreenState extends State<CategoriesTxnScreen> {
     IconData selectedIcon = Icons.category;
 
     void addCategory(Categories category) {
-      BlocProvider.of<LocalCategoriesBloc>(context).add(AddCategoryEvent(category: category));
+      BlocProvider.of<LocalCategoriesBloc>(context)
+          .add(AddCategoryEvent(category: category));
     }
 
     return showDialog<void>(
@@ -168,7 +173,8 @@ class _CategoriesTxnScreenState extends State<CategoriesTxnScreen> {
                     color: ColorCodes.lightBlue,
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  child: Icon(selectedIcon, size: 30.0, color: ColorCodes.white),
+                  child:
+                      Icon(selectedIcon, size: 30.0, color: ColorCodes.white),
                 ),
                 const SizedBox(height: 20.0),
                 SingleChildScrollView(
@@ -185,12 +191,15 @@ class _CategoriesTxnScreenState extends State<CategoriesTxnScreen> {
                           padding: const EdgeInsets.all(8.0),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color:
-                                selectedIcon == entry.value ? Colors.blueAccent : Colors.grey[200],
+                            color: selectedIcon == entry.value
+                                ? Colors.blueAccent
+                                : Colors.grey[200],
                           ),
                           child: Icon(
                             entry.value,
-                            color: selectedIcon == entry.value ? Colors.white : Colors.black,
+                            color: selectedIcon == entry.value
+                                ? Colors.white
+                                : Colors.black,
                           ),
                         ),
                       );
@@ -269,11 +278,13 @@ class _CategoriesTxnScreenState extends State<CategoriesTxnScreen> {
                     textAlign: TextAlign.center,
                   ),
                   onPressed: () {
-                    if (controller!.text.isNotEmpty && amountController!.text.isNotEmpty) {
+                    if (controller!.text.isNotEmpty &&
+                        amountController!.text.isNotEmpty) {
                       final category = Categories()
                         ..name = controller.text.trim()
                         ..amount = double.parse(amountController.text.trim())
-                        ..amountLeft = double.parse(amountController.text.trim())
+                        ..amountLeft =
+                            double.parse(amountController.text.trim())
                         ..iconCode = selectedIcon.codePoint
                         ..duration = selectedDuration;
                       addCategory(category);

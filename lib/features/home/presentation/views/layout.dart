@@ -10,6 +10,8 @@ import 'package:budgeting_app/features/home/presentation/views/bloc/bottom_navig
 import 'package:budgeting_app/features/home/presentation/views/bloc/bottom_navigation_state.dart';
 import 'package:budgeting_app/features/home/presentation/views/home.dart';
 import 'package:budgeting_app/features/profile/presentation/views/profile.dart';
+import 'package:budgeting_app/features/transactions/presentation/bloc/local/local_transaction_bloc.dart';
+import 'package:budgeting_app/features/transactions/presentation/bloc/local/local_transaction_event.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,18 +28,23 @@ class _LayoutPageState extends State<LayoutPage> {
   @override
   void initState() {
     resetCategories();
-    // getCategories();
-  super.initState();
+    getTransactions();
+    super.initState();
   }
 
-  getCategories() {
-    BlocProvider.of<LocalCategoriesBloc>(context)
-        .add(const GetCategoriesEvent());
-  }
+  // getCategories() {
+  //   BlocProvider.of<LocalCategoriesBloc>(context)
+  //       .add(const GetCategoriesEvent());
+  // }
 
   resetCategories() {
     BlocProvider.of<LocalCategoriesBloc>(context)
         .add(const ResetCategoriesEvent());
+  }
+
+  void getTransactions() {
+    BlocProvider.of<LocalTransactionBloc>(context)
+        .add(const GetTransactionsEvent());
   }
 
   @override
