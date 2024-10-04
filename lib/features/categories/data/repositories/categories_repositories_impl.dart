@@ -23,7 +23,8 @@ class CategoriesRepositoriesImpl implements CategoriesRespository {
   }
 
   @override
-  Future<Either<Failure, List<Categories>>> addCategories(List<Categories> categories) async {
+  Future<Either<Failure, List<Categories>>> addCategories(
+      List<Categories> categories) async {
     try {
       await _isar.writeTxn(() async {
         for (Categories category in categories) {
@@ -41,7 +42,8 @@ class CategoriesRepositoriesImpl implements CategoriesRespository {
     Categories? category;
     try {
       await _isar.writeTxn(() async {
-        category = await _isar.categories.filter().nameEqualTo(name).findFirst();
+        category =
+            await _isar.categories.filter().nameEqualTo(name).findFirst();
       });
 
       return Right(category!);
@@ -65,21 +67,13 @@ class CategoriesRepositoriesImpl implements CategoriesRespository {
   }
 
   @override
-  Future<Either<Failure, bool>> deleteCategories(String name) async {
+  Future<Either<Failure, bool>> deleteCategory(int categoryId) async {
     bool result = false;
-    Categories? category;
+
     try {
       await _isar.writeTxn(() async {
-        category = await _isar.categories.filter().nameEqualTo(name).findFirst();
+        result = await _isar.categories.delete(categoryId);
       });
-
-      if (category != null) {
-        await _isar.writeTxn(() async {
-          result = await _isar.categories.delete(category!.id);
-        });
-      } else {
-        return const Left(ServerFailure("category not found"));
-      }
 
       if (result) {
         return const Right(true);

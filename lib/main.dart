@@ -1,5 +1,5 @@
-import 'package:budgeting_app/core/config/shared_prefs/package_info.dart';
 import 'package:budgeting_app/core/config/shared_prefs/shared_prefs.dart';
+import 'package:budgeting_app/core/config/version/package_info.dart';
 import 'package:budgeting_app/core/constants/colors.dart';
 import 'package:budgeting_app/core/constants/strings.dart';
 import 'package:budgeting_app/core/di/dependency_injection.dart';

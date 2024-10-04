@@ -11,7 +11,8 @@ import 'package:budgeting_app/features/categories/presentation/bloc/local/local_
 import 'package:budgeting_app/features/categories/presentation/bloc/local/local_categories_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class LocalCategoriesBloc extends Bloc<LocalCategoriesEvent, LocalCategoriesState> {
+class LocalCategoriesBloc
+    extends Bloc<LocalCategoriesEvent, LocalCategoriesState> {
   final CategoryUsecase categoryUsecase;
   final CategoriesUsecase categoriesUsecase;
   final GetCategoryUsecase getCategoryUsecase;
@@ -124,7 +125,7 @@ class LocalCategoriesBloc extends Bloc<LocalCategoriesEvent, LocalCategoriesStat
   ) async {
     emit(LocalCategoriesLoadingState());
     try {
-      final response = await deleteCategoriesUsecase(event.name);
+      final response = await deleteCategoriesUsecase(event.categoryId);
       response.fold(
         (failure) => emit(LocalCategoriesErrorState(failure.message)),
         (result) => emit(LocalCategoriesDeletedState(result)),

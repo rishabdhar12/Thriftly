@@ -23,11 +23,13 @@ import 'package:intl/intl.dart';
 class ExpenseHistoryScreen extends StatefulWidget {
   final int id;
   final int iconCode;
+  final double totalBudget;
 
   const ExpenseHistoryScreen({
     super.key,
     required this.id,
     required this.iconCode,
+    required this.totalBudget,
   });
 
   @override
@@ -77,6 +79,10 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
     } else if (_amountController.text.isEmpty) {
       context.pop();
       showSnackBar(context, message: "amount is mandatory");
+    } else if (double.parse(_amountController.text) > widget.totalBudget) {
+      context.pop();
+      showSnackBar(context,
+          message: "expense cannot be more than allocated budget!");
     } else if (_dateController.text.isEmpty) {
       context.pop();
       showSnackBar(context, message: "date is mandatory");
@@ -86,6 +92,7 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
         ..categoryId = widget.id
         ..title = _titleController.text
         ..date = _selectedDate
+        ..totalBudget = widget.totalBudget
         ..amountSpent = double.parse(_amountController.text)
         ..message = _messageController.text;
       addTransaction(
@@ -109,6 +116,10 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
     } else if (_amountController.text.isEmpty) {
       context.pop();
       showSnackBar(context, message: "amount is mandatory");
+    } else if (double.parse(_amountController.text) > widget.totalBudget) {
+      context.pop();
+      showSnackBar(context,
+          message: "expense cannot be more than allocated budget!");
     } else if (_dateController.text.isEmpty) {
       context.pop();
       showSnackBar(context, message: "date is mandatory");
@@ -154,8 +165,8 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: now,
-      // firstDate: DateTime(01, 01, 1947),
-      firstDate: firstDayOfMonth,
+      firstDate: DateTime(01, 01, 1947),
+      // firstDate: firstDayOfMonth,
       lastDate: lastDayOfMonth,
       initialEntryMode: DatePickerEntryMode.calendarOnly,
     );
@@ -293,7 +304,7 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
           actions: [
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: ColorCodes.lightBlue,
+                backgroundColor: ColorCodes.darkBlue,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -302,7 +313,7 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                 Navigator.of(context).pop();
                 showEditBottomSheet(context, transaction!);
               },
-              child: textWidget(text: "Edit", color: ColorCodes.darkBlue),
+              child: textWidget(text: "Edit", color: ColorCodes.white),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -316,7 +327,7 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
                 Navigator.of(context).pop();
                 delete(transaction!.id);
               },
-              child: const Text("Delete"),
+              child: textWidget(text: "Delete", color: Colors.white),
             ),
           ],
         );

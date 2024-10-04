@@ -10,9 +10,8 @@ abstract class TransactionRepository {
   Future<Either<Failure, int>> editTransaction(EditTransactionParams params);
   Future<Either<Failure, List<Transaction>>> getTransactionsByCategoryId(
       int categoryId);
-  // TODO: implement this feature
-  Future<Either<Failure, List<Transaction>>> getCategoryByTransactionId(
-      int transactionId);
+  // Future<Either<Failure, Categories>> getCategoryByTransactionId(
+  //     int transactionId);
   Future<Either<Failure, List<Transaction>>> getTransactions();
   Future<Either<Failure, bool>> deleteTransaction(
       DeleteTransactionParams params);

@@ -8,6 +8,6 @@ abstract class CategoriesRespository {
       List<Categories> categories);
   Future<Either<Failure, Categories>> getCategory(String name);
   Future<Either<Failure, List<Categories>>> getCategories();
-  Future<Either<Failure, bool>> deleteCategories(String name);
+  Future<Either<Failure, bool>> deleteCategory(int categoryId);
   Future<Either<Failure, List<Categories>>> resetCategories();
 }

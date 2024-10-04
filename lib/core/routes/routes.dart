@@ -115,9 +115,9 @@ final GoRouter router = GoRouter(
             context: context,
             state: state,
             child: ExpenseHistoryScreen(
-              id: extra['id'],
-              iconCode: extra['iconCode'],
-            ),
+                id: extra['id'],
+                iconCode: extra['iconCode'],
+                totalBudget: extra['totalBudget']),
             type: 'slide-right-to-left',
           );
         }),

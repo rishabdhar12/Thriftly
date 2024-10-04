@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:budgeting_app/core/common/text.dart';
 import 'package:budgeting_app/core/constants/colors.dart';
 import 'package:budgeting_app/core/constants/route_names.dart';
@@ -5,18 +7,22 @@ import 'package:budgeting_app/features/categories/domain/entities/local/categori
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-Widget categoryItem(BuildContext context, List<Categories> categories, int index) {
+Widget categoryItem(
+    BuildContext context, List<Categories> categories, int index) {
   return Column(
     mainAxisSize: MainAxisSize.max,
     children: [
       GestureDetector(
+        onLongPress: () {
+          log("Delete");
+        },
         onTap: () {
           context.push(
             RouteNames.expenseHistoryScreen,
             extra: {
               'id': categories[index].id,
               'iconCode': categories[index].iconCode,
-              // '': categories[index].iconCode,
+              'totalBudget': categories[index].amount,
             },
           );
         },

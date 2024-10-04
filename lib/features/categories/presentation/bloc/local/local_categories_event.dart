@@ -40,11 +40,11 @@ class GetCategoriesEvent extends LocalCategoriesEvent {
 }
 
 class DeleteCategoriesEvent extends LocalCategoriesEvent {
-  final String name;
-  const DeleteCategoriesEvent({required this.name});
+  final int categoryId;
+  const DeleteCategoriesEvent({required this.categoryId});
 
   @override
-  List<Object> get props => [name];
+  List<Object> get props => [categoryId];
 }
 
 class ResetCategoriesEvent extends LocalCategoriesEvent {

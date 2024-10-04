@@ -1,6 +1,7 @@
 import 'package:budgeting_app/core/constants/assets.dart';
 import 'package:budgeting_app/core/constants/colors.dart';
 import 'package:budgeting_app/features/analysis/presentation/views/analysis_screen.dart';
+import 'package:budgeting_app/features/categories/domain/entities/local/categories_schema_isar.dart';
 import 'package:budgeting_app/features/categories/presentation/bloc/local/local_categories_bloc.dart';
 import 'package:budgeting_app/features/categories/presentation/bloc/local/local_categories_event.dart';
 import 'package:budgeting_app/features/categories/presentation/bloc/local/local_categories_state.dart';
@@ -157,7 +158,27 @@ class _LayoutPageState extends State<LayoutPage> {
                     },
                   );
                 } else if (state is AnalysisState) {
-                  return const AnalysisScreen();
+                  return BlocBuilder<LocalCategoriesBloc, LocalCategoriesState>(
+                    builder: (context, categoriesState) {
+                      if (categoriesState is LocalCategoriesFetchedState) {
+                        double totalBudget = 0.00;
+                        for (Categories category
+                            in categoriesState.categories!) {
+                          totalBudget += category.amount;
+                        }
+                        return AnalysisScreen(
+                          totalBudget: totalBudget,
+                        );
+                      } else if (categoriesState
+                          is LocalCategoriesLoadingState) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else {
+                        return const SizedBox();
+                      }
+                    },
+                  );
                 }
                 // else if (state is TransactionState) {
                 //   return const TransactionScreen();
