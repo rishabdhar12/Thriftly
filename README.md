@@ -45,7 +45,7 @@ Before you can run the app, ensure you have the following tools installed:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-repo/thriftly.git
+   git clone https://github.com/rishabdhar12/Thriftly.git
    cd thriftly
    ```
 
