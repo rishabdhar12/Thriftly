@@ -33,6 +33,9 @@ final TextEditingController _phoneNumberController = TextEditingController();
 final TextEditingController _fullNameController = TextEditingController();
 final TextEditingController _emailController = TextEditingController();
 final TextEditingController _dobController = TextEditingController();
+final TextEditingController _passwordController = TextEditingController();
+final TextEditingController _confirmPasswordController =
+    TextEditingController();
 
 String _selectedCode = "+91";
 
@@ -40,9 +43,8 @@ DateTime _selectedDate = DateTime.now();
 
 class _SignUpScreenState extends State<SignUpScreen> {
   checkUserExist() {
-    context
-        .read<AuthBloc>()
-        .add(CheckUserExistEvent(phoneNumber: "$_selectedCode${_phoneNumberController.text}"));
+    context.read<AuthBloc>().add(CheckUserExistEvent(
+        phoneNumber: "$_selectedCode${_phoneNumberController.text}"));
   }
 
   void signUpUser(SignUpParams params) {
@@ -59,7 +61,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           onDateChanged: (DateTime newDate) {
             setState(() {
               _selectedDate = newDate;
-              _dobController.text = formatter.format(_selectedDate).toString().split(" ").first;
+              _dobController.text =
+                  formatter.format(_selectedDate).toString().split(" ").first;
             });
           },
         );
@@ -101,7 +104,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           extendBodyBehindAppBar: true,
           body: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 40),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 40),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -135,7 +139,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           borderRadius: BorderRadius.circular(20.0),
                           color: ColorCodes.lightGreen,
                         ),
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 4),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton<String>(
                             isExpanded: true,
@@ -152,8 +157,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 log(_selectedCode);
                               });
                             },
-                            items: countryData
-                                .map<DropdownMenuItem<String>>((Map<String, String> country) {
+                            items: countryData.map<DropdownMenuItem<String>>(
+                                (Map<String, String> country) {
                               return DropdownMenuItem<String>(
                                 value: country['code'],
                                 child: textWidget(
@@ -208,6 +213,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     fontSize: 18,
                     color: ColorCodes.lightGreen,
                   ),
+
+                  const SizedBox(height: 30),
                   Container(
                     padding: const EdgeInsets.only(left: 20.0),
                     decoration: BoxDecoration(
@@ -218,7 +225,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         textWidget(
-                          text: _dobController.text == "" ? "DD/MM/YYYY" : _dobController.text,
+                          text: _dobController.text == ""
+                              ? "DD/MM/YYYY"
+                              : _dobController.text,
                           fontSize: 16,
                           color: ColorCodes.appBackground,
                         ),
@@ -229,18 +238,48 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ],
                     ),
                   ),
+                  const SizedBox(height: 30),
+
+                  // Password
+                  textWidget(
+                    text: AppStrings.password,
+                    fontSize: 18,
+                    color: ColorCodes.lightGreen,
+                  ),
+                  textFormField(
+                    hintText: AppStrings.yourPassword,
+                    controller: _passwordController,
+                    textInputType: TextInputType.visiblePassword,
+                    obscureText: true,
+                  ),
+                  const SizedBox(height: 30),
+
+                  // Confirm Password
+                  textWidget(
+                    text: AppStrings.confirmPassword,
+                    fontSize: 18,
+                    color: ColorCodes.lightGreen,
+                  ),
+                  textFormField(
+                    hintText: AppStrings.confirmPassword,
+                    controller: _confirmPasswordController,
+                    textInputType: TextInputType.visiblePassword,
+                    obscureText: true,
+                  ),
                   const SizedBox(height: 40),
                   Center(
                     child: BlocConsumer<AuthBloc, AuthState>(
                       listener: (context, state) {
                         if (state is UserExistState) {
                           if (state.isUserExist) {
-                            showSnackBar(context, message: AppStrings.userExists);
+                            showSnackBar(context,
+                                message: AppStrings.userExists);
                           } else {
                             signUpUser(
                               SignUpParams(
                                 fullName: _fullNameController.text,
-                                phoneNumber: "$_selectedCode${_phoneNumberController.text}",
+                                phoneNumber:
+                                    "$_selectedCode${_phoneNumberController.text}",
                                 email: _emailController.text,
                                 dob: _dobController.text,
                               ),
@@ -262,13 +301,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             height: 45,
                             onPressed: () async {
                               if (_phoneNumberController.text.isEmpty) {
-                                showSnackBar(context, message: AppStrings.invalidPhNumber);
+                                showSnackBar(context,
+                                    message: AppStrings.invalidPhNumber);
                               } else if (_fullNameController.text.isEmpty) {
-                                showSnackBar(context, message: AppStrings.invalidName);
+                                showSnackBar(context,
+                                    message: AppStrings.invalidName);
                               } else if (_emailController.text.isEmpty) {
-                                showSnackBar(context, message: AppStrings.invalidEmail);
+                                showSnackBar(context,
+                                    message: AppStrings.invalidEmail);
                               } else if (_dobController.text.isEmpty) {
-                                showSnackBar(context, message: AppStrings.invalidDOB);
+                                showSnackBar(context,
+                                    message: AppStrings.invalidDOB);
                               } else {
                                 checkUserExist();
                               }

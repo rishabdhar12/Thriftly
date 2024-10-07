@@ -40,6 +40,7 @@ dependencies:
   new_version_plus: ^0.0.12
   package_info_plus: ^8.0.2
   syncfusion_flutter_charts: ^26.2.14
+  google_sign_in: ^6.2.1
 
 dev_dependencies:
   flutter_test:

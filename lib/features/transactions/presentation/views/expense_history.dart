@@ -165,8 +165,8 @@ class _ExpenseHistoryScreenState extends State<ExpenseHistoryScreen> {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: now,
-      firstDate: DateTime(01, 01, 1947),
-      // firstDate: firstDayOfMonth,
+      // firstDate: DateTime(01, 01, 1947),
+      firstDate: firstDayOfMonth,
       lastDate: lastDayOfMonth,
       initialEntryMode: DatePickerEntryMode.calendarOnly,
     );

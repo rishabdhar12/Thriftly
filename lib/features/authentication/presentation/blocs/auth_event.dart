@@ -25,6 +25,13 @@ class VerifyOtpEvent extends AuthEvent {
   List<Object> get props => [verificationId, otp];
 }
 
+class GoogleSignInEvent extends AuthEvent {
+  GoogleSignInEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
 class CheckUserExistEvent extends AuthEvent {
   final String phoneNumber;
 

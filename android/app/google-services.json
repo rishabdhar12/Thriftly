@@ -12,7 +12,20 @@
           "package_name": "com.rishabdhar12.budgeting_app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1005309051138-lcg3d80ovcuhlffkjjdi09padlo26kp1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rishabdhar12.budgeting_app",
+            "certificate_hash": "5897cbaa31f33f77721002c7debd50bd96f5b9d0"
+          }
+        },
+        {
+          "client_id": "1005309051138-8rbcjdukmoh1as92tpdrv4eaumpm6otb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDbznKxGRvrERB0agHdh5bxiwHu17wXjrU"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1005309051138-8rbcjdukmoh1as92tpdrv4eaumpm6otb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1005309051138-8iv9e6ij7hjrsv6a5a8g7mejh3hg671s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.budgetingApp"
+              }
+            }
+          ]
         }
       }
     }

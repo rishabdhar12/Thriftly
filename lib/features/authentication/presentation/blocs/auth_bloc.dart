@@ -1,4 +1,6 @@
+import 'package:budgeting_app/core/usecase/usecase.dart';
 import 'package:budgeting_app/features/authentication/domain/usecases/check_user_exists_usecase.dart';
+import 'package:budgeting_app/features/authentication/domain/usecases/google_signin_usecase.dart';
 import 'package:budgeting_app/features/authentication/domain/usecases/signin_usecase.dart';
 import 'package:budgeting_app/features/authentication/domain/usecases/signup_usecase.dart';
 import 'package:budgeting_app/features/authentication/domain/usecases/verifyotp_usecase.dart';
@@ -13,17 +15,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final VerifyOtp verifyOtp;
   final CheckUserExist checkUserExist;
   final SignUp signUp;
+  final GoogleSignInUsecase googleSignInUsecase;
 
   AuthBloc({
     required this.signInWithPhoneNumber,
     required this.verifyOtp,
     required this.checkUserExist,
     required this.signUp,
+    required this.googleSignInUsecase,
   }) : super(AuthInitial()) {
     on<SendOtpEvent>(_onSendOtpEvent);
     on<VerifyOtpEvent>(_onVerifyOtpEvent);
     on<CheckUserExistEvent>(_onCheckUserExist);
     on<SignUpEvent>(_onSignUp);
+    on<GoogleSignInEvent>(_onSignInWithGoogle);
   }
 
   void _onSendOtpEvent(SendOtpEvent event, Emitter<AuthState> emit) async {
@@ -82,6 +87,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final user = signUpWithPhoneNumberResponse.getRight().toNullable();
       // log("AuthBloc: ${user!.uid}");
       emit(OtpSentState(verificationId: user!.uid));
+    } catch (error) {
+      emit(AuthError(message: error.toString()));
+    }
+  }
+
+  void _onSignInWithGoogle(
+      GoogleSignInEvent event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+    try {
+      final signInResponse = await googleSignInUsecase(NoParams());
+
+      signInResponse.fold(
+        (failure) => emit(AuthError(message: failure.message)),
+        (user) => emit(GoogleAuthenticatedState(user: user)),
+      );
     } catch (error) {
       emit(AuthError(message: error.toString()));
     }

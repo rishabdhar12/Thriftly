@@ -26,13 +26,11 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-final _formKey = GlobalKey<FormState>();
-
 final TextEditingController _phoneNumber = TextEditingController();
 String _selectedCode = "+91";
 
 class _LoginScreenState extends State<LoginScreen> {
-  checkUserExist() {
+  void checkUserExist() {
     context.read<AuthBloc>().add(
         CheckUserExistEvent(phoneNumber: "$_selectedCode${_phoneNumber.text}"));
   }
@@ -42,6 +40,10 @@ class _LoginScreenState extends State<LoginScreen> {
     context
         .read<AuthBloc>()
         .add(SendOtpEvent(phoneNumber: "$_selectedCode${_phoneNumber.text}"));
+  }
+
+  void signinWithGoogle() {
+    context.read<AuthBloc>().add(GoogleSignInEvent());
   }
 
   @override
@@ -197,6 +199,39 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                     ),
                   ),
+                  const SizedBox(height: 40.0),
+                  // google sign in
+                  /* Center(
+                    child: BlocConsumer<AuthBloc, AuthState>(
+                      listener: (context, state) {
+                        if (state is GoogleAuthenticatedState) {
+                          log("GoogleSignin successful");
+                        }
+                      },
+                      builder: (context, state) {
+                        if (state is AuthLoading) {
+                          return const Center(
+                            child: CupertinoActivityIndicator(
+                                radius: 30, color: ColorCodes.buttonColor),
+                          );
+                        } else {
+                          return elevatedButton(
+                            width: 190,
+                            height: 45,
+                            onPressed: () async {
+                              signinWithGoogle();
+                            },
+                            textWidget: textWidget(
+                              text: "Google",
+                              fontSize: 22,
+                              fontWeight: FontWeight.w700,
+                              color: ColorCodes.appBackground,
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ), */
                 ],
               ),
             ),

@@ -1,4 +1,5 @@
 import 'package:budgeting_app/features/authentication/domain/entities/auth_entity.dart';
+import 'package:budgeting_app/features/authentication/domain/entities/google_user_entity.dart';
 import 'package:budgeting_app/features/authentication/domain/entities/user_entity.dart';
 import 'package:equatable/equatable.dart';
 
@@ -54,4 +55,13 @@ class UserExistState extends AuthState {
 
   @override
   List<Object> get props => [isUserExist];
+}
+
+class GoogleAuthenticatedState extends AuthState {
+  final GoogleUserEntity user;
+
+  GoogleAuthenticatedState({required this.user});
+
+  @override
+  List<Object> get props => [user];
 }
